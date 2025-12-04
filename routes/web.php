@@ -13,3 +13,10 @@ Route::get('/railway-seed-once-12345', function () {
     }
     return "Only works on Railway";
 });
+Route::get('/fix-admin-password-2025', function () {
+    \App\Models\User::where('email', 'admin@hrms.com')
+        ->update(['password' => bcrypt('password')]);
+    return 'Admin password fixed! You can now login with password: password';
+});
+
+
