@@ -6,22 +6,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/health', fn() => response('OK', 200));
-Route::get('/railway-seed-once-12345', function () {
-    if (app()->environment('production')) {
-        \Artisan::call('db:seed');
-        return "DATABASE SEEDED SUCCESSFULLY – You can now login!";
-    }
-    return "Only works on Railway";
-});
-Route::get('/fix-admin-password-2025', function () {
-    \App\Models\User::where('email', 'admin@hrms.com')
-        ->update(['password' => bcrypt('password')]);
-    return 'Admin password fixed! You can now login with password: password';
-});
-Route::get('/seed-admin-now-2025', function () {
-    \Artisan::call('db:seed');
-    return "Admin created! Login → admin@hrm.com / password123";
-});
 
 // routes/web.php or routes/api.php
 Route::get('/create-admin-force-2025', function () {
@@ -36,3 +20,11 @@ Route::get('/create-admin-force-2025', function () {
     );
     return "ADMIN CREATED/UPDATED → Email: admin@hrm.com | Password: password123";
 });
+// In routes/web.php — add this single route (protected)
+Route::get('/generate-docs', function () {
+    if (app()->environment('production')) {
+        \Knuckles\Scribe\Scribe::generate();
+        return 'Documentation generated! Visit /docs';
+    }
+    return 'Only works on production';
+})->name('scribe.generate');
