@@ -18,5 +18,8 @@ Route::get('/fix-admin-password-2025', function () {
         ->update(['password' => bcrypt('password')]);
     return 'Admin password fixed! You can now login with password: password';
 });
-
+Route::get('/seed-admin-now-2025', function () {
+    \Artisan::call('db:seed');
+    return "Admin created! Login → admin@hrm.com / password123";
+});
 
