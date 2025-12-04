@@ -1,0 +1,267 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Employee;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\Employee\EmployeeStoreRequest;
+use App\Http\Requests\Employee\EmployeeUpdateRequest;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+
+class EmployeeController extends Controller
+{
+    // GET ALL
+    public function index(Request $request)
+    {
+        $query = Employee::with(['personalInfo', 'professionalInfo.department', 'professionalInfo.designation']);
+
+        // Search
+        if ($request->search) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('employee_code', 'like', "%$search%")
+                  ->orWhereHas('personalInfo', function ($qq) use ($search) {
+                    $qq->where('first_name', 'like', "%$search%")
+                       ->orWhere('last_name', 'like', "%$search%")
+                       ->orWhere('email', 'like', "%$search%")
+                       ->orWhere('phone', 'like', "%$search%");
+                });
+            });
+        }
+
+        // Filter by Status
+        $query->when($request->status, fn($q, $s) => $q->where('status', $s));
+
+        // Filter by Department and Designation
+        $query->when($request->department_id, fn($q, $d) => $q->whereHas('professionalInfo', fn($qq) => $qq->where('department_id', $d)))
+              ->when($request->designation_id, fn($q, $d) => $q->whereHas('professionalInfo', fn($qq) => $qq->where('designation_id', $d)));
+
+        // Sorting
+        $sort = $request->query('sort', 'created_at');
+        $order = $request->query('order', 'desc');
+
+        if (in_array($sort, ['first_name', 'last_name', 'email'])) {
+            $query->join('employee_personal_infos', 'employees.id', '=', 'employee_personal_infos.employee_id')
+                  ->orderBy('employee_personal_infos.' . $sort, $order)
+                  ->select('employees.*');
+        } else {
+            $query->orderBy($sort, $order);
+        }
+
+        $employees = $query->paginate($request->limit ?? 10);
+
+        return response()->json([
+            'message' => 'Employees fetched successfully',
+            'data' => $employees->items(),
+            'pagination' => [
+                'total' => $employees->total(),
+                'limit' => $employees->perPage(),
+                'current_page' => $employees->currentPage(),
+                'last_page' => $employees->lastPage(),
+            ]
+        ]);
+    }
+
+    // CREATE
+    public function store(EmployeeStoreRequest $request)
+{
+    \DB::beginTransaction();
+    try {
+        $employee = Employee::create();
+
+        // PHOTO HANDLING — CONVERT TO WEBP & STORE CORRECTLY
+        $photoPath = null;
+        if ($request->hasFile('photo')) {
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($request->file('photo'));
+
+            // Optional: resize if too big (recommended)
+            $image->scale(width: 800); // keeps aspect ratio
+
+            $encoded = $image->toWebp(90);
+
+            // Generate unique filename
+            $filename = \Str::random(40) . '.webp';
+            $path = 'employees/' . $filename;
+
+            // Save to storage/app/public/employees/xyz.webp
+            Storage::disk('public')->put($path, (string) $encoded);
+
+            $photoPath = $path; // ← THIS IS WHAT GOES TO DB
+        }
+
+        // Get validated data
+        $validated = $request->validated();
+
+        // Personal Info
+        $personalInfoData = [
+            'first_name'      => $validated['first_name'],
+            'last_name'       => $validated['last_name'],
+            'email'           => $validated['email'],
+            'phone'           => $validated['phone'] ?? null,
+            'photo'           => $photoPath, // ← CORRECT PATH OR NULL
+            'date_of_birth'   => $validated['date_of_birth'],
+            'gender'          => $validated['gender'],
+            'marital_status'  => $validated['marital_status'] ?? null,
+            'nationality'     => $validated['nationality'] ?? null,
+            'address'         => $validated['address'] ?? null,
+            'city'            => $validated['city'] ?? null,
+            'state'           => $validated['state'] ?? null,
+            'zip_code'        => $validated['zip_code'] ?? null,
+        ];
+
+        // Professional Info
+        $professionalInfoData = [
+            'department_id'        => $validated['department_id'],
+            'designation_id'       => $validated['designation_id'],
+            'joining_date'         => $validated['joining_date'],
+            'ending_date'          => $validated['ending_date'] ?? null,
+            'employment_type'      => $validated['employment_type'],
+            'basic_salary'         => $validated['basic_salary'],
+            'salary_currency'      => $validated['salary_currency'] ?? 'USD',
+            'bank_name'            => $validated['bank_name'] ?? null,
+            'bank_account_number'  => $validated['bank_account_number'] ?? null,
+            'tax_id'               => $validated['tax_id'] ?? null,
+        ];
+
+        $employee->personalInfo()->create($personalInfoData);
+        $employee->professionalInfo()->create($professionalInfoData);
+
+        \DB::commit();
+
+        return response()->json([
+            'message' => 'Employee created successfully',
+            'data'    => $employee->load([
+                'personalInfo',
+                'professionalInfo.department',
+                'professionalInfo.designation'
+            ])
+        ], 201);
+
+    } catch (\Exception $e) {
+        \DB::rollBack();
+        return response()->json([
+            'message' => 'Failed to create employee',
+            'error'   => $e->getMessage()
+        ], 422);
+    }
+}
+
+    // SHOW
+    public function show($id)
+    {
+        $employee = Employee::with(['personalInfo', 'professionalInfo'])->findOrFail($id);
+        return response()->json([
+            'message' => 'Employee retrieved successfully',
+            'data' => $employee
+        ]);
+    }
+
+    // UPDATE
+    public function update(EmployeeUpdateRequest $request, $id)
+    {
+        $employee = Employee::findOrFail($id);
+
+        $validated = $request->validated();
+
+        // Separate data
+        $personalInfoData = array_intersect_key($validated, array_flip([
+            'first_name', 'last_name', 'email', 'phone', 'photo', 'date_of_birth', 
+            'gender', 'marital_status', 'nationality', 'address', 'city', 'state', 'zip_code'
+        ]));
+
+        $professionalInfoData = array_intersect_key($validated, array_flip([
+            'department_id', 'designation_id', 'joining_date', 'ending_date', 
+            'employment_type', 'basic_salary', 'salary_currency', 'bank_name', 
+            'bank_account_number', 'tax_id'
+        ]));
+
+        if (!empty($personalInfoData)) {
+            $employee->personalInfo()->update($personalInfoData);
+        }
+
+        if (!empty($professionalInfoData)) {
+            $employee->professionalInfo()?->update($professionalInfoData);
+        }
+
+        return response()->json([
+            'message' => 'Employee updated successfully',
+            'data' => $employee->fresh()->load(['personalInfo','professionalInfo'])
+        ]);
+    }
+
+    // UPLOAD PHOTO ONLY
+    public function uploadPhoto(Request $request, $id)
+    {
+        $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg|max:5120'
+        ]);
+
+        $employee = Employee::findOrFail($id);
+
+        // Delete old photo
+        if ($employee->personalInfo?->photo && $employee->personalInfo->photo !== 'default.jpg') {
+            Storage::disk('public')->delete($employee->personalInfo->photo);
+        }
+
+        // Convert to WebP
+        $manager = new ImageManager(new Driver());
+        $image = $manager->read($request->file('photo'));
+        $encoded = $image->toWebp(90);
+        $filename = pathinfo($request->file('photo')->hashName(), PATHINFO_FILENAME) . '.webp';
+        Storage::disk('public')->put('employees/' . $filename, (string) $encoded);
+        $path = 'employees/' . $filename;
+
+        $employee->personalInfo()->update(['photo' => $path]);
+
+        return response()->json([
+            'message' => 'Photo uploaded successfully',
+            'photo_url' => asset('storage/' . $path)
+        ]);
+    }
+
+    // DELETE PHOTO
+    public function deletePhoto($id)
+    {
+        $employee = Employee::findOrFail($id);
+
+        if ($employee->personalInfo?->photo && $employee->personalInfo->photo !== 'default.jpg') {
+            Storage::disk('public')->delete($employee->personalInfo->photo);
+            $employee->personalInfo()->update(['photo' => null]);
+        }
+
+        return response()->json(['message' => 'Photo removed']);
+    }
+
+    // DESTROY
+    public function destroy($id)
+    {
+        $employee = Employee::findOrFail($id);
+
+        if ($employee->personalInfo?->photo) {
+            Storage::disk('public')->delete($employee->personalInfo->photo);
+        }
+
+        $employee->delete();
+
+        return response()->json([
+            'message' => 'Employee deleted successfully'
+        ]);
+    }
+
+    // TOGGLE STATUS
+    public function toggleStatus($id)
+    {
+        $employee = Employee::findOrFail($id);
+        $employee->status = $employee->status === 'active' ? 'inactive' : 'active';
+        $employee->save();
+
+        return response()->json([
+            'message' => 'Status updated',
+            'status' => $employee->status
+        ]);
+    }
+}
