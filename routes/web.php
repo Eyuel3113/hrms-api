@@ -20,11 +20,3 @@ Route::get('/create-admin-force-2025', function () {
     );
     return "ADMIN CREATED/UPDATED → Email: admin@hrm.com | Password: password123";
 });
-// In routes/web.php — add this single route (protected)
-Route::get('/generate-docs', function () {
-    if (app()->environment('production')) {
-        \Knuckles\Scribe\Scribe::generate();
-        return 'Documentation generated! Visit /docs';
-    }
-    return 'Only works on production';
-})->name('scribe.generate');
