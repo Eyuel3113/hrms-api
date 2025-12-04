@@ -37,3 +37,4 @@ class RouteServiceProvider extends ServiceProvider
             \Knuckles\Scribe\Scribe::generate();
         }
     }
+}
