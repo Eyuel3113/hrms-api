@@ -23,3 +23,16 @@ Route::get('/seed-admin-now-2025', function () {
     return "Admin created! Login → admin@hrm.com / password123";
 });
 
+// routes/web.php or routes/api.php
+Route::get('/create-admin-force-2025', function () {
+    \App\Models\User::updateOrCreate(
+        ['email' => 'admin@hrm.com'],
+        [
+            'name' => 'System Admin',
+            'password' => bcrypt('password123'),
+            'email_verified_at' => now(),
+            'role' => 'admin'
+        ]
+    );
+    return "ADMIN CREATED/UPDATED → Email: admin@hrm.com | Password: password123";
+});
