@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Department;
 use App\Http\Requests\Department\DepartmentStoreRequest;
 use App\Http\Requests\Department\DepartmentUpdateRequest;
-use App\Http\Requests\Department\DepartmentUpdateStatusRequest;
 
 class DepartmentController extends Controller
 {

@@ -43,32 +43,23 @@ public function login(LoginRequest $request)
         return response()->json(['message' => 'Invalid credentials'], 401);
     }
 
-    // Delete old tokens
     $user->tokens()->delete();
 
-    // Access token: 2 hours
-    $token = $user->createToken('token', ['*'], now()->addMinutes(30))->plainTextToken;
+    $token = $user->createToken('auth_token', ['*'], now()->addMinutes(30))->plainTextToken;
+    $refresh = $user->createToken('refresh_token', ['*'], now()->addDays(365))->plainTextToken;
 
-    // Refresh token: 1 year in HttpOnly cookie
-    $refreshToken = $user->createToken('refresh-token', ['*'], now()->addYears(1))->plainTextToken;
+    $isProduction = env('APP_ENV') === 'production';
 
+    // Return tokens in response body for Bearer auth AND set as cookies for cookie-based auth
     return response()->json([
         'success' => true,
-        'accestoken' => $token,
-        'token_type'   => 'Bearer',
-        'expires_in'   => 30 * 60,
-        'user'         => $user->only(['id', 'name', 'email']),
-    ])->cookie(
-    'refresh-token',                              // name
-    $refreshToken,                                  // value
-    60 * 24 * 365,                           // minutes (1 year)
-    '/',                                     // path
-    null,                                    // domain
-    env('APP_ENV') === 'production',         // secure (true on Railway)
-    true,                                    // HttpOnly → XSS safe
-    false,                                   // raw
-    'lax'                                    // sameSite
-    );
+        'message' => 'Login successful',
+        'user' => $user->only(['id', 'name', 'email']),
+        'token' => $token,  // For Bearer token authentication
+        'refresh_token' => $refresh,  // For Bearer token refresh
+    ])
+    ->cookie('auth_token', $token, 30, '/', null, $isProduction, true, false, 'lax')
+    ->cookie('refresh_token', $refresh, 60*24*365, '/', null, $isProduction, true, false, 'lax');
 }
 
 public function logout(Request $request)
@@ -76,12 +67,26 @@ public function logout(Request $request)
     $request->user()->tokens()->delete();
 
     return response()->json(['message' => 'Logged out'])
+        ->withCookie(cookie()->forget('auth_token'))
         ->withCookie(cookie()->forget('refresh_token'));
 }
 
     public function me(Request $request)
     {
         return response()->json($request->user());
+    }
+
+    public function refresh(Request $request)
+    {
+        $user = $request->user();
+        $user->tokens()->delete();
+
+        $newToken = $user->createToken('auth_token', ['*'], now()->addMinutes(30))->plainTextToken;
+
+        $isProduction = env('APP_ENV') === 'production';
+
+        return response()->json(['success' => true])
+            ->cookie('auth_token', $newToken, 30, '/', null, $isProduction, true, false, 'lax');
     }
 
    public function forgotPassword(Request $request)
