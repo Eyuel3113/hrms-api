@@ -59,14 +59,15 @@ public function login(LoginRequest $request)
         'expires_in'   => 30 * 60,
         'user'         => $user->only(['id', 'name', 'email']),
     ])->cookie(
-        name:     'refresh_token',
-        value:    $refreshToken,
-        minutes:  60 * 24 * 365,
-        path:     '/',
-        domain:   null,
-        secure:   env('APP_ENV') === 'production',
-        httpOnly: true,
-        sameSite: 'lax'
+    'refresh-token',                              // name
+    $refreshToken,                                  // value
+    60 * 24 * 365,                           // minutes (1 year)
+    '/',                                     // path
+    null,                                    // domain
+    env('APP_ENV') === 'production',         // secure (true on Railway)
+    true,                                    // HttpOnly → XSS safe
+    false,                                   // raw
+    'lax'                                    // sameSite
     );
 }
 
