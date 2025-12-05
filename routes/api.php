@@ -8,14 +8,38 @@ use App\Http\Controllers\Api\EmployeeController;
 
 
 Route::prefix('v1')->name('auth.')->group(function () {
+
     Route::post('/auth/login', [AuthController::class, 'login'])->name('login');
-    Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout');
-    Route::get('/auth/me', [AuthController::class, 'me'])->middleware('auth:sanctum')->name('me');
     Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
     Route::post('/auth/reset-password', [AuthController::class, 'resetPassword'])->name('reset-password');
+
+    // PROTECTED ROUTES – require auth:sanctum + HttpOnly cookie
+    Route::middleware('auth:sanctum')->group(function () {
+
+        // Auth
+        Route::post('/auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
+        Route::get('/auth/me', [AuthController::class, 'me'])->name('auth.me');
+        Route::get('/auth/refresh', function (Request $request) {
+    $user = $request->user();
+
+    if (!$user) {
+        return response()->json(['message' => 'Unauthenticated'], 401);
+    }
+
+    $user->tokens()->delete();
+
+    $newAccess = $user->createToken('token', ['*'], now()->addMinutes(30))->plainTextToken;
+    $newRefresh = $user->createToken('refresh-token', ['*'], now()->addYears(1))->plainTextToken;
+
+    return response()->json([
+        'access_token' => $newAccess,
+        'token_type'   => 'Bearer',
+        'expires_in'   => 1800,
+    ])->cookie('refresh_token', $newRefresh, 60*24*365, '/', null, env('APP_ENV')==='production', true, false, 'lax');
+})->middleware('auth:sanctum');  
+    });
+
 });
-
-
 Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
 
     // ── DEPARTMENTS 
