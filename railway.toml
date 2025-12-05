@@ -1,18 +1,19 @@
 [build]
-  builder = "NIXPACKS"
+  builder = "NIXPACKS
+
+[phases.setup]
+  nixPkgs = ["php82", "php82Packages.composer"]
+
+[phases.install]
+  cmds = ["composer install --optimize-autoloader --no-dev --no-interaction"]
 
 [phases.build]
-  dependsOn = []
   cmds = [
-    "composer install --no-dev --optimize-autoloader --no-interaction",
-    "php artisan migrate --force",
+    "php artisan migrate --force || true",
     "php artisan config:cache",
-    "php artisan route:cache"
+    "php artisan route:cache",
+    "php artisan view:cache"
   ]
 
-[deploy]
-  startCommand = "php artisan serve --host=0.0.0.0 --port=$PORT"
-
-# SKIP NODE.JS COMPLETELY
-[nixpacks.providers]
-  Nodejs = []  # Empty = skip Node
+[start]
+  cmd = "php artisan serve --host=0.0.0.0 --port=$PORT"
