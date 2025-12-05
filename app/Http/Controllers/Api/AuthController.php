@@ -40,49 +40,42 @@ public function login(LoginRequest $request)
     $user = User::where('email', $request->email)->first();
 
     if (!$user || !Hash::check($request->password, $user->password)) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Invalid email or password',
-        ], 401);
+        return response()->json(['message' => 'Invalid credentials'], 401);
     }
 
-    // Delete ALL old tokens (clean start)
+    // Delete old tokens
     $user->tokens()->delete();
 
-    // Create token that expires in 2 hours
-    $token = $user->createToken('web-login', ['*'], now()->addHours(2))->plainTextToken;
+    // Access token: 2 hours
+    $token = $user->createToken('token', ['*'], now()->addMinutes(30))->plainTextToken;
+
+    // Refresh token: 1 year in HttpOnly cookie
+    $refreshToken = $user->createToken('refresh-token', ['*'], now()->addYears(1))->plainTextToken;
 
     return response()->json([
         'success' => true,
-        'message' => 'Login successful',
-        'user'    => [
-            'id'    => $user->id,
-            'name'  => $user->name,
-            'email' => $user->email,
-       
-        ],
+        'accestoken' => $token,
+        'token_type'   => 'Bearer',
+        'expires_in'   => 30 * 60,
+        'user'         => $user->only(['id', 'name', 'email']),
     ])->cookie(
-        'token',                         // name
-        $token,                          // value
-        60 * 24 * 365,                   // cookie lives 1 year (refresh token)
-        '/',                             // path
-        null,                            // domain
-        env('APP_ENV') === 'production', // secure on Railway
-        true,                            // HttpOnly → XSS safe
-        false,
-        'lax'
+        name:     'refresh_token',
+        value:    $refreshToken,
+        minutes:  60 * 24 * 365,
+        path:     '/',
+        domain:   null,
+        secure:   env('APP_ENV') === 'production',
+        httpOnly: true,
+        sameSite: 'lax'
     );
 }
 
-    public function logout(Request $request)
+public function logout(Request $request)
 {
-    // Delete ALL tokens (not just current one)
     $request->user()->tokens()->delete();
 
-    return response()->json([
-        'success' => true,
-        'message' => 'Logged out successfully'
-    ])->withCookie(cookie()->forget('hr_token')); // ← clears the cookie
+    return response()->json(['message' => 'Logged out'])
+        ->withCookie(cookie()->forget('refresh_token'));
 }
 
     public function me(Request $request)

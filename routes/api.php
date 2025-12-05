@@ -20,27 +20,23 @@ Route::prefix('v1')->name('auth.')->group(function () {
         Route::post('/auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
         Route::get('/auth/me', [AuthController::class, 'me'])->name('auth.me');
         Route::get('/auth/refresh', function (Request $request) {
-            $user = $request->user();
-            $user->tokens()->delete(); // kill all old tokens
+    $user = $request->user();
 
-            $newToken = $user->createToken('web-login', ['*'], now()->addHours(2))->plainTextToken;
+    if (!$user) {
+        return response()->json(['message' => 'Unauthenticated'], 401);
+    }
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Token refreshed',
-                'user' => $user->only(['id', 'name', 'email']),
-            ])->cookie(
-                'token',
-                $newToken,
-                60 * 24 * 365,
-                '/',
-                null,
-                env('APP_ENV') === 'production',
-                true,
-                false,
-                'lax'
-            );
-        })->name('auth.refresh');   
+    $user->tokens()->delete();
+
+    $newAccess = $user->createToken('token', ['*'], now()->addMinutes(30))->plainTextToken;
+    $newRefresh = $user->createToken('refresh-token', ['*'], now()->addYears(1))->plainTextToken;
+
+    return response()->json([
+        'access_token' => $newAccess,
+        'token_type'   => 'Bearer',
+        'expires_in'   => 1800,
+    ])->cookie('refresh_token', $newRefresh, 60*24*365, '/', null, env('APP_ENV')==='production', true, false, 'lax');
+})->middleware('auth:sanctum');  
     });
 
 });
