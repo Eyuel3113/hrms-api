@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\DesignationController;
 use App\Http\Controllers\Api\EmployeeController;
+use App\Http\Controllers\Api\AttendanceController;
 
 Route::prefix('v1')->group(function () {
 
@@ -54,5 +55,16 @@ Route::prefix('v1')->group(function () {
             Route::delete('/{id}/photo', [EmployeeController::class, 'deletePhoto']);
             Route::patch('/{id}/status', [EmployeeController::class, 'toggleStatus']);
         });
+    
+
+         //ATTENDANCE
+    
+    Route::prefix('attendance')->name('attendance.')->group(function () {
+         Route::get('/today', [AttendanceController::class, 'today'])->name('today');
+         Route::post('/check-in', [AttendanceController::class, 'checkIn'])->name('checkin');
+         Route::post('/check-out', [AttendanceController::class, 'checkOut'])->name('checkout');
     });
+    
+});
+
 });
