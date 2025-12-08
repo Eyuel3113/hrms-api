@@ -59,7 +59,18 @@ class DesignationController extends Controller
         ]
     ]);
     }
-
+ /**
+     * List Designations
+     * 
+     * Get a paginated list of designations.
+     * 
+     * @group Designations
+     * @queryParam search string Search by title or description.
+     * @response 200 {
+     *  "data": [ ... ],
+     *  "pagination": { ... }
+     * }
+     */
       public function all()
 {
     $search = request()->query('search');

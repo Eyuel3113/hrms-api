@@ -14,6 +14,24 @@ use Intervention\Image\Drivers\Gd\Driver;
 class EmployeeController extends Controller
 {
     // GET ALL
+    /**
+     * List Employees
+     * 
+     * Get a paginated list of employees.
+     * 
+     * @group Employees
+     * @queryParam search string Search by name, email, phone, or employee code.
+     * @queryParam status string Filter by status (active/inactive).
+     * @queryParam department_id uuid Filter by department.
+     * @queryParam designation_id uuid Filter by designation.
+     * @queryParam sort string Sort field (e.g., created_at, first_name).
+     * @queryParam order string Sort order (asc/desc).
+     * @queryParam limit int Items per page. Default 10.
+     * @response 200 {
+     *  "data": [ ... ],
+     *  "pagination": { ... }
+     * }
+     */
     public function index(Request $request)
     {
         $query = Employee::with(['personalInfo', 'professionalInfo.department', 'professionalInfo.designation']);
@@ -66,6 +84,28 @@ class EmployeeController extends Controller
     }
 
     // CREATE
+    /**
+     * Create Employee
+     * 
+     * Create a new employee with personal and professional info.
+     * 
+     * @group Employees
+     * @bodyParam first_name string required First name.
+     * @bodyParam last_name string required Last name.
+     * @bodyParam email string required Email address.
+     * @bodyParam phone string Phone number.
+     * @bodyParam photo file Profile photo (image).
+     * @bodyParam date_of_birth date required Date of birth (YYYY-MM-DD).
+     * @bodyParam gender string required Gender (male/female).
+     * @bodyParam department_id uuid required Department ID.
+     * @bodyParam designation_id uuid required Designation ID.
+     * @bodyParam joining_date date required Joining date.
+     * @bodyParam basic_salary number required Basic salary.
+     * @response 201 {
+     *  "message": "Employee created successfully",
+     *  "data": { ... }
+     * }
+     */
     public function store(EmployeeStoreRequest $request)
 {
     \DB::beginTransaction();
@@ -151,6 +191,17 @@ class EmployeeController extends Controller
 }
 
     // SHOW
+    /**
+     * Get Employee
+     * 
+     * Get employee details by ID.
+     * 
+     * @group Employees
+     * @response 200 {
+     *  "message": "Employee retrieved successfully",
+     *  "data": { ... }
+     * }
+     */
     public function show($id)
     {
         $employee = Employee::with(['personalInfo', 'professionalInfo'])->findOrFail($id);
@@ -161,6 +212,19 @@ class EmployeeController extends Controller
     }
 
     // UPDATE
+    /**
+     * Update Employee
+     * 
+     * Update employee details.
+     * 
+     * @group Employees
+     * @bodyParam first_name string First name.
+     * @bodyParam email string Email address.
+     * @response 200 {
+     *  "message": "Employee updated successfully",
+     *  "data": { ... }
+     * }
+     */
     public function update(EmployeeUpdateRequest $request, $id)
     {
         $employee = Employee::findOrFail($id);
@@ -194,6 +258,18 @@ class EmployeeController extends Controller
     }
 
     // UPLOAD PHOTO ONLY
+    /**
+     * Upload Photo
+     * 
+     * Upload or update employee profile photo.
+     * 
+     * @group Employees
+     * @bodyParam photo file required Image file (jpeg, png, jpg, max 5MB).
+     * @response 200 {
+     *  "message": "Photo uploaded successfully",
+     *  "photo_url": "http://..."
+     * }
+     */
     public function uploadPhoto(Request $request, $id)
     {
         $request->validate([
@@ -224,6 +300,16 @@ class EmployeeController extends Controller
     }
 
     // DELETE PHOTO
+    /**
+     * Delete Photo
+     * 
+     * Remove employee profile photo.
+     * 
+     * @group Employees
+     * @response 200 {
+     *  "message": "Photo removed"
+     * }
+     */
     public function deletePhoto($id)
     {
         $employee = Employee::findOrFail($id);
@@ -237,6 +323,16 @@ class EmployeeController extends Controller
     }
 
     // DESTROY
+    /**
+     * Delete Employee
+     * 
+     * Delete an employee record.
+     * 
+     * @group Employees
+     * @response 200 {
+     *  "message": "Employee deleted successfully"
+     * }
+     */
     public function destroy($id)
     {
         $employee = Employee::findOrFail($id);
@@ -253,6 +349,17 @@ class EmployeeController extends Controller
     }
 
     // TOGGLE STATUS
+    /**
+     * Toggle Status
+     * 
+     * Toggle employee status (active/inactive).
+     * 
+     * @group Employees
+     * @response 200 {
+     *  "message": "Status updated",
+     *  "status": "inactive"
+     * }
+     */
     public function toggleStatus($id)
     {
         $employee = Employee::findOrFail($id);

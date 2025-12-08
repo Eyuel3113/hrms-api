@@ -12,28 +12,6 @@ use Illuminate\Support\Facades\Password;
 
 class AuthController extends Controller
 {
-    // public function login(LoginRequest $request)
-    // {
-    //     $user = User::where('email', $request->email)->first();
-
-    //     if (! $user || ! Hash::check($request->password, $user->password)) {
-    //         return response()->json([
-    //             'message' => 'Invalid email or password',
-    //         ], 401);
-    //     }
-
-    //     // Delete old tokens (optional)
-    //     $user->tokens()->delete();
-
-    //     // Create API token
-    //     $token = $user->createToken('api-token', ['*'])->plainTextToken;
-
-    //     return response()->json([
-    //         'message' => 'Login successful',
-    //         'token'   => $token,
-    //         'user'    => $user
-    //     ]);
-    // }
 
     /**
      * Login
@@ -141,6 +119,23 @@ class AuthController extends Controller
             ->cookie('auth_token', $newToken, 30, '/', null, $isProduction, true, false, 'lax');
     }
 
+
+      /**
+     * Forget-password
+     * 
+     * Authenticate a user and return access tokens.
+     * 
+     * @group Authentication
+     * @bodyParam email string required The user's email. Example: user@example.com
+     * @response 200 {
+     *  "success": true,
+     *  "message": "forget password link sent",
+     *  "user": { ... },
+     *  "token": "...",
+     *  "refresh_token": "..."
+     * }
+     */
+
    public function forgotPassword(Request $request)
 {
     $request->validate(['email' => 'required|email']);
@@ -153,7 +148,22 @@ class AuthController extends Controller
         ? response()->json(['message' => 'Reset link sent to your email'])
         : response()->json(['message' => 'Can not find this user'], 400);
 }
-
+  /**
+     * Reset Password
+     * 
+     * Authenticate a user and return access tokens.
+     * 
+     * @group Authentication
+     * @bodyParam token string required The password reset token. Example: tokenstring
+     * @bodyParam email string required The user's email. Example:
+     * @response 200 {
+     *  "success": true,
+     *  "message": "Login successful",
+     *  "user": { ... },
+     *  "token": "...",
+     *  "refresh_token": "..."
+     * }
+     */
 public function resetPassword(Request $request)
 {
     $request->validate([
