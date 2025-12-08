@@ -9,52 +9,56 @@ use App\Http\Requests\Department\DepartmentUpdateRequest;
 
 class DepartmentController extends Controller
 {
+ 
     public function index()
-    {
-        $search = request()->query('search');
-        $status = request()->query('status');
-        $limit = request()->query('limit', 10);
-        $sort = request()->query('sort', 'created_at');
-        $order = request()->query('order', 'desc');
+{
+    $search = request()->query('search');
+    $status = request()->query('status');
+    $limit  = request()->query('limit', 10);
+    $sort   = request()->query('sort', 'created_at');
+    $order  = request()->query('order', 'desc');
 
-        $query = Department::query()->withCount('designations');
+    $query = Department::query()
+        ->withCount('employees')      
+        ->withCount('designations');   
 
-        if ($search) {
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%$search%")
-                  ->orWhere('code', 'like', "%$search%")
-                  ->orWhere('description', 'like', "%$search%");
-            });
-        }
-
-        if ($status) {
-            $query->where('status', $status);
-        }
-
-        $departments = $query->orderBy($sort, $order)->paginate($limit);
-
-        // Load 5 employees for each department
-        $departments->getCollection()->transform(function ($department) {
-            $department->setRelation('employees', 
-                $department->employees()
-                    ->with('personalInfo') // Eager load personal info
-                    ->take(5)
-                    ->get()
-            );
-            return $department;
+    // Search
+    if ($search) {
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+              ->orWhere('code', 'like', "%{$search}%")
+              ->orWhere('description', 'like', "%{$search}%");
         });
-
-        return response()->json([
-            'message' => 'Departments fetched successfully',
-            'data' => $departments->items(),
-            'pagination' => [
-                'total' => $departments->total(),
-                'per_page' => $departments->perPage(),
-                'current_page' => $departments->currentPage(),
-                'last_page' => $departments->lastPage(),
-            ]
-        ]);
     }
+
+    // Status filter
+    if ($status) {
+        $query->where('status', $status);
+    }
+
+    // Pagination
+    $departments = $query->orderBy($sort, $order)->paginate($limit);
+
+    // Optional: Add 5 recent employees preview (you already had this)
+    $departments->getCollection()->transform(function ($department) {
+        $department->employees = $department->employees()
+            ->with('personalInfo')
+            ->take(5)
+            ->get();
+        return $department;
+    });
+
+    return response()->json([
+        'message'    => 'Departments fetched successfully',
+        'data'       => $departments->items(),
+        'pagination' => [
+            'total'       => $departments->total(),
+            'per_page'    => $departments->perPage(),
+            'current_page'=> $departments->currentPage(),
+            'last_page'   => $departments->lastPage(),
+        ]
+    ]);
+}
 public function all()
 {
     $search = request()->query('search');
