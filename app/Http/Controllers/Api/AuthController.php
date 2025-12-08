@@ -35,7 +35,23 @@ class AuthController extends Controller
     //     ]);
     // }
 
-public function login(LoginRequest $request)
+    /**
+     * Login
+     * 
+     * Authenticate a user and return access tokens.
+     * 
+     * @group Authentication
+     * @bodyParam email string required The user's email. Example: user@example.com
+     * @bodyParam password string required The user's password. Example: password
+     * @response 200 {
+     *  "success": true,
+     *  "message": "Login successful",
+     *  "user": { ... },
+     *  "token": "...",
+     *  "refresh_token": "..."
+     * }
+     */
+    public function login(LoginRequest $request)
 {
     $user = User::where('email', $request->email)->first();
 
@@ -62,7 +78,17 @@ public function login(LoginRequest $request)
     ->cookie('refresh_token', $refresh, 60*24*365, '/', null, $isProduction, true, false, 'lax');
 }
 
-public function logout(Request $request)
+    /**
+     * Logout
+     * 
+     * Revoke the current access token.
+     * 
+     * @group Authentication
+     * @response 200 {
+     *  "message": "Logged out"
+     * }
+     */
+    public function logout(Request $request)
 {
     $request->user()->tokens()->delete();
 
@@ -71,21 +97,47 @@ public function logout(Request $request)
         ->withCookie(cookie()->forget('refresh_token'));
 }
 
+    /**
+     * Get User Profile
+     * 
+     * Get the authenticated user's profile.
+     * 
+     * @group Authentication
+     * @response 200 {
+     *  "id": "uuid",
+     *  "name": "John Doe",
+     *  "email": "john@example.com",
+     *  ...
+     * }
+     */
     public function me(Request $request)
     {
         return response()->json($request->user());
     }
 
+    /**
+     * Refresh Token
+     * 
+     * Refresh the authentication token using a valid refresh token.
+     * 
+     * @group Authentication
+     * @response 200 {
+     *  "success": true
+     * }
+     */
     public function refresh(Request $request)
     {
         $user = $request->user();
-        $user->tokens()->delete();
+        
+        // Do NOT delete all tokens. Just issue a new access token.
+        // Ideally, we should check if the current token capability includes 'refresh_token' if we used capabilities.
+        // For now, we assume the middleware 'auth:sanctum' let us in.
 
         $newToken = $user->createToken('auth_token', ['*'], now()->addMinutes(30))->plainTextToken;
 
         $isProduction = env('APP_ENV') === 'production';
 
-        return response()->json(['success' => true])
+        return response()->json(['success' => true, 'token' => $newToken])
             ->cookie('auth_token', $newToken, 30, '/', null, $isProduction, true, false, 'lax');
     }
 

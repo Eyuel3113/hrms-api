@@ -10,6 +10,20 @@ use App\Http\Requests\Department\DepartmentUpdateRequest;
 class DepartmentController extends Controller
 {
  
+    /**
+     * List Departments
+     * 
+     * Get a paginated list of departments.
+     * 
+     * @group Departments
+     * @queryParam search string Search by name, code, or description.
+     * @queryParam status string Filter by status (active/inactive).
+     * @queryParam limit int Items per page. Default 10.
+     * @response 200 {
+     *  "data": [ ... ],
+     *  "pagination": { ... }
+     * }
+     */
     public function index()
 {
     $search = request()->query('search');
@@ -59,7 +73,18 @@ class DepartmentController extends Controller
         ]
     ]);
 }
-public function all()
+    /**
+     * All Active Departments
+     * 
+     * Get a list of all active departments (no pagination).
+     * 
+     * @group Departments
+     * @queryParam search string Search by name, code, or description.
+     * @response 200 {
+     *  "data": [ ... ]
+     * }
+     */
+    public function all()
 {
     $search = request()->query('search');
 
@@ -78,6 +103,19 @@ public function all()
         'data'    => $query->get()
     ]);
 }
+    /**
+     * Create Department
+     * 
+     * Create a new department.
+     * 
+     * @group Departments
+     * @bodyParam name string required Name of the department.
+     * @bodyParam code string required Unique code.
+     * @response 201 {
+     *  "message": "Department created successfully",
+     *  "data": { ... }
+     * }
+     */
     public function store(DepartmentStoreRequest $request)
     {
         $department = Department::create($request->validated());
@@ -88,6 +126,19 @@ public function all()
         ], 201);
     }
 
+    /**
+     * Get Department
+     * 
+     * Get department details by ID.
+     * 
+     * @group Departments
+     * @response 200 {
+     *  "id": "...",
+     *  "name": "...",
+     *  "designations_count": 5,
+     *  "employees": [ ... ]
+     * }
+     */
     public function show($id)
     {
         $department = Department::withCount('designations')->findOrFail($id);
@@ -102,6 +153,17 @@ public function all()
         return response()->json($department);
     }
 
+    /**
+     * Update Department
+     * 
+     * Update department details.
+     * 
+     * @group Departments
+     * @response 200 {
+     *  "message": "Department updated successfully",
+     *  "data": { ... }
+     * }
+     */
     public function update(DepartmentUpdateRequest $request, $id)
     {
         $department = Department::findOrFail($id);
@@ -113,7 +175,18 @@ public function all()
         ]);
     }
 
-       public function toggleStatus($id)
+    /**
+     * Toggle Status
+     * 
+     * Toggle department status (active/inactive).
+     * 
+     * @group Departments
+     * @response 200 {
+     *  "message": "Department status updated successfully",
+     *  "status": "inactive"
+     * }
+     */
+    public function toggleStatus($id)
 {
     $department = Department::findOrFail($id);
 

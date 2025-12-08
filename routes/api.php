@@ -40,6 +40,7 @@ Route::prefix('v1')->group(function () {
         Route::prefix('designations')->group(function () {
             Route::get('/', [DesignationController::class, 'index']);
             Route::post('/', [DesignationController::class, 'store']);
+            Route::get('/all', [DesignationController::class, 'all']);
             Route::get('/{id}', [DesignationController::class, 'show']);
             Route::patch('/{id}', [DesignationController::class, 'update']);
             Route::delete('/{id}', [DesignationController::class, 'destroy']);

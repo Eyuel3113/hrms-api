@@ -10,6 +10,23 @@ use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
+    /**
+     * Today's Attendance
+     * 
+     * Get attendance overview for the current day.
+     * 
+     * @group Attendance
+     * @response 200 {
+     *  "success": true,
+     *  "date": "2023-10-27",
+     *  "ethiopian_date": "Tikimt 16, 2016",
+     *  "total": 10,
+     *  "present": 8,
+     *  "late": 2,
+     *  "absent": 5,
+     *  "data": [ ... ]
+     * }
+     */
     public function today()
     {
         $today = today()->toDateString();
@@ -31,7 +48,22 @@ class AttendanceController extends Controller
         ]);
     }
 
-public function checkIn(Request $request)
+    /**
+     * Check In
+     * 
+     * Record employee check-in.
+     * 
+     * @group Attendance
+     * @bodyParam employee_id uuid required The employee's ID.
+     * @bodyParam lat float required Latitude.
+     * @bodyParam lng float required Longitude.
+     * @response 200 {
+     *  "success": true,
+     *  "message": "John checked in at 08:30",
+     *  ...
+     * }
+     */
+    public function checkIn(Request $request)
 {
     $employeeid = $request->employee_id; 
 
@@ -109,7 +141,22 @@ private function calculateDistance($lat1, $lon1, $lat2, $lon2)
     return $earthRadius * $c;
 }
 
-public function checkOut(Request $request)
+    /**
+     * Check Out
+     * 
+     * Record employee check-out.
+     * 
+     * @group Attendance
+     * @bodyParam employee_id uuid required The employee's ID.
+     * @bodyParam lat float required Latitude.
+     * @bodyParam lng float required Longitude.
+     * @response 200 {
+     *  "success": true,
+     *  "message": "John checked out at 17:30",
+     *  ...
+     * }
+     */
+    public function checkOut(Request $request)
 {
     $employeeid = $request->employee_id;
 

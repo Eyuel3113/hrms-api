@@ -9,11 +9,23 @@ use App\Http\Requests\Designation\UpdateDesignationRequest;
 
 class DesignationController extends Controller
 {
+    
+
     /**
-     * Display a listing of the resource.
+     * List Designations
+     * 
+     * Get a paginated list of designations.
+     * 
+     * @group Designations
+     * @queryParam search string Search by title or description.
+     * @queryParam status string Filter by status.
+     * @queryParam limit int Items per page. Default 10.
+     * @response 200 {
+     *  "data": [ ... ],
+     *  "pagination": { ... }
+     * }
      */
     public function index()
-       
     {
         $search =request()->query('search');
         $limit =request()->query('limit', 10);
@@ -48,10 +60,40 @@ class DesignationController extends Controller
     ]);
     }
 
+      public function all()
+{
+    $search = request()->query('search');
+
+    $query = Designation::where('status', 'active');
+
+    if ($search) {
+        $query->where(function ($q) use ($search) {
+            $q->where('title', 'like', "%{$search}%")
+              ->orWhere('description', 'like', "%{$search}%");
+        });
+    }
+
+    return response()->json([
+        'message' => 'Active Designations fetched successfully',
+        'data'    => $query->get()
+    ]);
+}
+
+    
     /**
-     * Store a newly created resource in storage.
+     * Create Designation
+     * 
+     * Create a new designation.
+     * 
+     * @group Designations
+     * @bodyParam title string required Title of the designation.
+     * @bodyParam department_id uuid required Department ID.
+     * @response 201 {
+     *  "message": "Designation created successfully",
+     *  "designation": { ... }
+     * }
      */
- public function store(StoreDesignationRequest $request)
+    public function store(StoreDesignationRequest $request)
     {
         $designation = Designation::create($request->validated());
 
@@ -62,6 +104,17 @@ class DesignationController extends Controller
     }
     /**
      * Display the specified resource.
+     */
+    /**
+     * Get Designation
+     * 
+     * Get designation details by ID.
+     * 
+     * @group Designations
+     * @response 200 {
+     *  "message": "Designation retrieved successfully",
+     *  "data": { ... }
+     * }
      */
     public function show($id)
     {
@@ -76,7 +129,18 @@ class DesignationController extends Controller
     /**
      * Update the specified resource in storage.
      */
- public function update(UpdateDesignationRequest $request, $id)
+    /**
+     * Update Designation
+     * 
+     * Update designation details.
+     * 
+     * @group Designations
+     * @response 200 {
+     *  "message": "Designation updated successfully",
+     *  "data": { ... }
+     * }
+     */
+    public function update(UpdateDesignationRequest $request, $id)
     {
         $designation = Designation::findOrFail($id);
         $designation->update($request->validated());
@@ -88,7 +152,18 @@ class DesignationController extends Controller
     }
 
 
-     public function toggleStatus($id)
+    /**
+     * Toggle Status
+     * 
+     * Toggle designation status.
+     * 
+     * @group Designations
+     * @response 200 {
+     *  "message": "Designation status updated successfully",
+     *  "status": "active"
+     * }
+     */
+    public function toggleStatus($id)
 {
     $designation = Designation::findOrFail($id);
 
