@@ -30,7 +30,7 @@ return new class extends Migration {
             $table->text('note')->nullable();
             $table->timestamps();
 
-            $table->unique(['employee_id', 'date']);
+            // $table->unique(['employee_id', 'date']); // Removed to allow multiple check-ins per day
             $table->index('date');
         });
     }

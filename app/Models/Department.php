@@ -47,4 +47,16 @@ class Department extends Model
     {
         return $this->hasMany(Designation::class);
     }
+
+    public function employees()
+    {
+        return $this->hasManyThrough(
+            Employee::class,
+            EmployeeProfessionalInfo::class,
+            'department_id', // Foreign key on employee_professional_infos table...
+            'id', // Foreign key on employees table...
+            'id', // Local key on departments table...
+            'employee_id' // Local key on employee_professional_infos table...
+        );
+    }
 }

@@ -11,37 +11,69 @@ class DepartmentController extends Controller
 {
     public function index()
     {
-        $search =request()->query('search');
-        $status =request()->query('status');
-        $limit =request()->query('limit', 10);
-        $sort =request()->query('sort', 'created_at');
-        $order =request()->query('order', 'desc');
-        $query = Department::query();
+        $search = request()->query('search');
+        $status = request()->query('status');
+        $limit = request()->query('limit', 10);
+        $sort = request()->query('sort', 'created_at');
+        $order = request()->query('order', 'desc');
 
-        if($search){
-            $query->where('name', 'like', "%$search%")
+        $query = Department::query()->withCount('designations');
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
                   ->orWhere('code', 'like', "%$search%")
                   ->orWhere('description', 'like', "%$search%");
+            });
         }
 
-        if($status){
+        if ($status) {
             $query->where('status', $status);
         }
 
-        $departments = $query->orderBy($sort,$order)->paginate($limit);
+        $departments = $query->orderBy($sort, $order)->paginate($limit);
+
+        // Load 5 employees for each department
+        $departments->getCollection()->transform(function ($department) {
+            $department->setRelation('employees', 
+                $department->employees()
+                    ->with('personalInfo') // Eager load personal info
+                    ->take(5)
+                    ->get()
+            );
+            return $department;
+        });
 
         return response()->json([
-        'message' => 'Departments fetched successfully',
-        'data' => $departments->items(),
-        'pagination' => [
-            'total' => $departments->total(),
-            'per_page' => $departments->perPage(),
-            'current_page' => $departments->currentPage(),
-            'last_page' => $departments->lastPage(),
-        ]
-    ]);
+            'message' => 'Departments fetched successfully',
+            'data' => $departments->items(),
+            'pagination' => [
+                'total' => $departments->total(),
+                'per_page' => $departments->perPage(),
+                'current_page' => $departments->currentPage(),
+                'last_page' => $departments->lastPage(),
+            ]
+        ]);
+    }
+public function all()
+{
+    $search = request()->query('search');
+
+    $query = Department::where('status', 'active');
+
+    if ($search) {
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+              ->orWhere('code', 'like', "%{$search}%")
+              ->orWhere('description', 'like', "%{$search}%");
+        });
     }
 
+    return response()->json([
+        'message' => 'Active departments fetched successfully',
+        'data'    => $query->get()
+    ]);
+}
     public function store(DepartmentStoreRequest $request)
     {
         $department = Department::create($request->validated());
@@ -54,7 +86,16 @@ class DepartmentController extends Controller
 
     public function show($id)
     {
-        return response()->json(Department::findOrFail($id));
+        $department = Department::withCount('designations')->findOrFail($id);
+        
+        $department->setRelation('employees', 
+            $department->employees()
+                ->with('personalInfo')
+                ->take(5)
+                ->get()
+        );
+
+        return response()->json($department);
     }
 
     public function update(DepartmentUpdateRequest $request, $id)

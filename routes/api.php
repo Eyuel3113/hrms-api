@@ -29,9 +29,11 @@ Route::prefix('v1')->group(function () {
         Route::prefix('departments')->group(function () {
             Route::get('/', [DepartmentController::class, 'index']);
             Route::post('/', [DepartmentController::class, 'store']);
+            Route::get('/all', [DepartmentController::class, 'all']);
             Route::get('/{id}', [DepartmentController::class, 'show']);
             Route::patch('/{id}', [DepartmentController::class, 'update']);
             Route::patch('/{id}/status', [DepartmentController::class, 'toggleStatus']);
+            
         });
 
         // DESIGNATIONS

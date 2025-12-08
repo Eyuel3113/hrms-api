@@ -48,12 +48,13 @@ public function checkIn(Request $request)
 
     $today = today()->toDateString();
 
-    $existing = Attendance::where('employee_id', $employeeid)
+    $activeSession = Attendance::where('employee_id', $employeeid)
         ->where('date', $today)
+        ->whereNull('check_out')
         ->first();
 
-    if ($existing?->check_in) {
-        return response()->json(['message' => 'Already checked in today'], 400);
+    if ($activeSession) {
+        return response()->json(['message' => 'Already checked in. Please check out first.'], 400);
     }
 
     // GEOFENCING 
@@ -128,14 +129,12 @@ public function checkOut(Request $request)
     $attendance = Attendance::where('employee_id', $employee->id)
         ->where('date', $today)
         ->whereNotNull('check_in')
+        ->whereNull('check_out')
+        ->latest()
         ->first();
 
     if (!$attendance) {
-        return response()->json(['message' => 'No check-in found today'], 400);
-    }
-
-    if ($attendance->check_out) {
-        return response()->json(['message' => 'Already checked out'], 400);
+        return response()->json(['message' => 'No active check-in found to check out from.'], 400);
     }
 
     // GEOFENCING
