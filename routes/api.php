@@ -51,6 +51,7 @@ Route::prefix('v1')->group(function () {
         Route::prefix('employees')->group(function () {
             Route::get('/', [EmployeeController::class, 'index']);
             Route::post('/', [EmployeeController::class, 'store']);
+            Route::get('/all', [EmployeeController::class, 'all']);
             Route::get('/{id}', [EmployeeController::class, 'show']);
             Route::patch('/{id}', [EmployeeController::class, 'update']);
             Route::delete('/{id}', [EmployeeController::class, 'destroy']);

@@ -7,6 +7,7 @@ use App\Models\Attendance;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\EthiopianCalendar;
 
 class AttendanceController extends Controller
 {
@@ -39,7 +40,7 @@ class AttendanceController extends Controller
         return response()->json([
             'success' => true,
             'date'    => $today,
-            'ethiopian_date' => formatEthiopian($today),
+            'ethiopian_date' => EthiopianCalendar::format($today),
             'total'   => $attendances->count(),
             'present' => $attendances->where('status', 'present')->count(),
             'late'    => $attendances->where('status', 'late')->count(),
@@ -64,82 +65,81 @@ class AttendanceController extends Controller
      * }
      */
     public function checkIn(Request $request)
-{
-    $employeeid = $request->employee_id; 
+    {
+        $employeeid = $request->employee_id; 
 
-    if (!$employeeid) {
-        return response()->json(['message' => 'employee_id required'], 400);
-    }
-
-    
-    $employee = Employee::where('id', $employeeid)->first();
-
-    if (!$employee) {
-        return response()->json(['message' => 'Employee not found: ' . $employeeid], 404);
-    }
-
-    $today = today()->toDateString();
-
-    $activeSession = Attendance::where('employee_id', $employeeid)
-        ->where('date', $today)
-        ->whereNull('check_out')
-        ->first();
-
-    if ($activeSession) {
-        return response()->json(['message' => 'Already checked in. Please check out first.'], 400);
-    }
-
-    // GEOFENCING 
-    $lat = $request->lat;
-    $lng = $request->lng;
-
-    if ($lat && $lng) {
-        $distance = $this->calculateDistance($lat, $lng, env('GEOFENCE_LAT'), env('GEOFENCE_LNG'));
-        if ($distance > env('GEOFENCE_RADIUS', 100)) {
-            return response()->json([
-                'message' => 'Outside office location',
-                'distance_meters' => round($distance, 2),
-            ], 403);
+        if (!$employeeid) {
+            return response()->json(['message' => 'employee_id required'], 400);
         }
-    } else {
-        return response()->json(['message' => 'Location required'], 400);
+
+        $employee = Employee::where('id', $employeeid)->first();
+
+        if (!$employee) {
+            return response()->json(['message' => 'Employee not found: ' . $employeeid], 404);
+        }
+
+        $today = today()->toDateString();
+
+        $activeSession = Attendance::where('employee_id', $employeeid)
+            ->where('date', $today)
+            ->whereNull('check_out')
+            ->first();
+
+        if ($activeSession) {
+            return response()->json(['message' => 'Already checked in. Please check out first.'], 400);
+        }
+
+        // GEOFENCING 
+        $lat = $request->lat;
+        $lng = $request->lng;
+
+        if ($lat && $lng) {
+            $distance = $this->calculateDistance($lat, $lng, env('GEOFENCE_LAT'), env('GEOFENCE_LNG'));
+            if ($distance > env('GEOFENCE_RADIUS', 100)) {
+                return response()->json([
+                    'message' => 'Outside office location',
+                    'distance_meters' => round($distance, 2),
+                ], 403);
+            }
+        } else {
+            return response()->json(['message' => 'Location required'], 400);
+        }
+
+        Attendance::create([
+            'employee_id'      => $employee->id,  
+            'date'             => $today,
+            'ethiopian_date'   => EthiopianCalendar::format($today),
+            'check_in'         => now()->format('H:i:s'),
+            'check_in_ip'      => $request->ip(),
+            'check_in_device'  => $request->header('User-Agent') ? 'Web' : 'ZKTeco',
+            'latitude'         => $lat,
+            'longitude'        => $lng,
+            'status'           => 'present',
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => $employee->first_name . ' checked in at ' . now()->format('H:i'),
+            'employee_code' => $employee->employee_code,
+            'ethiopian' => EthiopianCalendar::format($today),
+        ]);
     }
 
-    Attendance::create([
-        'employee_id'      => $employee->id,  
-        'date'             => $today,
-        'ethiopian_date'   => formatEthiopian($today),
-        'check_in'         => now()->format('H:i:s'),
-        'check_in_ip'      => $request->ip(),
-        'check_in_device'  => $request->header('User-Agent') ? 'Web' : 'ZKTeco',
-        'latitude'         => $lat,
-        'longitude'        => $lng,
-        'status'           => 'present',
-    ]);
+    private function calculateDistance($lat1, $lon1, $lat2, $lon2)
+    {
+        $earthRadius = 6371000; // meters
 
-    return response()->json([
-        'success' => true,
-        'message' => $employee->first_name . ' checked in at ' . now()->format('H:i'),
-        'employee_code' => $employee->employee_code,
-        'ethiopian' => formatEthiopian($today),
-    ]);
-}
+        $dLat = deg2rad($lat2 - $lat1);
+        $dLon = deg2rad($lon2 - $lon1);
 
-private function calculateDistance($lat1, $lon1, $lat2, $lon2)
-{
-    $earthRadius = 6371000; // meters
+        $a = sin($dLat/2) * sin($dLat/2) +
+             cos(deg2rad($lat1)) * cos(deg2rad($lat2)) *
+             sin($dLon/2) * sin($dLon/2);
 
-    $dLat = deg2rad($lat2 - $lat1);
-    $dLon = deg2rad($lon2 - $lon1);
+        $c = 2 * atan2(sqrt($a), sqrt(1-$a));
 
-    $a = sin($dLat/2) * sin($dLat/2) +
-         cos(deg2rad($lat1)) * cos(deg2rad($lat2)) *
-         sin($dLon/2) * sin($dLon/2);
-
-    $c = 2 * atan2(sqrt($a), sqrt(1-$a));
-
-    return $earthRadius * $c;
-}
+        return $earthRadius * $c;
+    }
 
     /**
      * Check Out
@@ -157,68 +157,68 @@ private function calculateDistance($lat1, $lon1, $lat2, $lon2)
      * }
      */
     public function checkOut(Request $request)
-{
-    $employeeid = $request->employee_id;
+    {
+        $employeeid = $request->employee_id;
 
-    if (!$employeeid) {
-        return response()->json(['message' => 'employee_id required'], 400);
-    }
-
-    $employee = Employee::where('id', $employeeid)->first();
-
-    if (!$employee) {
-        return response()->json(['message' => 'Employee not found'], 404);
-    }
-
-    $today = today()->toDateString();
-    $now = now()->format('H:i:s');  
-
-    $attendance = Attendance::where('employee_id', $employee->id)
-        ->where('date', $today)
-        ->whereNotNull('check_in')
-        ->whereNull('check_out')
-        ->latest()
-        ->first();
-
-    if (!$attendance) {
-        return response()->json(['message' => 'No active check-in found to check out from.'], 400);
-    }
-
-    // GEOFENCING
-    $lat = $request->lat;
-    $lng = $request->lng;
-
-    if ($lat && $lng) {
-        $distance = $this->calculateDistance($lat, $lng, env('GEOFENCE_LAT'), env('GEOFENCE_LNG'));
-        if ($distance > env('GEOFENCE_RADIUS', 100)) {
-            return response()->json(['message' => 'Cannot check out — outside office'], 403);
+        if (!$employeeid) {
+            return response()->json(['message' => 'employee_id required'], 400);
         }
-    } else {
-        return response()->json(['message' => 'Location required'], 400);
+
+        $employee = Employee::where('id', $employeeid)->first();
+
+        if (!$employee) {
+            return response()->json(['message' => 'Employee not found'], 404);
+        }
+
+        $today = today()->toDateString();
+        $now = now()->format('H:i:s');  
+
+        $attendance = Attendance::where('employee_id', $employee->id)
+            ->where('date', $today)
+            ->whereNotNull('check_in')
+            ->whereNull('check_out')
+            ->latest()
+            ->first();
+
+        if (!$attendance) {
+            return response()->json(['message' => 'No active check-in found to check out from.'], 400);
+        }
+
+        // GEOFENCING
+        $lat = $request->lat;
+        $lng = $request->lng;
+
+        if ($lat && $lng) {
+            $distance = $this->calculateDistance($lat, $lng, env('GEOFENCE_LAT'), env('GEOFENCE_LNG'));
+            if ($distance > env('GEOFENCE_RADIUS', 100)) {
+                return response()->json(['message' => 'Cannot check out — outside office'], 403);
+            }
+        } else {
+            return response()->json(['message' => 'Location required'], 400);
+        }
+
+
+        $checkInTime = $attendance->check_in;  
+
+        $now = now()->format('H:i:s');
+
+        $attendance->update([
+            'check_out'        => $now,
+            'check_out_ip'     => $request->ip(),
+            'check_out_device' => $request->header('User-Agent') ? 'Web' : 'ZKTeco',
+            'latitude'         => $lat,
+            'longitude'        => $lng,
+        ]);
+
+        return response()->json([
+            'success'      => true,
+            'message'      => $employee->first_name . ' checked out at ' . $now,
+            'check_in'     => $checkInTime,
+            'check_out'    => $now,
+            'worked_hours' => $this->calculateWorkedHours($checkInTime, $now),  
+            'ethiopian'    => EthiopianCalendar::format($today),
+        ]);
     }
-
-
-$checkInTime = $attendance->check_in;  
-
-$now = now()->format('H:i:s');
-
-$attendance->update([
-    'check_out'        => $now,
-    'check_out_ip'     => $request->ip(),
-    'check_out_device' => $request->header('User-Agent') ? 'Web' : 'ZKTeco',
-    'latitude'         => $lat,
-    'longitude'        => $lng,
-]);
-
-return response()->json([
-    'success'      => true,
-    'message'      => $employee->first_name . ' checked out at ' . $now,
-    'check_in'     => $checkInTime,
-    'check_out'    => $now,
-    'worked_hours' => $this->calculateWorkedHours($checkInTime, $now),  
-    'ethiopian'    => formatEthiopian($today),
-]);
-}
 
 private function calculateWorkedHours($checkIn, $checkOut)
 {

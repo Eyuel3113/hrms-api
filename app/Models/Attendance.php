@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+use App\Helpers\EthiopianCalendar;
+
 class Attendance extends Model
 {
     protected $guarded = ['id'];
@@ -20,7 +22,7 @@ class Attendance extends Model
     protected static function booted()
     {
         static::creating(function ($attendance) {
-            $attendance->ethiopian_date = formatEthiopian($attendance->date);
+            $attendance->ethiopian_date = EthiopianCalendar::format($attendance->date);
         });
     }
 

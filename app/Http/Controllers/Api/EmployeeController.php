@@ -82,7 +82,63 @@ class EmployeeController extends Controller
             ]
         ]);
     }
+/**
+ * Get All Employees (No Pagination)
+ * 
+ * Returns all employees with full filtering and search.
+ * Used for dropdowns, reports, ZKTeco sync, etc.
+ * 
+ * @group Employees
+ * @queryParam search string Search by name, email, phone, employee code
+ * @queryParam status string active/inactive
+ * @queryParam department_id uuid Filter by department
+ * @queryParam designation_id uuid Filter by designation
+ * @queryParam sort string e.g., first_name, created_at
+ * @queryParam order string asc/desc
+ */
+public function all(Request $request)
+{
+    $query = Employee::with(['personalInfo', 'professionalInfo', 'professionalInfo.department', 'professionalInfo.designation']);
 
+    // SEARCH
+    if ($request->filled('search')) {
+        $search = $request->search;
+        $query->where(function($q) use ($search) {
+            $q->where('employee_code', 'like', "%{$search}%")
+              ->orWhereHas('personalInfo', function($qq) use ($search) {
+                  $qq->where('first_name', 'like', "%{$search}%")
+                     ->orWhere('last_name',  'like', "%{$search}%")
+                     ->orWhere('email',      'like', "%{$search}%")
+                     ->orWhere('phone',      'like', "%{$search}%");
+              });
+        });
+    }
+
+    // FILTERS
+    $query->when($request->status,          fn($q, $s) => $q->where('status', $s));
+    $query->when($request->department_id,   fn($q, $d) => $q->whereHas('professionalInfo', fn($qq) => $qq->where('department_id', $d)));
+    $query->when($request->designation_id,  fn($q, $d) => $q->whereHas('professionalInfo', fn($qq) => $qq->where('designation_id', $d)));
+
+    // SORTING (same logic as index)
+    $sort  = $request->query('sort', 'created_at');
+    $order = $request->query('order', 'desc');
+
+    if (in_array($sort, ['first_name', 'last_name', 'email', 'phone'])) {
+        $query->join('employee_personal_infos as pi', 'employees.id', '=', 'pi.employee_id')
+              ->orderBy("pi.{$sort}", $order)
+              ->select('employees.*'); // avoid column conflict
+    } else {
+        $query->orderBy($sort, $order);
+    }
+
+    $employees = $query->get(); // ← NO paginate() → returns ALL
+
+    return response()->json([
+        'message' => 'All employees fetched successfully',
+        'total'   => $employees->count(),
+        'data'    => $employees
+    ]);
+}
     // CREATE
     /**
      * Create Employee
@@ -204,7 +260,7 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-        $employee = Employee::with(['personalInfo', 'professionalInfo'])->findOrFail($id);
+        $employee = Employee::with(['personalInfo', 'professionalInfo.department', 'professionalInfo.designation'])->findOrFail($id);
         return response()->json([
             'message' => 'Employee retrieved successfully',
             'data' => $employee
