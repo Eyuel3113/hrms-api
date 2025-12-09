@@ -32,7 +32,7 @@ class AttendanceController extends Controller
     {
         $today = today()->toDateString();
 
-        $attendances = Attendance::with(['employee:id,first_name,last_name,employee_code,photo'])
+        $attendances = Attendance::with(['employee.personalInfo'])
             ->where('date', $today)
             ->orderBy('check_in')
             ->get();
@@ -72,7 +72,7 @@ class AttendanceController extends Controller
             return response()->json(['message' => 'employee_id required'], 400);
         }
 
-        $employee = Employee::where('id', $employeeid)->first();
+        $employee = Employee::with('personalInfo')->where('id', $employeeid)->first();
 
         if (!$employee) {
             return response()->json(['message' => 'Employee not found: ' . $employeeid], 404);
@@ -119,7 +119,7 @@ class AttendanceController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $employee->first_name . ' checked in at ' . now()->format('H:i'),
+            'message' => $employee->personalInfo->first_name . ' checked in at ' . now()->format('H:i'),
             'employee_code' => $employee->employee_code,
             'ethiopian' => EthiopianCalendar::format($today),
         ]);
@@ -164,7 +164,7 @@ class AttendanceController extends Controller
             return response()->json(['message' => 'employee_id required'], 400);
         }
 
-        $employee = Employee::where('id', $employeeid)->first();
+        $employee = Employee::with('personalInfo')->where('id', $employeeid)->first();
 
         if (!$employee) {
             return response()->json(['message' => 'Employee not found'], 404);
@@ -212,7 +212,7 @@ class AttendanceController extends Controller
 
         return response()->json([
             'success'      => true,
-            'message'      => $employee->first_name . ' checked out at ' . $now,
+            'message'      => $employee->personalInfo->first_name . ' checked out at ' . $now,
             'check_in'     => $checkInTime,
             'check_out'    => $now,
             'worked_hours' => $this->calculateWorkedHours($checkInTime, $now),  

@@ -335,7 +335,7 @@ public function all(Request $request)
         $employee = Employee::findOrFail($id);
 
         // Delete old photo
-        if ($employee->personalInfo?->photo && $employee->personalInfo->photo !== 'default.jpg') {
+        if ($employee->personalInfo?->photo) {
             Storage::disk('public')->delete($employee->personalInfo->photo);
         }
 
@@ -370,7 +370,7 @@ public function all(Request $request)
     {
         $employee = Employee::findOrFail($id);
 
-        if ($employee->personalInfo?->photo && $employee->personalInfo->photo !== 'default.jpg') {
+        if ($employee->personalInfo?->photo) {
             Storage::disk('public')->delete($employee->personalInfo->photo);
             $employee->personalInfo()->update(['photo' => null]);
         }

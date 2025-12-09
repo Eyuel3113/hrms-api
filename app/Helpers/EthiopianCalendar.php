@@ -33,7 +33,7 @@ class EthiopianCalendar
             $startOfYear = $startOfNewYear;
         }
         
-        $daysPassed = $date->diffInDays($startOfYear);
+        $daysPassed = $date->diffInDays($startOfYear, true); // absolute diff
         
         $ethMonth = (int)($daysPassed / 30) + 1;
         $ethDay = ($daysPassed % 30) + 1;

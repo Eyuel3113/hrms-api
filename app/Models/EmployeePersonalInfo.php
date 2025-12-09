@@ -14,6 +14,8 @@ class EmployeePersonalInfo extends Model
         'address', 'city', 'state', 'zip_code'
     ];
 
+    protected $appends = ['photo_url'];
+
     protected static function boot()
     {
         parent::boot();
@@ -27,6 +29,10 @@ class EmployeePersonalInfo extends Model
 
     public function getPhotoUrlAttribute()
     {
-        return $this->photo ? asset('storage/' . $this->photo) : null;
+        if ($this->photo && \Illuminate\Support\Facades\Storage::disk('public')->exists($this->photo)) {
+            return asset('storage/' . $this->photo);
+        }
+
+        return asset('default.svg');
     }
 }
