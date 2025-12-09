@@ -8,6 +8,7 @@ use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\EthiopianCalendar;
+use App\Models\Shift;
 
 class AttendanceController extends Controller
 {
@@ -239,12 +240,20 @@ private function calculateWorkedHours($checkIn, $checkOut)
 }
 
 
-private function calculateAttendanceStatus($attendance)
+private function calculateAttendanceStatus(Attendance $attendance)
 {
-    $start = \Carbon\Carbon::createFromFormat('H:i:s', env('OFFICE_START_TIME', '09:00:00'));
-    $end   = \Carbon\Carbon::createFromFormat('H:i:s', env('OFFICE_END_TIME', '17:30:00'));
-    $lateThreshold = (int) env('LATE_THRESHOLD_MINUTES', 15);
-    $halfDayMinutes = (int) env('HALF_DAY_THRESHOLD_MINUTES', 240);
+    $employee = $attendance->employee;
+    $shift = $employee->shift ?? Shift::default()->first();
+
+    // Fallback if no shift
+    if (!$shift) {
+        $shift = (object)[
+            'start_time' => '09:00:00',
+            'end_time'   => '17:30:00',
+            'late_threshold_minutes' => 15,
+            'half_day_minutes' => 240,
+        ];
+    }
 
     // Cast attributes are already Carbon instances (or strings if raw). Handle both.
     $checkIn = $attendance->check_in;
@@ -257,40 +266,50 @@ private function calculateAttendanceStatus($attendance)
         $checkOut = \Carbon\Carbon::parse($checkOut);
     }
 
-    // Default
+    $officeStart = \Carbon\Carbon::createFromFormat('H:i:s', $shift->start_time);
+    $officeEnd   = \Carbon\Carbon::createFromFormat('H:i:s', $shift->end_time);
+
     $status = 'absent';
     $lateMinutes = 0;
     $earlyLeaveMinutes = 0;
     $workedMinutes = 0;
+    $overtimeMinutes = 0;
 
     if ($checkIn && $checkOut) {
+        if ($checkOut->lessThan($checkIn)) $checkOut->addDay();
+
         $workedMinutes = $checkIn->diffInMinutes($checkOut);
 
-        // Late?
-        if ($checkIn->greaterThan($start->copy()->addMinutes($lateThreshold))) {
-            $lateMinutes = $checkIn->diffInMinutes($start);
+        $lateThresholdTime = $officeStart->copy()->addMinutes($shift->late_threshold_minutes);
+        if ($checkIn->greaterThan($lateThresholdTime)) {
+            $lateMinutes = $checkIn->diffInMinutes($officeStart);
         }
 
-        // Early leave?
-        if ($checkOut->lessThan($end)) {
-            $earlyLeaveMinutes = $end->diffInMinutes($checkOut);
+        if ($checkOut->lessThan($officeEnd)) {
+            $earlyLeaveMinutes = $officeEnd->diffInMinutes($checkOut);
         }
 
-        // Half-day?
-        if ($workedMinutes < $halfDayMinutes) {
+        if ($checkOut->greaterThan($officeEnd)) {
+            $overtimeMinutes = $checkOut->diffInMinutes($officeEnd);
+        }
+
+        if ($workedMinutes < $shift->half_day_minutes) {
             $status = 'half_day';
+        } elseif ($lateMinutes > 0) {
+            $status = 'late';
         } else {
-            $status = $lateMinutes > 0 ? 'late' : 'present';
+            $status = 'present';
         }
-    } elseif ($checkIn && !$checkOut) {
-        $status = 'present'; // checked in, not out yet
+    } elseif ($checkIn) {
+        $status = 'present';
     }
 
     $attendance->update([
-        'status' => $status,
-        'late_minutes' => $lateMinutes,
-        'early_leave_minutes' => $earlyLeaveMinutes,
-        'worked_minutes' => $workedMinutes,
+        'status'               => $status,
+        'late_minutes'         => $lateMinutes,
+        'early_leave_minutes'  => $earlyLeaveMinutes,
+        'worked_minutes'       => $workedMinutes,
+        'overtime_minutes'     => $overtimeMinutes,
     ]);
 }
 

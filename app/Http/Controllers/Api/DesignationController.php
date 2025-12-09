@@ -71,17 +71,43 @@ class DesignationController extends Controller
      *  "pagination": { ... }
      * }
      */
-      public function all()
+//       public function all()
+// {
+//     $search = request()->query('search');
+
+//     $query = Designation::where('status', 'active');
+
+//     if ($search) {
+//         $query->where(function ($q) use ($search) {
+//             $q->where('title', 'like', "%{$search}%")
+//               ->orWhere('description', 'like', "%{$search}%");
+//         });
+//     }
+
+//     return response()->json([
+//         'message' => 'Active Designations fetched successfully',
+//         'data'    => $query->get()
+//     ]);
+// }
+
+public function all()
 {
     $search = request()->query('search');
+    $departmentId = request()->query('department_id'); // ← NEW FILTER
 
     $query = Designation::where('status', 'active');
 
+    // SEARCH
     if ($search) {
         $query->where(function ($q) use ($search) {
             $q->where('title', 'like', "%{$search}%")
               ->orWhere('description', 'like', "%{$search}%");
         });
+    }
+
+    // FILTER BY DEPARTMENT ID (UUID SUPPORTED)
+    if ($departmentId) {
+        $query->where('department_id', $departmentId);
     }
 
     return response()->json([
@@ -153,13 +179,19 @@ class DesignationController extends Controller
      */
     public function update(UpdateDesignationRequest $request, $id)
     {
-        $designation = Designation::findOrFail($id);
-        $designation->update($request->validated());
+        try {
+            $designation = Designation::findOrFail($id);
+            $designation->update($request->validated());
 
-        return response()->json([
-            'message' => 'Designation updated successfully',
-            'data'    => $designation->fresh()
-        ]);
+            return response()->json([
+                'message' => 'Designation updated successfully',
+                'data'    => $designation->fresh()
+            ]);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'Designation not found with ID: ' . $id
+            ], 404);
+        }
     }
 
 

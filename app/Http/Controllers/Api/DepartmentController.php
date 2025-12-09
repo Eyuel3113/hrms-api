@@ -166,13 +166,19 @@ class DepartmentController extends Controller
      */
     public function update(DepartmentUpdateRequest $request, $id)
     {
-        $department = Department::findOrFail($id);
-        $department->update($request->validated());
+        try {
+            $department = Department::findOrFail($id);
+            $department->update($request->validated());
 
-        return response()->json([
-            'message' => 'Department updated successfully',
-            'data' => $department
-        ]);
+            return response()->json([
+                'message' => 'Department updated successfully',
+                'data' => $department
+            ]);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'Department not found with ID: ' . $id
+            ], 404);
+        }
     }
 
     /**
