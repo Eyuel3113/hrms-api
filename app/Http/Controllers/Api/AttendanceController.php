@@ -105,7 +105,7 @@ class AttendanceController extends Controller
             return response()->json(['message' => 'Location required'], 400);
         }
 
-        Attendance::create([
+        $attendance = Attendance::create([
             'employee_id'      => $employee->id,  
             'date'             => $today,
             'ethiopian_date'   => EthiopianCalendar::format($today),
@@ -116,6 +116,7 @@ class AttendanceController extends Controller
             'longitude'        => $lng,
             'status'           => 'present',
         ]);
+        $this->calculateAttendanceStatus($attendance);
 
         return response()->json([
             'success' => true,
@@ -209,6 +210,7 @@ class AttendanceController extends Controller
             'latitude'         => $lat,
             'longitude'        => $lng,
         ]);
+        $this->calculateAttendanceStatus($attendance);
 
         return response()->json([
             'success'      => true,
@@ -235,5 +237,64 @@ private function calculateWorkedHours($checkIn, $checkOut)
 
     return $diff->h . 'h ' . $diff->i . 'm';
 }
+
+
+private function calculateAttendanceStatus($attendance)
+{
+    $start = \Carbon\Carbon::createFromFormat('H:i:s', env('OFFICE_START_TIME', '09:00:00'));
+    $end   = \Carbon\Carbon::createFromFormat('H:i:s', env('OFFICE_END_TIME', '17:30:00'));
+    $lateThreshold = (int) env('LATE_THRESHOLD_MINUTES', 15);
+    $halfDayMinutes = (int) env('HALF_DAY_THRESHOLD_MINUTES', 240);
+
+    // Cast attributes are already Carbon instances (or strings if raw). Handle both.
+    $checkIn = $attendance->check_in;
+    if ($checkIn && !($checkIn instanceof \Carbon\Carbon)) {
+        $checkIn = \Carbon\Carbon::parse($checkIn);
+    }
+
+    $checkOut = $attendance->check_out;
+    if ($checkOut && !($checkOut instanceof \Carbon\Carbon)) {
+        $checkOut = \Carbon\Carbon::parse($checkOut);
+    }
+
+    // Default
+    $status = 'absent';
+    $lateMinutes = 0;
+    $earlyLeaveMinutes = 0;
+    $workedMinutes = 0;
+
+    if ($checkIn && $checkOut) {
+        $workedMinutes = $checkIn->diffInMinutes($checkOut);
+
+        // Late?
+        if ($checkIn->greaterThan($start->copy()->addMinutes($lateThreshold))) {
+            $lateMinutes = $checkIn->diffInMinutes($start);
+        }
+
+        // Early leave?
+        if ($checkOut->lessThan($end)) {
+            $earlyLeaveMinutes = $end->diffInMinutes($checkOut);
+        }
+
+        // Half-day?
+        if ($workedMinutes < $halfDayMinutes) {
+            $status = 'half_day';
+        } else {
+            $status = $lateMinutes > 0 ? 'late' : 'present';
+        }
+    } elseif ($checkIn && !$checkOut) {
+        $status = 'present'; // checked in, not out yet
+    }
+
+    $attendance->update([
+        'status' => $status,
+        'late_minutes' => $lateMinutes,
+        'early_leave_minutes' => $earlyLeaveMinutes,
+        'worked_minutes' => $workedMinutes,
+    ]);
+}
+
+
+
 
 }

@@ -56,7 +56,7 @@ class DepartmentController extends Controller
     // Optional: Add 5 recent employees preview (you already had this)
     $departments->getCollection()->transform(function ($department) {
         $department->employees = $department->employees()
-            ->with('personalInfo')
+            ->with(['personalInfo', 'professionalInfo.designation'])
             ->take(5)
             ->get();
         return $department;
