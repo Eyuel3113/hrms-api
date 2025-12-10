@@ -42,4 +42,8 @@ class Employee extends Model
     {
         return $this->hasOneThrough(Designation::class, EmployeeProfessionalInfo::class, 'employee_id', 'id', 'id', 'designation_id');
     }
+    public function shift()
+{
+    return $this->belongsTo(Shift::class);
+}
 }

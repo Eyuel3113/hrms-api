@@ -9,15 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
- public function up()
-{
-    Schema::table('employees', function (Blueprint $table) {
-        $table->foreignUuid('shift_id')
-              ->nullable()
-              ->constrained('shifts')
-              ->nullOnDelete();
-    });
-}
+Schema::table('employees', function (Blueprint $table) {
+    $table->foreignUuid('shift_id')
+          ->nullable()
+          ->constrained('shifts')
+          ->nullOnDelete();
+});
 
     /**
      * Reverse the migrations.

@@ -47,6 +47,7 @@ class AttendanceController extends Controller
             'present' => $attendances->where('status', 'present')->count(),
             'late'    => $attendances->where('status', 'late')->count(),
             'absent'  => Employee::count() - $attendances->count(),
+            'half_day' => $attendances->where('status','half_day')->count(), 
             'data'    => $attendances
         ]);
     }
@@ -245,31 +246,96 @@ private function calculateWorkedHours($checkIn, $checkOut)
 }
 
 
+// private function calculateAttendanceStatus(Attendance $attendance)
+// {
+//     $employee = $attendance->employee;
+//     $shift = $employee->shift ?? Shift::default()->first();
+
+//     // Fallback if no shift
+//     if (!$shift) {
+//         $shift = (object)[
+//             'start_time' => '09:00:00',
+//             'end_time'   => '17:30:00',
+//             'late_threshold_minutes' => 15,
+//             'half_day_minutes' => 240,
+//         ];
+//     }
+
+//     // Cast attributes are already Carbon instances (or strings if raw). Handle both.
+//     $checkIn = $attendance->check_in;
+//     if ($checkIn && !($checkIn instanceof \Carbon\Carbon)) {
+//         $checkIn = \Carbon\Carbon::parse($checkIn);
+//     }
+
+//     $checkOut = $attendance->check_out;
+//     if ($checkOut && !($checkOut instanceof \Carbon\Carbon)) {
+//         $checkOut = \Carbon\Carbon::parse($checkOut);
+//     }
+
+//     $officeStart = \Carbon\Carbon::createFromFormat('H:i:s', $shift->start_time);
+//     $officeEnd   = \Carbon\Carbon::createFromFormat('H:i:s', $shift->end_time);
+
+//     $status = 'absent';
+//     $lateMinutes = 0;
+//     $earlyLeaveMinutes = 0;
+//     $workedMinutes = 0;
+//     $overtimeMinutes = 0;
+
+//     if ($checkIn && $checkOut) {
+//         if ($checkOut->lessThan($checkIn)) $checkOut->addDay();
+
+//         $workedMinutes = $checkIn->diffInMinutes($checkOut);
+
+//         $lateThresholdTime = $officeStart->copy()->addMinutes($shift->late_threshold_minutes);
+//         if ($checkIn->greaterThan($lateThresholdTime)) {
+//             $lateMinutes = $checkIn->diffInMinutes($officeStart);
+//         }
+
+//         if ($checkOut->lessThan($officeEnd)) {
+//             $earlyLeaveMinutes = $officeEnd->diffInMinutes($checkOut);
+//         }
+
+//         if ($checkOut->greaterThan($officeEnd)) {
+//             $overtimeMinutes = $checkOut->diffInMinutes($officeEnd);
+//         }
+
+//         if ($workedMinutes < $shift->half_day_minutes) {
+//             $status = 'half_day';
+//         } elseif ($lateMinutes > 0) {
+//             $status = 'late';
+//         } else {
+//             $status = 'present';
+//         }
+//     } elseif ($checkIn) {
+//         $status = 'present';
+//     }
+
+//     $attendance->update([
+//         'status'               => $status,
+//         'late_minutes'         => $lateMinutes,
+//         'early_leave_minutes'  => $earlyLeaveMinutes,
+//         'worked_minutes'       => $workedMinutes,
+//         'overtime_minutes'     => $overtimeMinutes,
+//     ]);
+// }
+
 private function calculateAttendanceStatus(Attendance $attendance)
 {
     $employee = $attendance->employee;
     $shift = $employee->shift ?? Shift::default()->first();
 
-    // Fallback if no shift
     if (!$shift) {
-        $shift = (object)[
+        $shift = (object) [
             'start_time' => '09:00:00',
             'end_time'   => '17:30:00',
             'late_threshold_minutes' => 15,
             'half_day_minutes' => 240,
+            'overtime_rate' => 1.50,
         ];
     }
 
-    // Cast attributes are already Carbon instances (or strings if raw). Handle both.
-    $checkIn = $attendance->check_in;
-    if ($checkIn && !($checkIn instanceof \Carbon\Carbon)) {
-        $checkIn = \Carbon\Carbon::parse($checkIn);
-    }
-
-    $checkOut = $attendance->check_out;
-    if ($checkOut && !($checkOut instanceof \Carbon\Carbon)) {
-        $checkOut = \Carbon\Carbon::parse($checkOut);
-    }
+    $checkIn  = $attendance->check_in ? \Carbon\Carbon::createFromFormat('H:i:s', $attendance->check_in) : null;
+    $checkOut = $attendance->check_out ? \Carbon\Carbon::createFromFormat('H:i:s', $attendance->check_out) : null;
 
     $officeStart = \Carbon\Carbon::createFromFormat('H:i:s', $shift->start_time);
     $officeEnd   = \Carbon\Carbon::createFromFormat('H:i:s', $shift->end_time);

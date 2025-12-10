@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\DesignationController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\AttendanceController;
 use App\Http\Controllers\Api\HolidayController;
+use App\Http\Controllers\Api\ShiftController;
 
 Route::prefix('v1')->group(function () {
 
@@ -77,6 +78,16 @@ Route::prefix('v1')->group(function () {
     Route::patch('/{id}', [HolidayController::class, 'update']);
     Route::patch('/{id}/status', [HolidayController::class, 'toggleStatus']);
     Route::delete('/{id}', [HolidayController::class, 'destroy']); 
+    });
+    
+    // SHIFTS
+    Route::prefix('shifts')->group(function () {
+    Route::get('/', [ShiftController::class, 'index']);           
+    Route::get('/active', [ShiftController::class, 'active']);          
+    Route::post('/', [ShiftController::class, 'store']);
+    Route::patch('/{id}', [ShiftController::class, 'update']);
+    Route::patch('/{id}/status', [ShiftController::class, 'toggleStatus']);
+    Route::delete('/{id}', [ShiftController::class, 'destroy']);
 });
     
 });

@@ -2,18 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Shift extends Model
 {
-    use HasFactory;
-
-    // UUID — YOUR WAY
     protected $keyType = 'string';
     public $incrementing = false;
-    protected $primaryKey = 'id';
 
     protected $fillable = [
         'name',
@@ -37,22 +32,12 @@ class Shift extends Model
     protected static function boot()
     {
         parent::boot();
-
         static::creating(function ($model) {
-            if (! $model->id) {
+            if (!$model->id) {
                 $model->id = (string) Str::uuid();
             }
             if (empty($model->is_active)) {
                 $model->is_active = true;
-            }
-            if (empty($model->late_threshold_minutes)) {
-                $model->late_threshold_minutes = 15;
-            }
-            if (empty($model->half_day_minutes)) {
-                $model->half_day_minutes = 240;
-            }
-            if (empty($model->overtime_rate)) {
-                $model->overtime_rate = 1.50;
             }
         });
     }
