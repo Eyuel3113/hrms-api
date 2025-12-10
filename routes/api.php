@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\DesignationController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\AttendanceController;
+use App\Http\Controllers\Api\HolidayController;
 
 Route::prefix('v1')->group(function () {
 
@@ -14,7 +15,7 @@ Route::prefix('v1')->group(function () {
     Route::post('/auth/login', [AuthController::class, 'login']);
     Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword']);
     Route::post('/auth/reset-password', [AuthController::class, 'resetPassword']);
-
+    Route::post('/auth/refresh', [AuthController::class, 'refresh']);
     // AUTHENTICATED ROUTES
     Route::middleware('auth:sanctum')->group(function () {
 
@@ -22,7 +23,7 @@ Route::prefix('v1')->group(function () {
         Route::prefix('auth')->group(function () {
             Route::post('/logout', [AuthController::class, 'logout']);
             Route::get('/me', [AuthController::class, 'me']);
-            Route::post('/refresh', [AuthController::class, 'refresh']);
+
         });
 
         // DEPARTMENTS
@@ -68,6 +69,15 @@ Route::prefix('v1')->group(function () {
          Route::post('/check-in', [AttendanceController::class, 'checkIn'])->name('checkin');
          Route::post('/check-out', [AttendanceController::class, 'checkOut'])->name('checkout');
     });
+          // HOLIDAYS
+    Route::prefix('holidays')->group(function () {
+    Route::get('/', [HolidayController::class, 'index']);
+    Route::get('/active', [HolidayController::class, 'active']);
+    Route::post('/', [HolidayController::class, 'store']);
+    Route::patch('/{id}', [HolidayController::class, 'update']);
+    Route::patch('/{id}/status', [HolidayController::class, 'toggleStatus']);
+    Route::delete('/{id}', [HolidayController::class, 'destroy']); 
+});
     
 });
 

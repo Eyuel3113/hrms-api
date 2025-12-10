@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\User;
 use Illuminate\Support\Facades\Password;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller
 {
@@ -105,12 +106,21 @@ class AuthController extends Controller
      */
     public function refresh(Request $request)
     {
-        $user = $request->user();
-        
-        // Do NOT delete all tokens. Just issue a new access token.
-        // Ideally, we should check if the current token capability includes 'refresh_token' if we used capabilities.
-        // For now, we assume the middleware 'auth:sanctum' let us in.
+        $refreshToken = $request->cookie('refresh_token');
 
+        if (!$refreshToken) {
+            return response()->json(['message' => 'Refresh token missing'], 401);
+        }
+
+        // Find the token record (including revoked check)
+        $tokenRecord = PersonalAccessToken::findToken($refreshToken);
+        if (!$tokenRecord) {
+            return response()->json(['message' => 'Invalid refresh token'], 401);
+        }
+
+        $user = $tokenRecord->tokenable;
+
+        // Issue a new access token (do not revoke existing tokens)
         $newToken = $user->createToken('auth_token', ['*'], now()->addMinutes(30))->plainTextToken;
 
         $isProduction = env('APP_ENV') === 'production';

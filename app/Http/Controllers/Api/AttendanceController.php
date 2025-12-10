@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\EthiopianCalendar;
 use App\Models\Shift;
+use App\Models\Holiday;
 
 class AttendanceController extends Controller
 {
@@ -173,6 +174,10 @@ class AttendanceController extends Controller
         }
 
         $today = today()->toDateString();
+        // Holiday check
+        if (Holiday::active()->where('date', $today)->exists()) {
+            return response()->json(['message' => 'Today is a holiday. Attendance not allowed.'], 400);
+        }
         $now = now()->format('H:i:s');  
 
         $attendance = Attendance::where('employee_id', $employee->id)
