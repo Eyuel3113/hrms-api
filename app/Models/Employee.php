@@ -12,7 +12,7 @@ class Employee extends Model
 
     protected $keyType = 'string';
     public $incrementing = false;
-    protected $fillable = ['employee_code', 'status'];
+    protected $fillable = ['employee_code', 'status','shift_id'];
 
     protected static function boot()
     {
