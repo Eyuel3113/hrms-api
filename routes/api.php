@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\AttendanceController;
 use App\Http\Controllers\Api\HolidayController;
 use App\Http\Controllers\Api\ShiftController;
+use App\Http\Controllers\Api\LeaveController;
+use App\Http\Controllers\Api\LeaveTypeController;
 
 Route::prefix('v1')->group(function () {
 
@@ -89,6 +91,25 @@ Route::prefix('v1')->group(function () {
     Route::patch('/{id}/status', [ShiftController::class, 'toggleStatus']);
     Route::delete('/{id}', [ShiftController::class, 'destroy']);
 });
+
+//LEAVES
+Route::prefix('leaves')->group(function () {
+    Route::get('/', [LeaveController::class, 'index']);
+    Route::post('/', [LeaveController::class, 'store']);
+    Route::patch('/{id}/approve', [LeaveController::class, 'approve']);
+    Route::patch('/{id}/reject', [LeaveController::class, 'reject']);
+});
+
+// LEAVE TYPES
+Route::prefix('leave-types')->group(function () {
+    Route::get('/', [LeaveTypeController::class, 'index']);
+    Route::get('/active', [LeaveTypeController::class, 'active']);
+    Route::post('/', [LeaveTypeController::class, 'store']);
+    Route::patch('/{id}', [LeaveTypeController::class, 'update']);
+    Route::patch('/{id}/status', [LeaveTypeController::class, 'toggleStatus']);
+    Route::delete('/{id}', [LeaveTypeController::class, 'destroy']);
+});
+
     
 });
 
