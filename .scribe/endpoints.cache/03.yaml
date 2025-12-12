@@ -347,7 +347,7 @@ endpoints:
         name: employment_type
         description: ''
         required: true
-        example: full-time
+        example: internship
         type: string
         enumValues:
           - full-time
@@ -440,7 +440,7 @@ endpoints:
       designation_id: architecto
       joining_date: architecto
       ending_date: '2052-01-05'
-      employment_type: full-time
+      employment_type: internship
       basic_salary: 4326.41688
       salary_currency: gzm
       bank_name: architecto
@@ -726,7 +726,7 @@ endpoints:
         name: date_of_birth
         description: 'Must be a valid date.'
         required: false
-        example: '2025-12-12T11:48:18'
+        example: '2025-12-12T12:55:44'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -750,7 +750,7 @@ endpoints:
         name: marital_status
         description: ''
         required: false
-        example: single
+        example: divorced
         type: string
         enumValues:
           - single
@@ -842,7 +842,7 @@ endpoints:
         name: joining_date
         description: 'Must be a valid date.'
         required: false
-        example: '2025-12-12T11:48:18'
+        example: '2025-12-12T12:55:44'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -864,7 +864,7 @@ endpoints:
         name: employment_type
         description: ''
         required: false
-        example: full_time
+        example: internship
         type: string
         enumValues:
           - full_time
@@ -929,22 +929,33 @@ endpoints:
         exampleWasSpecified: false
         nullable: true
         deprecated: false
+      shift_id:
+        custom: []
+        name: shift_id
+        description: 'The <code>id</code> of an existing record in the shifts table.'
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       first_name: architecto
       last_name: 'n'
       email: gbailey@example.net
       phone: vdljnikhwaykcmyu
-      date_of_birth: '2025-12-12T11:48:18'
+      date_of_birth: '2025-12-12T12:55:44'
       gender: female
-      marital_status: single
+      marital_status: divorced
       nationality: architecto
       address: architecto
       city: architecto
       state: architecto
       zip_code: architecto
-      joining_date: '2025-12-12T11:48:18'
+      joining_date: '2025-12-12T12:55:44'
       ending_date: '2052-01-05'
-      employment_type: full_time
+      employment_type: internship
       basic_salary: 22
       salary_currency: gzm
       bank_name: architecto

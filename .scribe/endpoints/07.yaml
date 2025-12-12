@@ -83,6 +83,61 @@ endpoints:
   -
     custom: []
     httpMethods:
+      - GET
+    uri: 'api/v1/leaves/{id}'
+    metadata:
+      custom: []
+      groupName: 'Leave Management'
+      groupDescription: ''
+      subgroup: |-
+        Leave Requests
+
+        APIs for managing employee leave requests and approvals.
+      subgroupDescription: ''
+      title: 'Get Leave Request'
+      description: 'Get details of a specific leave request.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The UUID of the leave request.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          vary: Origin
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
       - POST
     uri: api/v1/leaves
     metadata:
@@ -387,6 +442,61 @@ endpoints:
   -
     custom: []
     httpMethods:
+      - GET
+    uri: 'api/v1/leave-types/{id}'
+    metadata:
+      custom: []
+      groupName: 'Leave Management'
+      groupDescription: ''
+      subgroup: |-
+        Leave Types
+
+        APIs for managing leave types (Annual, Sick, etc.)
+      subgroupDescription: ''
+      title: 'Get Leave Type'
+      description: 'Get details of a specific leave type.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The UUID of the leave type.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          vary: Origin
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
       - POST
     uri: api/v1/leave-types
     metadata:
@@ -531,7 +641,7 @@ endpoints:
         name: is_paid
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -551,7 +661,7 @@ endpoints:
     cleanBodyParameters:
       name: 'Casual Leave v2'
       default_days: 27
-      is_paid: true
+      is_paid: false
       requires_approval: false
     fileParameters: []
     responses: []
