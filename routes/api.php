@@ -11,6 +11,8 @@ use App\Http\Controllers\Api\HolidayController;
 use App\Http\Controllers\Api\ShiftController;
 use App\Http\Controllers\Api\LeaveController;
 use App\Http\Controllers\Api\LeaveTypeController;
+use App\Http\Controllers\Api\JobController;
+use App\Http\Controllers\Api\CandidateController;
 
 Route::prefix('v1')->group(function () {
 
@@ -110,6 +112,21 @@ Route::prefix('leave-types')->group(function () {
     Route::patch('/{id}', [LeaveTypeController::class, 'update']);
     Route::patch('/{id}/status', [LeaveTypeController::class, 'toggleStatus']);
     Route::delete('/{id}', [LeaveTypeController::class, 'destroy']);
+});
+
+// RECRUITMENT
+
+Route::prefix('recruitment')->group(function () {
+    Route::get('/jobs', [JobController::class, 'index']);
+    Route::get('/jobs/active', [JobController::class, 'active']);
+    Route::post('/jobs', [JobController::class, 'store']);
+    Route::patch('/jobs/{id}', [JobController::class, 'update']);
+    Route::delete('/jobs/{id}', [JobController::class, 'destroy']);
+
+    Route::post('/candidates', [CandidateController::class, 'store']);
+    Route::get('/candidates', [CandidateController::class, 'index']);
+    Route::patch('/candidates/{id}/status', [CandidateController::class, 'updateStatus']);
+    Route::post('/candidates/{id}/hire', [CandidateController::class, 'hire']); // converts to Employee
 });
 
     
