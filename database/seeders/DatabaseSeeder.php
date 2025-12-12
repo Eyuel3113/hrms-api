@@ -10,8 +10,10 @@ class DatabaseSeeder extends Seeder
     {
         // THIS LINE WAS MISSING — ADD IT!
         $this->call([
-            AdminUserSeeder::class,   // ← this creates the admin
-            // Add other seeders later if you want
+            AdminUserSeeder::class,
+            ShiftSeeder::class,
+            HolidaySeeder::class,
+            LeaveTypeSeeder::class,
         ]);
 
         // Optional: create test user
