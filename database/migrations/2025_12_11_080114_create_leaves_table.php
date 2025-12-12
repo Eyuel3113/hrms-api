@@ -26,7 +26,7 @@ return new class extends Migration
             // Leave Details
             $table->date('start_date');
             $table->date('end_date');
-            $table->integer('total_days')->storedAs('DATEDIFF(end_date, start_date) + 1');
+            $table->integer('total_days')->nullable(); // Standard column for cross-DB compatibility
 
             $table->text('reason')->nullable();
 

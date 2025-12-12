@@ -24,7 +24,7 @@ return new class extends Migration
         });
 
         Schema::table('leaves', function (Blueprint $table) {
-            $table->integer('total_days')->storedAs('DATEDIFF(end_date, start_date) + 1');
+            $table->integer('total_days')->nullable();
         });
     }
 };
