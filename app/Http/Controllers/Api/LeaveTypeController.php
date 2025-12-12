@@ -6,10 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Models\LeaveType;
 use Illuminate\Http\Request;
 
+/**
+ * @group Leave Management
+ * @subgroup Leave Types
+ *
+ * APIs for managing leave types (Annual, Sick, etc.)
+ */
 class LeaveTypeController extends Controller
 {
     /**
-     * List Leave Types — Paginated + Search
+     * List Leave Types
+     *
+     * Fetch a paginated list of leave types.
+     *
+     * @queryParam search string Filter by name. Example: Annual
+     * @queryParam limit int Number of items per page. Example: 10
      */
     public function index(Request $request)
     {
@@ -37,7 +48,21 @@ class LeaveTypeController extends Controller
     }
 
     /**
-     * All Active Leave Types (for dropdowns)
+     * List Active Leave Types
+     *
+     * Fetch all active leave types (useful for dropdowns).
+     *
+     * @response 200 {
+     *   "message": "Active leave types fetched",
+     *   "data": [
+     *     {
+     *       "id": "7bd6f6fe-9fc3-4f64-944f-3481cd1d3ec4",
+     *       "name": "Annual Leave",
+     *       "default_days": 20,
+     *       "is_active": true
+     *     }
+     *   ]
+     * }
      */
     public function active()
     {
@@ -49,6 +74,13 @@ class LeaveTypeController extends Controller
 
     /**
      * Create Leave Type
+     *
+     * Add a new leave type definition.
+     *
+     * @bodyParam name string required The name of the leave type. Example: Casual Leave
+     * @bodyParam default_days int required Default days allowed per year. Example: 10
+     * @bodyParam is_paid boolean Whether the leave is paid. Example: true
+     * @bodyParam requires_approval boolean Whether approval is required. Example: true
      */
     public function store(Request $request)
     {
@@ -74,6 +106,11 @@ class LeaveTypeController extends Controller
 
     /**
      * Update Leave Type
+     *
+     * Update an existing leave type.
+     *
+     * @urlParam id string required The UUID of the leave type.
+     * @bodyParam name string The name of the leave type. Example: Casual Leave v2
      */
     public function update(Request $request, $id)
     {
@@ -95,7 +132,11 @@ class LeaveTypeController extends Controller
     }
 
     /**
-     * Toggle Active/Inactive
+     * Toggle Leave Type Status
+     *
+     * Activate or deactivate a leave type.
+     *
+     * @urlParam id string required The UUID of the leave type.
      */
     public function toggleStatus($id)
     {
@@ -112,6 +153,10 @@ class LeaveTypeController extends Controller
 
     /**
      * Delete Leave Type
+     *
+     * Permanently delete a leave type.
+     *
+     * @urlParam id string required The UUID of the leave type.
      */
     public function destroy($id)
     {

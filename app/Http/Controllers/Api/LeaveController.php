@@ -7,8 +7,23 @@ use App\Models\Leave;
 use App\Models\LeaveType;
 use Illuminate\Http\Request;
 
+/**
+ * @group Leave Management
+ * @subgroup Leave Requests
+ *
+ * APIs for managing employee leave requests and approvals.
+ */
 class LeaveController extends Controller
 {
+    /**
+     * List Leave Requests
+     *
+     * Fetch a paginated list of leave requests.
+     *
+     * @queryParam search string Search by employee name. Example: John
+     * @queryParam status string Filter by status (pending, approved, rejected). Example: pending
+     * @queryParam limit int Number of items per page. Example: 10
+     */
     public function index(Request $request)
     {
         $search = $request->query('search');
@@ -42,6 +57,17 @@ class LeaveController extends Controller
         ]);
     }
 
+    /**
+     * Create Leave Request
+     *
+     * Submit a new leave request for an employee.
+     *
+     * @bodyParam employee_id string required The UUID of the employee.
+     * @bodyParam leave_type_id string required The UUID of the leave type.
+     * @bodyParam start_date date required Format: YYYY-MM-DD. Example: 2024-01-01
+     * @bodyParam end_date date required Format: YYYY-MM-DD. Example: 2024-01-05
+     * @bodyParam reason string nullable Reason for leave. Example: Family vacation
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -68,22 +94,36 @@ class LeaveController extends Controller
         ], 201);
     }
 
-public function approve($id)
-{
-    $leave = Leave::findOrFail($id);
+    /**
+     * Approve Leave Request
+     *
+     * Approve a pending leave request.
+     *
+     * @urlParam id string required The UUID of the leave request.
+     */
+    public function approve($id)
+    {
+        $leave = Leave::findOrFail($id);
 
-    // Get the logged in HR Admin's Employee UUID
-    $adminEmployee = auth()->user()->employee;  // assuming User has employee relationship
+        // Get the logged in HR Admin's Employee UUID
+        $adminEmployee = auth()->user()->employee;  // assuming User has employee relationship
 
-    $leave->update([
-        'status'      => 'approved',
-        'approved_by' => $adminEmployee?->id,  // ← UUID, not integer
-        'approved_at' => now(),
-    ]);
+        $leave->update([
+            'status'      => 'approved',
+            'approved_by' => $adminEmployee?->id,  // ← UUID, not integer
+            'approved_at' => now(),
+        ]);
 
-    return response()->json(['message' => 'Leave approved']);
-}
+        return response()->json(['message' => 'Leave approved']);
+    }
 
+    /**
+     * Reject Leave Request
+     *
+     * Reject a pending leave request.
+     *
+     * @urlParam id string required The UUID of the leave request.
+     */
     public function reject($id)
     {
         $leave = Leave::findOrFail($id);

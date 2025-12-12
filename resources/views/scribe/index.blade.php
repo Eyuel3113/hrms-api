@@ -216,6 +216,57 @@
                             </li>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-leave-management" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="leave-management">
+                    <a href="#leave-management">Leave Management</a>
+                </li>
+                                    <ul id="tocify-subheader-leave-management" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="leave-management-leave-requests-apis-for-managing-employee-leave-requests-and-approvals">
+                                <a href="#leave-management-leave-requests-apis-for-managing-employee-leave-requests-and-approvals">Leave Requests
+
+APIs for managing employee leave requests and approvals.</a>
+                            </li>
+                                                            <ul id="tocify-subheader-leave-management-leave-requests-apis-for-managing-employee-leave-requests-and-approvals" class="tocify-subheader">
+                                                                            <li class="tocify-item level-3" data-unique="leave-management-GETapi-v1-leaves">
+                                            <a href="#leave-management-GETapi-v1-leaves">List Leave Requests</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="leave-management-POSTapi-v1-leaves">
+                                            <a href="#leave-management-POSTapi-v1-leaves">Create Leave Request</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="leave-management-PATCHapi-v1-leaves--id--approve">
+                                            <a href="#leave-management-PATCHapi-v1-leaves--id--approve">Approve Leave Request</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="leave-management-PATCHapi-v1-leaves--id--reject">
+                                            <a href="#leave-management-PATCHapi-v1-leaves--id--reject">Reject Leave Request</a>
+                                        </li>
+                                                                    </ul>
+                                                                                <li class="tocify-item level-2" data-unique="leave-management-leave-types-apis-for-managing-leave-types-annual-sick-etc">
+                                <a href="#leave-management-leave-types-apis-for-managing-leave-types-annual-sick-etc">Leave Types
+
+APIs for managing leave types (Annual, Sick, etc.)</a>
+                            </li>
+                                                            <ul id="tocify-subheader-leave-management-leave-types-apis-for-managing-leave-types-annual-sick-etc" class="tocify-subheader">
+                                                                            <li class="tocify-item level-3" data-unique="leave-management-GETapi-v1-leave-types">
+                                            <a href="#leave-management-GETapi-v1-leave-types">List Leave Types</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="leave-management-GETapi-v1-leave-types-active">
+                                            <a href="#leave-management-GETapi-v1-leave-types-active">List Active Leave Types</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="leave-management-POSTapi-v1-leave-types">
+                                            <a href="#leave-management-POSTapi-v1-leave-types">Create Leave Type</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="leave-management-PATCHapi-v1-leave-types--id-">
+                                            <a href="#leave-management-PATCHapi-v1-leave-types--id-">Update Leave Type</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="leave-management-PATCHapi-v1-leave-types--id--status">
+                                            <a href="#leave-management-PATCHapi-v1-leave-types--id--status">Toggle Leave Type Status</a>
+                                        </li>
+                                                                            <li class="tocify-item level-3" data-unique="leave-management-DELETEapi-v1-leave-types--id-">
+                                            <a href="#leave-management-DELETEapi-v1-leave-types--id-">Delete Leave Type</a>
+                                        </li>
+                                                                    </ul>
+                                                                        </ul>
+                            </ul>
                     <ul id="tocify-header-shifts" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="shifts">
                     <a href="#shifts">Shifts</a>
@@ -250,7 +301,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: December 10, 2025</li>
+        <li>Last updated: December 12, 2025</li>
     </ul>
 </div>
 
@@ -1771,7 +1822,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"name\": \"architecto\",
     \"code\": \"architecto\",
     \"description\": \"Eius et animi quos velit et.\",
-    \"status\": \"active\"
+    \"status\": \"inactive\"
 }"
 </code></pre></div>
 
@@ -1790,7 +1841,7 @@ let body = {
     "name": "architecto",
     "code": "architecto",
     "description": "Eius et animi quos velit et.",
-    "status": "active"
+    "status": "inactive"
 };
 
 fetch(url, {
@@ -1928,10 +1979,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="POSTapi-v1-departments"
-               value="active"
+               value="inactive"
                data-component="body">
     <br>
-<p>Example: <code>active</code></p>
+<p>Example: <code>inactive</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>active</code></li> <li><code>inactive</code></li></ul>
         </div>
@@ -2230,7 +2281,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"name\": \"architecto\",
     \"code\": \"architecto\",
     \"description\": \"Eius et animi quos velit et.\",
-    \"status\": \"active\"
+    \"status\": \"inactive\"
 }"
 </code></pre></div>
 
@@ -2249,7 +2300,7 @@ let body = {
     "name": "architecto",
     "code": "architecto",
     "description": "Eius et animi quos velit et.",
-    "status": "active"
+    "status": "inactive"
 };
 
 fetch(url, {
@@ -2400,10 +2451,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="PATCHapi-v1-departments--id-"
-               value="active"
+               value="inactive"
                data-component="body">
     <br>
-<p>Example: <code>active</code></p>
+<p>Example: <code>inactive</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>active</code></li> <li><code>inactive</code></li></ul>
         </div>
@@ -3726,7 +3777,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "phone=architecto"\
     --form "date_of_birth=architecto"\
     --form "gender=architecto"\
-    --form "marital_status=single"\
+    --form "marital_status=married"\
     --form "nationality=architecto"\
     --form "address=architecto"\
     --form "city=architecto"\
@@ -3735,14 +3786,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "department_id=architecto"\
     --form "designation_id=architecto"\
     --form "joining_date=architecto"\
-    --form "ending_date=2052-01-03"\
-    --form "employment_type=part-time"\
+    --form "ending_date=2052-01-05"\
+    --form "employment_type=full-time"\
     --form "basic_salary=4326.41688"\
     --form "salary_currency=gzm"\
     --form "bank_name=architecto"\
     --form "bank_account_number=architecto"\
     --form "tax_id=architecto"\
-    --form "photo=@C:\Users\user\AppData\Local\Temp\phpFDBA.tmp" </code></pre></div>
+    --form "photo=@C:\Users\user\AppData\Local\Temp\phpCCEE.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -3762,7 +3813,7 @@ body.append('email', 'gbailey@example.net');
 body.append('phone', 'architecto');
 body.append('date_of_birth', 'architecto');
 body.append('gender', 'architecto');
-body.append('marital_status', 'single');
+body.append('marital_status', 'married');
 body.append('nationality', 'architecto');
 body.append('address', 'architecto');
 body.append('city', 'architecto');
@@ -3771,8 +3822,8 @@ body.append('zip_code', 'architecto');
 body.append('department_id', 'architecto');
 body.append('designation_id', 'architecto');
 body.append('joining_date', 'architecto');
-body.append('ending_date', '2052-01-03');
-body.append('employment_type', 'part-time');
+body.append('ending_date', '2052-01-05');
+body.append('employment_type', 'full-time');
 body.append('basic_salary', '4326.41688');
 body.append('salary_currency', 'gzm');
 body.append('bank_name', 'architecto');
@@ -3930,7 +3981,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Profile photo (image). Example: <code>C:\Users\user\AppData\Local\Temp\phpFDBA.tmp</code></p>
+<p>Profile photo (image). Example: <code>C:\Users\user\AppData\Local\Temp\phpCCEE.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>date_of_birth</code></b>&nbsp;&nbsp;
@@ -3963,10 +4014,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="marital_status"                data-endpoint="POSTapi-v1-employees"
-               value="single"
+               value="married"
                data-component="body">
     <br>
-<p>Example: <code>single</code></p>
+<p>Example: <code>married</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>single</code></li> <li><code>married</code></li> <li><code>divorced</code></li> <li><code>widowed</code></li></ul>
         </div>
@@ -4073,10 +4124,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="ending_date"                data-endpoint="POSTapi-v1-employees"
-               value="2052-01-03"
+               value="2052-01-05"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after <code>joining_date</code>. Example: <code>2052-01-03</code></p>
+<p>Must be a valid date. Must be a date after <code>joining_date</code>. Example: <code>2052-01-05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>employment_type</code></b>&nbsp;&nbsp;
@@ -4085,10 +4136,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="employment_type"                data-endpoint="POSTapi-v1-employees"
-               value="part-time"
+               value="full-time"
                data-component="body">
     <br>
-<p>Example: <code>part-time</code></p>
+<p>Example: <code>full-time</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>full-time</code></li> <li><code>part-time</code></li> <li><code>contract</code></li> <li><code>internship</code></li></ul>
         </div>
@@ -4530,23 +4581,23 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "last_name=n"\
     --form "email=gbailey@example.net"\
     --form "phone=vdljnikhwaykcmyu"\
-    --form "date_of_birth=2025-12-10T13:03:44"\
-    --form "gender=male"\
+    --form "date_of_birth=2025-12-12T11:48:18"\
+    --form "gender=female"\
     --form "marital_status=single"\
     --form "nationality=architecto"\
     --form "address=architecto"\
     --form "city=architecto"\
     --form "state=architecto"\
     --form "zip_code=architecto"\
-    --form "joining_date=2025-12-10T13:03:44"\
-    --form "ending_date=2052-01-03"\
-    --form "employment_type=internship"\
+    --form "joining_date=2025-12-12T11:48:18"\
+    --form "ending_date=2052-01-05"\
+    --form "employment_type=full_time"\
     --form "basic_salary=22"\
     --form "salary_currency=gzm"\
     --form "bank_name=architecto"\
     --form "bank_account_number=architecto"\
     --form "tax_id=architecto"\
-    --form "photo=@C:\Users\user\AppData\Local\Temp\phpFE47.tmp" </code></pre></div>
+    --form "photo=@C:\Users\user\AppData\Local\Temp\phpCE28.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -4564,17 +4615,17 @@ body.append('first_name', 'architecto');
 body.append('last_name', 'n');
 body.append('email', 'gbailey@example.net');
 body.append('phone', 'vdljnikhwaykcmyu');
-body.append('date_of_birth', '2025-12-10T13:03:44');
-body.append('gender', 'male');
+body.append('date_of_birth', '2025-12-12T11:48:18');
+body.append('gender', 'female');
 body.append('marital_status', 'single');
 body.append('nationality', 'architecto');
 body.append('address', 'architecto');
 body.append('city', 'architecto');
 body.append('state', 'architecto');
 body.append('zip_code', 'architecto');
-body.append('joining_date', '2025-12-10T13:03:44');
-body.append('ending_date', '2052-01-03');
-body.append('employment_type', 'internship');
+body.append('joining_date', '2025-12-12T11:48:18');
+body.append('ending_date', '2052-01-05');
+body.append('employment_type', 'full_time');
 body.append('basic_salary', '22');
 body.append('salary_currency', 'gzm');
 body.append('bank_name', 'architecto');
@@ -4745,7 +4796,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 5120 kilobytes. Example: <code>C:\Users\user\AppData\Local\Temp\phpFE47.tmp</code></p>
+<p>Must be an image. Must not be greater than 5120 kilobytes. Example: <code>C:\Users\user\AppData\Local\Temp\phpCE28.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>date_of_birth</code></b>&nbsp;&nbsp;
@@ -4754,10 +4805,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date_of_birth"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="2025-12-10T13:03:44"
+               value="2025-12-12T11:48:18"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2025-12-10T13:03:44</code></p>
+<p>Must be a valid date. Example: <code>2025-12-12T11:48:18</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -4766,10 +4817,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="gender"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="male"
+               value="female"
                data-component="body">
     <br>
-<p>Example: <code>male</code></p>
+<p>Example: <code>female</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>male</code></li> <li><code>female</code></li></ul>
         </div>
@@ -4878,10 +4929,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="joining_date"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="2025-12-10T13:03:44"
+               value="2025-12-12T11:48:18"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2025-12-10T13:03:44</code></p>
+<p>Must be a valid date. Example: <code>2025-12-12T11:48:18</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>ending_date</code></b>&nbsp;&nbsp;
@@ -4890,10 +4941,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="ending_date"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="2052-01-03"
+               value="2052-01-05"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after <code>joining_date</code>. Example: <code>2052-01-03</code></p>
+<p>Must be a valid date. Must be a date after <code>joining_date</code>. Example: <code>2052-01-05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>employment_type</code></b>&nbsp;&nbsp;
@@ -4902,10 +4953,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="employment_type"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="internship"
+               value="full_time"
                data-component="body">
     <br>
-<p>Example: <code>internship</code></p>
+<p>Example: <code>full_time</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>full_time</code></li> <li><code>part_time</code></li> <li><code>contract</code></li> <li><code>internship</code></li></ul>
         </div>
@@ -5119,7 +5170,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     "http://localhost/api/v1/employees/architecto/photo" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "photo=@C:\Users\user\AppData\Local\Temp\phpFE49.tmp" </code></pre></div>
+    --form "photo=@C:\Users\user\AppData\Local\Temp\phpCE39.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -5250,7 +5301,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Image file (jpeg, png, jpg, max 5MB). Example: <code>C:\Users\user\AppData\Local\Temp\phpFE49.tmp</code></p>
+<p>Image file (jpeg, png, jpg, max 5MB). Example: <code>C:\Users\user\AppData\Local\Temp\phpCE39.tmp</code></p>
         </div>
         </form>
 
@@ -6561,6 +6612,1553 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="url">
     <br>
 <p>Holiday UUID. Example: <code>architecto</code></p>
+            </div>
+                    </form>
+
+                <h1 id="leave-management">Leave Management</h1>
+
+    
+
+                        <h2 id="leave-management-leave-requests-apis-for-managing-employee-leave-requests-and-approvals">Leave Requests
+
+APIs for managing employee leave requests and approvals.</h2>
+                                                    <h2 id="leave-management-GETapi-v1-leaves">List Leave Requests</h2>
+
+<p>
+</p>
+
+<p>Fetch a paginated list of leave requests.</p>
+
+<span id="example-requests-GETapi-v1-leaves">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/v1/leaves?search=John&amp;status=pending&amp;limit=10" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/leaves"
+);
+
+const params = {
+    "search": "John",
+    "status": "pending",
+    "limit": "10",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-leaves">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+vary: Origin
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-leaves" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-leaves"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-leaves"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-leaves" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-leaves">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-leaves" data-method="GET"
+      data-path="api/v1/leaves"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-leaves', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-leaves"
+                    onclick="tryItOut('GETapi-v1-leaves');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-leaves"
+                    onclick="cancelTryOut('GETapi-v1-leaves');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-leaves"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/leaves</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-leaves"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-leaves"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="search"                data-endpoint="GETapi-v1-leaves"
+               value="John"
+               data-component="query">
+    <br>
+<p>Search by employee name. Example: <code>John</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="GETapi-v1-leaves"
+               value="pending"
+               data-component="query">
+    <br>
+<p>Filter by status (pending, approved, rejected). Example: <code>pending</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-v1-leaves"
+               value="10"
+               data-component="query">
+    <br>
+<p>Number of items per page. Example: <code>10</code></p>
+            </div>
+                </form>
+
+                    <h2 id="leave-management-POSTapi-v1-leaves">Create Leave Request</h2>
+
+<p>
+</p>
+
+<p>Submit a new leave request for an employee.</p>
+
+<span id="example-requests-POSTapi-v1-leaves">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost/api/v1/leaves" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"employee_id\": \"architecto\",
+    \"leave_type_id\": \"architecto\",
+    \"start_date\": \"2024-01-01\",
+    \"end_date\": \"2024-01-05\",
+    \"reason\": \"Family vacation\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/leaves"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "employee_id": "architecto",
+    "leave_type_id": "architecto",
+    "start_date": "2024-01-01",
+    "end_date": "2024-01-05",
+    "reason": "Family vacation"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-leaves">
+</span>
+<span id="execution-results-POSTapi-v1-leaves" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-leaves"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-leaves"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-leaves" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-leaves">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-leaves" data-method="POST"
+      data-path="api/v1/leaves"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-leaves', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-leaves"
+                    onclick="tryItOut('POSTapi-v1-leaves');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-leaves"
+                    onclick="cancelTryOut('POSTapi-v1-leaves');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-leaves"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/leaves</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-leaves"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-leaves"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>employee_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="employee_id"                data-endpoint="POSTapi-v1-leaves"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>The UUID of the employee. Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>leave_type_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="leave_type_id"                data-endpoint="POSTapi-v1-leaves"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>The UUID of the leave type. Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>start_date</code></b>&nbsp;&nbsp;
+<small>date</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="start_date"                data-endpoint="POSTapi-v1-leaves"
+               value="2024-01-01"
+               data-component="body">
+    <br>
+<p>Format: YYYY-MM-DD. Example: <code>2024-01-01</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>end_date</code></b>&nbsp;&nbsp;
+<small>date</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="end_date"                data-endpoint="POSTapi-v1-leaves"
+               value="2024-01-05"
+               data-component="body">
+    <br>
+<p>Format: YYYY-MM-DD. Example: <code>2024-01-05</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>reason</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="reason"                data-endpoint="POSTapi-v1-leaves"
+               value="Family vacation"
+               data-component="body">
+    <br>
+<p>nullable Reason for leave. Example: <code>Family vacation</code></p>
+        </div>
+        </form>
+
+                    <h2 id="leave-management-PATCHapi-v1-leaves--id--approve">Approve Leave Request</h2>
+
+<p>
+</p>
+
+<p>Approve a pending leave request.</p>
+
+<span id="example-requests-PATCHapi-v1-leaves--id--approve">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PATCH \
+    "http://localhost/api/v1/leaves/architecto/approve" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/leaves/architecto/approve"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "PATCH",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-PATCHapi-v1-leaves--id--approve">
+</span>
+<span id="execution-results-PATCHapi-v1-leaves--id--approve" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PATCHapi-v1-leaves--id--approve"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PATCHapi-v1-leaves--id--approve"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PATCHapi-v1-leaves--id--approve" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PATCHapi-v1-leaves--id--approve">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PATCHapi-v1-leaves--id--approve" data-method="PATCH"
+      data-path="api/v1/leaves/{id}/approve"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PATCHapi-v1-leaves--id--approve', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PATCHapi-v1-leaves--id--approve"
+                    onclick="tryItOut('PATCHapi-v1-leaves--id--approve');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PATCHapi-v1-leaves--id--approve"
+                    onclick="cancelTryOut('PATCHapi-v1-leaves--id--approve');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PATCHapi-v1-leaves--id--approve"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-purple">PATCH</small>
+            <b><code>api/v1/leaves/{id}/approve</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PATCHapi-v1-leaves--id--approve"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PATCHapi-v1-leaves--id--approve"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="PATCHapi-v1-leaves--id--approve"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The UUID of the leave request. Example: <code>architecto</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="leave-management-PATCHapi-v1-leaves--id--reject">Reject Leave Request</h2>
+
+<p>
+</p>
+
+<p>Reject a pending leave request.</p>
+
+<span id="example-requests-PATCHapi-v1-leaves--id--reject">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PATCH \
+    "http://localhost/api/v1/leaves/architecto/reject" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/leaves/architecto/reject"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "PATCH",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-PATCHapi-v1-leaves--id--reject">
+</span>
+<span id="execution-results-PATCHapi-v1-leaves--id--reject" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PATCHapi-v1-leaves--id--reject"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PATCHapi-v1-leaves--id--reject"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PATCHapi-v1-leaves--id--reject" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PATCHapi-v1-leaves--id--reject">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PATCHapi-v1-leaves--id--reject" data-method="PATCH"
+      data-path="api/v1/leaves/{id}/reject"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PATCHapi-v1-leaves--id--reject', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PATCHapi-v1-leaves--id--reject"
+                    onclick="tryItOut('PATCHapi-v1-leaves--id--reject');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PATCHapi-v1-leaves--id--reject"
+                    onclick="cancelTryOut('PATCHapi-v1-leaves--id--reject');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PATCHapi-v1-leaves--id--reject"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-purple">PATCH</small>
+            <b><code>api/v1/leaves/{id}/reject</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PATCHapi-v1-leaves--id--reject"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PATCHapi-v1-leaves--id--reject"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="PATCHapi-v1-leaves--id--reject"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The UUID of the leave request. Example: <code>architecto</code></p>
+            </div>
+                    </form>
+
+                                <h2 id="leave-management-leave-types-apis-for-managing-leave-types-annual-sick-etc">Leave Types
+
+APIs for managing leave types (Annual, Sick, etc.)</h2>
+                                                    <h2 id="leave-management-GETapi-v1-leave-types">List Leave Types</h2>
+
+<p>
+</p>
+
+<p>Fetch a paginated list of leave types.</p>
+
+<span id="example-requests-GETapi-v1-leave-types">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/v1/leave-types?search=Annual&amp;limit=10" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/leave-types"
+);
+
+const params = {
+    "search": "Annual",
+    "limit": "10",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-leave-types">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+vary: Origin
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-leave-types" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-leave-types"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-leave-types"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-leave-types" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-leave-types">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-leave-types" data-method="GET"
+      data-path="api/v1/leave-types"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-leave-types', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-leave-types"
+                    onclick="tryItOut('GETapi-v1-leave-types');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-leave-types"
+                    onclick="cancelTryOut('GETapi-v1-leave-types');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-leave-types"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/leave-types</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-leave-types"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-leave-types"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="search"                data-endpoint="GETapi-v1-leave-types"
+               value="Annual"
+               data-component="query">
+    <br>
+<p>Filter by name. Example: <code>Annual</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-v1-leave-types"
+               value="10"
+               data-component="query">
+    <br>
+<p>Number of items per page. Example: <code>10</code></p>
+            </div>
+                </form>
+
+                    <h2 id="leave-management-GETapi-v1-leave-types-active">List Active Leave Types</h2>
+
+<p>
+</p>
+
+<p>Fetch all active leave types (useful for dropdowns).</p>
+
+<span id="example-requests-GETapi-v1-leave-types-active">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/v1/leave-types/active" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/leave-types/active"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-leave-types-active">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Active leave types fetched&quot;,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: &quot;7bd6f6fe-9fc3-4f64-944f-3481cd1d3ec4&quot;,
+            &quot;name&quot;: &quot;Annual Leave&quot;,
+            &quot;default_days&quot;: 20,
+            &quot;is_active&quot;: true
+        }
+    ]
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-leave-types-active" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-leave-types-active"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-leave-types-active"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-leave-types-active" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-leave-types-active">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-leave-types-active" data-method="GET"
+      data-path="api/v1/leave-types/active"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-leave-types-active', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-leave-types-active"
+                    onclick="tryItOut('GETapi-v1-leave-types-active');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-leave-types-active"
+                    onclick="cancelTryOut('GETapi-v1-leave-types-active');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-leave-types-active"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/leave-types/active</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-leave-types-active"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-leave-types-active"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="leave-management-POSTapi-v1-leave-types">Create Leave Type</h2>
+
+<p>
+</p>
+
+<p>Add a new leave type definition.</p>
+
+<span id="example-requests-POSTapi-v1-leave-types">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost/api/v1/leave-types" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"name\": \"Casual Leave\",
+    \"default_days\": 10,
+    \"is_paid\": true,
+    \"requires_approval\": true
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/leave-types"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "name": "Casual Leave",
+    "default_days": 10,
+    "is_paid": true,
+    "requires_approval": true
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-leave-types">
+</span>
+<span id="execution-results-POSTapi-v1-leave-types" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-leave-types"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-leave-types"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-leave-types" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-leave-types">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-leave-types" data-method="POST"
+      data-path="api/v1/leave-types"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-leave-types', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-leave-types"
+                    onclick="tryItOut('POSTapi-v1-leave-types');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-leave-types"
+                    onclick="cancelTryOut('POSTapi-v1-leave-types');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-leave-types"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/leave-types</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-leave-types"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-leave-types"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="name"                data-endpoint="POSTapi-v1-leave-types"
+               value="Casual Leave"
+               data-component="body">
+    <br>
+<p>The name of the leave type. Example: <code>Casual Leave</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>default_days</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="default_days"                data-endpoint="POSTapi-v1-leave-types"
+               value="10"
+               data-component="body">
+    <br>
+<p>Default days allowed per year. Example: <code>10</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>is_paid</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <label data-endpoint="POSTapi-v1-leave-types" style="display: none">
+            <input type="radio" name="is_paid"
+                   value="true"
+                   data-endpoint="POSTapi-v1-leave-types"
+                   data-component="body"             >
+            <code>true</code>
+        </label>
+        <label data-endpoint="POSTapi-v1-leave-types" style="display: none">
+            <input type="radio" name="is_paid"
+                   value="false"
+                   data-endpoint="POSTapi-v1-leave-types"
+                   data-component="body"             >
+            <code>false</code>
+        </label>
+    <br>
+<p>Whether the leave is paid. Example: <code>true</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>requires_approval</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <label data-endpoint="POSTapi-v1-leave-types" style="display: none">
+            <input type="radio" name="requires_approval"
+                   value="true"
+                   data-endpoint="POSTapi-v1-leave-types"
+                   data-component="body"             >
+            <code>true</code>
+        </label>
+        <label data-endpoint="POSTapi-v1-leave-types" style="display: none">
+            <input type="radio" name="requires_approval"
+                   value="false"
+                   data-endpoint="POSTapi-v1-leave-types"
+                   data-component="body"             >
+            <code>false</code>
+        </label>
+    <br>
+<p>Whether approval is required. Example: <code>true</code></p>
+        </div>
+        </form>
+
+                    <h2 id="leave-management-PATCHapi-v1-leave-types--id-">Update Leave Type</h2>
+
+<p>
+</p>
+
+<p>Update an existing leave type.</p>
+
+<span id="example-requests-PATCHapi-v1-leave-types--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PATCH \
+    "http://localhost/api/v1/leave-types/architecto" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"name\": \"Casual Leave v2\",
+    \"default_days\": 27,
+    \"is_paid\": true,
+    \"requires_approval\": false
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/leave-types/architecto"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "name": "Casual Leave v2",
+    "default_days": 27,
+    "is_paid": true,
+    "requires_approval": false
+};
+
+fetch(url, {
+    method: "PATCH",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-PATCHapi-v1-leave-types--id-">
+</span>
+<span id="execution-results-PATCHapi-v1-leave-types--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PATCHapi-v1-leave-types--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PATCHapi-v1-leave-types--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PATCHapi-v1-leave-types--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PATCHapi-v1-leave-types--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PATCHapi-v1-leave-types--id-" data-method="PATCH"
+      data-path="api/v1/leave-types/{id}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PATCHapi-v1-leave-types--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PATCHapi-v1-leave-types--id-"
+                    onclick="tryItOut('PATCHapi-v1-leave-types--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PATCHapi-v1-leave-types--id-"
+                    onclick="cancelTryOut('PATCHapi-v1-leave-types--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PATCHapi-v1-leave-types--id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-purple">PATCH</small>
+            <b><code>api/v1/leave-types/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PATCHapi-v1-leave-types--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PATCHapi-v1-leave-types--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="PATCHapi-v1-leave-types--id-"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The UUID of the leave type. Example: <code>architecto</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="name"                data-endpoint="PATCHapi-v1-leave-types--id-"
+               value="Casual Leave v2"
+               data-component="body">
+    <br>
+<p>The name of the leave type. Example: <code>Casual Leave v2</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>default_days</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="default_days"                data-endpoint="PATCHapi-v1-leave-types--id-"
+               value="27"
+               data-component="body">
+    <br>
+<p>Must be at least 0. Example: <code>27</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>is_paid</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <label data-endpoint="PATCHapi-v1-leave-types--id-" style="display: none">
+            <input type="radio" name="is_paid"
+                   value="true"
+                   data-endpoint="PATCHapi-v1-leave-types--id-"
+                   data-component="body"             >
+            <code>true</code>
+        </label>
+        <label data-endpoint="PATCHapi-v1-leave-types--id-" style="display: none">
+            <input type="radio" name="is_paid"
+                   value="false"
+                   data-endpoint="PATCHapi-v1-leave-types--id-"
+                   data-component="body"             >
+            <code>false</code>
+        </label>
+    <br>
+<p>Example: <code>true</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>requires_approval</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <label data-endpoint="PATCHapi-v1-leave-types--id-" style="display: none">
+            <input type="radio" name="requires_approval"
+                   value="true"
+                   data-endpoint="PATCHapi-v1-leave-types--id-"
+                   data-component="body"             >
+            <code>true</code>
+        </label>
+        <label data-endpoint="PATCHapi-v1-leave-types--id-" style="display: none">
+            <input type="radio" name="requires_approval"
+                   value="false"
+                   data-endpoint="PATCHapi-v1-leave-types--id-"
+                   data-component="body"             >
+            <code>false</code>
+        </label>
+    <br>
+<p>Example: <code>false</code></p>
+        </div>
+        </form>
+
+                    <h2 id="leave-management-PATCHapi-v1-leave-types--id--status">Toggle Leave Type Status</h2>
+
+<p>
+</p>
+
+<p>Activate or deactivate a leave type.</p>
+
+<span id="example-requests-PATCHapi-v1-leave-types--id--status">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PATCH \
+    "http://localhost/api/v1/leave-types/architecto/status" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/leave-types/architecto/status"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "PATCH",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-PATCHapi-v1-leave-types--id--status">
+</span>
+<span id="execution-results-PATCHapi-v1-leave-types--id--status" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PATCHapi-v1-leave-types--id--status"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PATCHapi-v1-leave-types--id--status"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PATCHapi-v1-leave-types--id--status" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PATCHapi-v1-leave-types--id--status">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PATCHapi-v1-leave-types--id--status" data-method="PATCH"
+      data-path="api/v1/leave-types/{id}/status"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PATCHapi-v1-leave-types--id--status', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PATCHapi-v1-leave-types--id--status"
+                    onclick="tryItOut('PATCHapi-v1-leave-types--id--status');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PATCHapi-v1-leave-types--id--status"
+                    onclick="cancelTryOut('PATCHapi-v1-leave-types--id--status');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PATCHapi-v1-leave-types--id--status"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-purple">PATCH</small>
+            <b><code>api/v1/leave-types/{id}/status</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PATCHapi-v1-leave-types--id--status"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PATCHapi-v1-leave-types--id--status"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="PATCHapi-v1-leave-types--id--status"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The UUID of the leave type. Example: <code>architecto</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="leave-management-DELETEapi-v1-leave-types--id-">Delete Leave Type</h2>
+
+<p>
+</p>
+
+<p>Permanently delete a leave type.</p>
+
+<span id="example-requests-DELETEapi-v1-leave-types--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "http://localhost/api/v1/leave-types/architecto" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/leave-types/architecto"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-v1-leave-types--id-">
+</span>
+<span id="execution-results-DELETEapi-v1-leave-types--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-v1-leave-types--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-v1-leave-types--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-v1-leave-types--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-v1-leave-types--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-DELETEapi-v1-leave-types--id-" data-method="DELETE"
+      data-path="api/v1/leave-types/{id}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-v1-leave-types--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEapi-v1-leave-types--id-"
+                    onclick="tryItOut('DELETEapi-v1-leave-types--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEapi-v1-leave-types--id-"
+                    onclick="cancelTryOut('DELETEapi-v1-leave-types--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEapi-v1-leave-types--id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/v1/leave-types/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="DELETEapi-v1-leave-types--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="DELETEapi-v1-leave-types--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="DELETEapi-v1-leave-types--id-"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The UUID of the leave type. Example: <code>architecto</code></p>
             </div>
                     </form>
 
