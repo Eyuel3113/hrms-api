@@ -307,6 +307,12 @@ public function all(Request $request)
             $employee->professionalInfo()?->update($professionalInfoData);
         }
 
+        // Fix: Update main employee table (shift_id, status, employee_code)
+        $mainEmployeeData = array_intersect_key($validated, array_flip(['shift_id', 'status', 'employee_code']));
+        if (!empty($mainEmployeeData)) {
+            $employee->update($mainEmployeeData);
+        }
+
         return response()->json([
             'message' => 'Employee updated successfully',
             'data' => $employee->fresh()->load(['personalInfo','professionalInfo'])

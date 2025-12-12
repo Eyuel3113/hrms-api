@@ -335,11 +335,32 @@ private function calculateWorkedHours($checkIn, $checkOut)
         }
 
         // Parse Check In/Out
-        $checkIn  = $attendance->check_in ? \Carbon\Carbon::createFromFormat('H:i:s', $attendance->check_in) : null;
-        $checkOut = $attendance->check_out ? \Carbon\Carbon::createFromFormat('H:i:s', $attendance->check_out) : null;
+        // Attributes are cast to datetime in model, so they might already be Carbon instances
+        $checkIn  = $attendance->check_in;
+        if ($checkIn && !($checkIn instanceof \Carbon\Carbon)) {
+            $checkIn = \Carbon\Carbon::parse($checkIn);
+        }
 
-        $officeStart = \Carbon\Carbon::createFromFormat('H:i:s', $shift->start_time);
-        $officeEnd   = \Carbon\Carbon::createFromFormat('H:i:s', $shift->end_time);
+        $checkOut = $attendance->check_out;
+        if ($checkOut && !($checkOut instanceof \Carbon\Carbon)) {
+            $checkOut = \Carbon\Carbon::parse($checkOut);
+        }
+
+        // Parse Shift Times (robustly handle H:i or H:i:s) using CheckIn date for alignment
+        // This prevents "today" vs "yesterday" issues if attendance is for a past date
+        $officeStart = \Carbon\Carbon::parse($shift->start_time);
+        $officeEnd   = \Carbon\Carbon::parse($shift->end_time);
+        
+        // Align office times to the same date as check-in
+        if ($checkIn) {
+            $officeStart->setDateFrom($checkIn);
+            $officeEnd->setDateFrom($checkIn);
+            
+            // If it's an overnight shift (end < start), move end to next day
+            if ($officeEnd->lessThan($officeStart)) {
+                $officeEnd->addDay();
+            }
+        }
 
         $status = 'absent';
         $lateMinutes = 0;
@@ -350,8 +371,10 @@ private function calculateWorkedHours($checkIn, $checkOut)
         // 1. Calculate Late Minutes (Depends only on Check In)
         if ($checkIn) {
             $lateThresholdTime = $officeStart->copy()->addMinutes($shift->late_threshold_minutes);
+            
+            // Only calculate late if checkIn is AFTER threshold
             if ($checkIn->greaterThan($lateThresholdTime)) {
-                $lateMinutes = $checkIn->diffInMinutes($officeStart);
+                $lateMinutes = abs($checkIn->diffInMinutes($officeStart));
             }
             $status = ($lateMinutes > 0) ? 'late' : 'present';
         }
@@ -363,18 +386,18 @@ private function calculateWorkedHours($checkIn, $checkOut)
                 $checkOut->addDay();
             }
 
-            $workedMinutes = $checkIn->diffInMinutes($checkOut);
+            $workedMinutes = abs($checkIn->diffInMinutes($checkOut));
 
             // Early Leave
             // If they left before office end
             if ($checkOut->lessThan($officeEnd)) {
-                $earlyLeaveMinutes = $officeEnd->diffInMinutes($checkOut);
+                $earlyLeaveMinutes = abs($officeEnd->diffInMinutes($checkOut));
             }
 
             // Overtime
             // If they left after office end
             if ($checkOut->greaterThan($officeEnd)) {
-                $overtimeMinutes = $checkOut->diffInMinutes($officeEnd);
+                $overtimeMinutes = abs($checkOut->diffInMinutes($officeEnd));
             }
 
             // Status Priority: Half Day > Late > Present

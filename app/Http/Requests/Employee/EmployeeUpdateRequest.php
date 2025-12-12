@@ -42,6 +42,7 @@ class EmployeeUpdateRequest extends FormRequest
             'bank_name' => 'nullable|string',
             'bank_account_number' => 'nullable|string|unique:employee_professional_infos,bank_account_number',
             'tax_id' => 'nullable|string|unique:employee_professional_infos,tax_id',
+            'shift_id' => 'sometimes|nullable|exists:shifts,id',
         ];
     }
 }

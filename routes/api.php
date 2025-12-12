@@ -95,6 +95,7 @@ Route::prefix('v1')->group(function () {
 //LEAVES
 Route::prefix('leaves')->group(function () {
     Route::get('/', [LeaveController::class, 'index']);
+    Route::get('/{id}', [LeaveController::class, 'show']); // Added
     Route::post('/', [LeaveController::class, 'store']);
     Route::patch('/{id}/approve', [LeaveController::class, 'approve']);
     Route::patch('/{id}/reject', [LeaveController::class, 'reject']);
@@ -104,6 +105,7 @@ Route::prefix('leaves')->group(function () {
 Route::prefix('leave-types')->group(function () {
     Route::get('/', [LeaveTypeController::class, 'index']);
     Route::get('/active', [LeaveTypeController::class, 'active']);
+    Route::get('/{id}', [LeaveTypeController::class, 'show']); // Added
     Route::post('/', [LeaveTypeController::class, 'store']);
     Route::patch('/{id}', [LeaveTypeController::class, 'update']);
     Route::patch('/{id}/status', [LeaveTypeController::class, 'toggleStatus']);

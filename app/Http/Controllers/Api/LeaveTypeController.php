@@ -73,6 +73,27 @@ class LeaveTypeController extends Controller
     }
 
     /**
+     * Get Leave Type
+     *
+     * Get details of a specific leave type.
+     *
+     * @urlParam id string required The UUID of the leave type.
+     */
+    public function show($id)
+    {
+        $type = LeaveType::find($id);
+
+        if (!$type) {
+            return response()->json(['message' => 'Leave type not found'], 404);
+        }
+
+        return response()->json([
+            'message' => 'Leave type retrieved',
+            'data'    => $type
+        ]);
+    }
+
+    /**
      * Create Leave Type
      *
      * Add a new leave type definition.

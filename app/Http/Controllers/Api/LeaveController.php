@@ -58,6 +58,27 @@ class LeaveController extends Controller
     }
 
     /**
+     * Get Leave Request
+     *
+     * Get details of a specific leave request.
+     *
+     * @urlParam id string required The UUID of the leave request.
+     */
+    public function show($id)
+    {
+        $leave = Leave::with(['employee.personalInfo', 'leaveType'])->find($id);
+
+        if (!$leave) {
+            return response()->json(['message' => 'Leave request not found'], 404);
+        }
+
+        return response()->json([
+            'message' => 'Leave request retrieved',
+            'data'    => $leave
+        ]);
+    }
+
+    /**
      * Create Leave Request
      *
      * Submit a new leave request for an employee.
