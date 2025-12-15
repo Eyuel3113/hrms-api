@@ -120,13 +120,16 @@ Route::prefix('recruitment')->group(function () {
     Route::get('/jobs', [JobController::class, 'index']);
     Route::get('/jobs/active', [JobController::class, 'active']);
     Route::post('/jobs', [JobController::class, 'store']);
+    Route::get('/jobs/{id}', [JobController::class, 'show']);
     Route::patch('/jobs/{id}', [JobController::class, 'update']);
+    Route::patch('/jobs/{id}/status', [JobController::class, 'toggleStatus']);
     Route::delete('/jobs/{id}', [JobController::class, 'destroy']);
 
     Route::post('/candidates', [CandidateController::class, 'store']);
     Route::get('/candidates', [CandidateController::class, 'index']);
+    Route::get('/candidates/{id}', [CandidateController::class, 'show']);
     Route::patch('/candidates/{id}/status', [CandidateController::class, 'updateStatus']);
-    Route::post('/candidates/{id}/hire', [CandidateController::class, 'hire']); // converts to Employee
+    Route::post('/candidates/{id}/hire', [CandidateController::class, 'hire']); 
 });
 
     

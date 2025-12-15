@@ -40,7 +40,7 @@ class AuthController extends Controller
 
     $user->tokens()->delete();
 
-    $token = $user->createToken('auth_token', ['*'], now()->addMinutes(30))->plainTextToken;
+    $token = $user->createToken('auth_token', ['*'], now()->addHours(24))->plainTextToken;
     $refresh = $user->createToken('refresh_token', ['*'], now()->addDays(365))->plainTextToken;
 
     $isProduction = env('APP_ENV') === 'production';
@@ -53,7 +53,7 @@ class AuthController extends Controller
         'token' => $token,  // For Bearer token authentication
         'refresh_token' => $refresh,  // For Bearer token refresh
     ])
-    ->cookie('auth_token', $token, 30, '/', null, $isProduction, true, false, 'lax')
+    ->cookie('auth_token', $token, 60*24, '/', null, $isProduction, true, false, 'lax')
     ->cookie('refresh_token', $refresh, 60*24*365, '/', null, $isProduction, true, false, 'lax');
 }
 
@@ -121,12 +121,12 @@ class AuthController extends Controller
         $user = $tokenRecord->tokenable;
 
         // Issue a new access token (do not revoke existing tokens)
-        $newToken = $user->createToken('auth_token', ['*'], now()->addMinutes(30))->plainTextToken;
+        $newToken = $user->createToken('auth_token', ['*'], now()->addHours(24))->plainTextToken;
 
         $isProduction = env('APP_ENV') === 'production';
 
         return response()->json(['success' => true, 'token' => $newToken])
-            ->cookie('auth_token', $newToken, 30, '/', null, $isProduction, true, false, 'lax');
+            ->cookie('auth_token', $newToken, 60*24, '/', null, $isProduction, true, false, 'lax');
     }
 
 

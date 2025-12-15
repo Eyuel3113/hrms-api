@@ -13,8 +13,27 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * Controller for managing Candidate applications.
+ *
+ * @group Candidate Management
+ * APIs for managing candidates, applications, and hiring.
+ */
 class CandidateController extends Controller
 {
+    /**
+     * List Candidates
+     *
+     * Display a listing of candidates with filtering and pagination.
+     *
+     * @queryParam search string Filter by name or email.
+     * @queryParam status string Filter by status (new, reviewed, etc).
+     * @queryParam job_id string Filter by job UUID.
+     * @queryParam limit integer Items per page. Default 10.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index(Request $request)
     {
         $search = $request->query('search');
@@ -51,6 +70,44 @@ class CandidateController extends Controller
         ]);
     }
 
+    /**
+ * Get Candidate by ID
+ *
+ * Display the specified candidate with job details.
+ *
+ * @group Candidate Management
+ * @urlParam id string required The UUID of the candidate. Example: 45f0064d-b0de-4f82-9240-47c41b0fc122
+ *
+ * @param string $id
+ * @return \Illuminate\Http\JsonResponse
+ */
+public function show($id)
+{
+    $candidate = Candidate::with(['job.department', 'job.designation'])
+                          ->findOrFail($id);
+
+    return response()->json([
+        'message' => 'Candidate retrieved successfully',
+        'data'    => $candidate,
+        'cv_url'  => $candidate->cv_path ? asset('storage/' . $candidate->cv_path) : null
+    ]);
+}
+
+    /**
+     * Submit Application
+     *
+     * Store a newly created candidate application.
+     *
+     * @bodyParam job_id string required The UUID of the job.
+     * @bodyParam full_name string required Candidate's full name.
+     * @bodyParam email string required Candidate's email address.
+     * @bodyParam phone string required Candidate's phone number.
+     * @bodyParam cv file required The CV/Resume file (pdf, doc, docx). Max 10MB.
+     * @bodyParam cover_letter string optional Cover letter text.
+     *
+     * @param \App\Http\Requests\Candidate\CandidateStoreRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(CandidateStoreRequest $request)
     {
         $cvPath = null;
@@ -80,6 +137,17 @@ class CandidateController extends Controller
         ], 201);
     }
 
+    /**
+     * Update Status
+     *
+     * Update the status of a specific candidate.
+     *
+     * @bodyParam status string required The new status (new, reviewed, interview, shortlisted, rejected, hired).
+     *
+     * @param Request $request
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateStatus(Request $request, $id)
     {
         $candidate = Candidate::findOrFail($id);
@@ -96,13 +164,27 @@ class CandidateController extends Controller
         ]);
     }
 
+    /**
+     * Hire Candidate
+     *
+     * Hire a candidate and convert them to an employee.
+     *
+     * @param Request $request
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function hire(Request $request, $id)
     {
         $candidate = Candidate::findOrFail($id);
 
-        if ($candidate->status !== 'hired') {
-            $candidate->update(['status' => 'hired']);
+        if ($candidate->status === 'hired' || $candidate->hired_as_employee_id) {
+            return response()->json([
+                'message' => 'This candidate has already been hired.',
+                //'employee_id' => $candidate->hired_as_employee_id
+            ], 400); // Bad Request
         }
+
+        $candidate->update(['status' => 'hired']);
 
         $employee = Employee::create([
             'id'            => (string) Str::uuid(),
@@ -121,7 +203,7 @@ class CandidateController extends Controller
             'department_id'  => $candidate->job->department_id,
             'designation_id' => $candidate->job->designation_id,
             'joining_date'   => now()->format('Y-m-d'),
-            'employment_type'=> 'permanent',
+            'employment_type'=> 'full-time',
             'basic_salary'   => 0,
         ]);
 

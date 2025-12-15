@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('candidates', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('job_id')->constrained('jobs')->cascadeOnDelete();
+            $table->foreignUuid('job_id')->constrained('job_postings')->cascadeOnDelete();
             $table->string('full_name');
             $table->string('email')->unique();
             $table->string('phone');
