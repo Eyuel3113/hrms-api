@@ -70,10 +70,10 @@ class CandidateController extends Controller
         ]);
     }
 
-    /**
+/**
  * Get Candidate by ID
  *
- * Display the specified candidate with job details.
+ * Display the specified candidate with job details and public CV URL.
  *
  * @group Candidate Management
  * @urlParam id string required The UUID of the candidate. Example: 45f0064d-b0de-4f82-9240-47c41b0fc122
@@ -86,10 +86,17 @@ public function show($id)
     $candidate = Candidate::with(['job.department', 'job.designation'])
                           ->findOrFail($id);
 
+    // Add public CV URL to the candidate data
+    $candidate->cv_url = $candidate->cv_path 
+        ? asset('storage/' . $candidate->cv_path) 
+        : null;
+
+    // Optionally hide internal cv_path from response
+    unset($candidate->cv_path);
+
     return response()->json([
         'message' => 'Candidate retrieved successfully',
-        'data'    => $candidate,
-        'cv_url'  => $candidate->cv_path ? asset('storage/' . $candidate->cv_path) : null
+        'data'    => $candidate
     ]);
 }
 
