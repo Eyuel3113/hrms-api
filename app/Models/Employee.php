@@ -46,4 +46,17 @@ class Employee extends Model
 {
     return $this->belongsTo(Shift::class);
 }
+public function trainings()
+{
+    return $this->belongsToMany(Training::class, 'training_attendees')
+                ->withPivot('status', 'attended_at', 'feedback')
+                ->withTimestamps();
+}
+public function projects()
+{
+    return $this->belongsToMany(Project::class, 'project_members')
+                ->withPivot('rating', 'feedback', 'rated_at')
+                ->withTimestamps();
+}
+
 }

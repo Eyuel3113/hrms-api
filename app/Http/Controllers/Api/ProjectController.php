@@ -8,6 +8,7 @@ use App\Models\ProjectMember;
 use App\Http\Requests\Project\ProjectStoreRequest;
 use App\Http\Requests\Project\ProjectUpdateRequest;
 use Illuminate\Http\Request;
+use App\Models\Employee;
 
 
 
@@ -396,4 +397,74 @@ public function assignAllEmployees($id)
             'out_of' => 5
         ]);
     }
+
+
+/**
+ * Employee Project History by ID
+ *
+ * Get all projects an employee participated in with rating and feedback.
+ *
+ * @group Project Management
+ * @urlParam employeeId string required The UUID of the employee.
+ * @queryParam search string optional Search by project title or description. Example: HRMS
+ * @queryParam limit integer optional Items per page. Default 10. Example: 20
+ *
+ * @param Request $request
+ * @param string $employeeId
+ * @return \Illuminate\Http\JsonResponse
+ */
+public function employeeProjectHistory(Request $request, $employeeId)
+{
+    $search = $request->query('search');
+    $limit  = $request->query('limit', 10);
+
+    $employee = Employee::with('personalInfo')->findOrFail($employeeId);
+
+    $query = $employee->projects()
+        ->withPivot('rating', 'feedback', 'rated_at');
+
+    if ($search) {
+        $query->where(function ($q) use ($search) {
+            $q->where('title', 'like', "%{$search}%")
+              ->orWhere('description', 'like', "%{$search}%");
+        });
+    }
+
+    $projects = $query->orderBy('projects.start_date', 'desc')
+                      ->paginate($limit);
+
+    $history = $projects->map(function ($project) {
+        return [
+            'project_id' => $project->id,
+            'title' => $project->title,
+            'description' => $project->description,
+            'start_date' => $project->start_date,
+            'end_date' => $project->end_date,
+            'status' => $project->status,
+            'rating' => $project->pivot->rating,
+            'feedback' => $project->pivot->feedback,
+            'rated_at' => $project->pivot->rated_at,
+            'average_rating' => $project->average_rating,
+        ];
+    });
+
+    return response()->json([
+        'message' => 'Employee project history fetched successfully',
+        'employee' => [
+            'id' => $employee->id,
+            'full_name' => $employee->personalInfo->first_name . ' ' . $employee->personalInfo->last_name,
+            'email' => $employee->personalInfo->email,
+            'phone' => $employee->personalInfo->phone,
+        ],
+        'total_projects' => $projects->total(),
+        'overall_performance' => round($projects->avg('pivot.rating'), 2),
+        'data' => $history,
+        'pagination' => [
+            'total'        => $projects->total(),
+            'per_page'     => $projects->perPage(),
+            'current_page' => $projects->currentPage(),
+            'last_page'    => $projects->lastPage(),
+        ]
+    ]);
+}
 }

@@ -8,6 +8,7 @@ use App\Models\TrainingAttendee;
 use App\Http\Requests\Training\TrainingStoreRequest;
 use App\Http\Requests\Training\TrainingUpdateRequest;
 use Illuminate\Http\Request;
+use App\Models\Employee;
 
 class TrainingController extends Controller
 {
@@ -385,4 +386,77 @@ public function toggleStatus($id)
         'data'      => $training
     ]);
 }
+/**
+ * Employee Training History by ID
+ *
+ * Get all trainings an employee participated in with attendance status.
+ *
+ * @group Training Management
+ * @urlParam employeeId string required The UUID of the employee.
+ * @queryParam search string optional Search by training title or description. Example: Laravel
+ * @queryParam limit integer optional Items per page. Default 10. Example: 20
+ *
+ * @param string $employeeId
+ * @param Request $request
+ * @return \Illuminate\Http\JsonResponse
+ */
+public function employeeTrainingHistory(Request $request, $employeeId)
+{
+    $search = $request->query('search');
+    $limit  = $request->query('limit', 10);
+
+    $employee = Employee::with('personalInfo')->findOrFail($employeeId);
+
+    $query = $employee->trainings()
+        ->withPivot('status', 'attended_at', 'feedback');
+
+    if ($search) {
+        $query->where(function ($q) use ($search) {
+            $q->where('title', 'like', "%{$search}%")
+              ->orWhere('description', 'like', "%{$search}%");
+        });
+    }
+
+    $trainings = $query->orderBy('trainings.start_date', 'desc')
+                       ->paginate($limit);
+
+    $history = $trainings->map(function ($training) {
+        return [
+            'training_id' => $training->id,
+            'title' => $training->title,
+            'description' => $training->description,
+            'start_date' => $training->start_date,
+            'end_date' => $training->end_date,
+            'trainer_name' => $training->trainer_name,
+            'location' => $training->location,
+            'type' => $training->type,
+            'is_mandatory' => $training->is_mandatory,
+            'incentive_amount' => $training->incentive_amount,
+            'has_incentive' => $training->has_incentive,
+            'status' => $training->pivot->status,
+            'attended_at' => $training->pivot->attended_at,
+            'feedback' => $training->pivot->feedback,
+        ];
+    });
+
+    return response()->json([
+        'message' => 'Employee training history fetched successfully',
+        'employee' => [
+            'id' => $employee->id,
+            'full_name' => $employee->personalInfo->first_name . ' ' . $employee->personalInfo->last_name,
+            'email' => $employee->personalInfo->email,
+            'phone' => $employee->personalInfo->phone,
+        ],
+        'total_trainings' => $trainings->total(),
+        'data' => $history,
+        'pagination' => [
+            'total'        => $trainings->total(),
+            'per_page'     => $trainings->perPage(),
+            'current_page' => $trainings->currentPage(),
+            'last_page'    => $trainings->lastPage(),
+        ]
+    ]);
+}
+
+
 }

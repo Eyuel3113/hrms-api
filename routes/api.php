@@ -143,12 +143,14 @@ Route::prefix('trainings')->group(function () {
     Route::post('/', [TrainingController::class, 'store']);
     Route::get('/active', [TrainingController::class, 'active']);
     Route::get('/inactive', [TrainingController::class, 'inactive']);
+    Route::get('/employee/{employeeId}', [TrainingController::class, 'employeeTrainingHistory']);
     Route::get('/{id}', [TrainingController::class, 'show']);
     Route::patch('/{id}', [TrainingController::class, 'update']);
     Route::patch('/{id}/status', [TrainingController::class, 'toggleStatus']);
     Route::post('/{id}/assign', [TrainingController::class, 'assignEmployees']);
     Route::post('/{id}/assign-all', [TrainingController::class, 'assignAllEmployees']);
     Route::patch('/{trainingId}/attend/{employeeId}', [TrainingController::class, 'markAttendance']);
+
 });
 
 // PROJECTS
@@ -165,6 +167,8 @@ Route::prefix('projects')->group(function () {
     Route::post('/{id}/assign-all', [TrainingController::class, 'assignAllEmployees']);
     Route::patch('/{projectId}/rate/{employeeId}', [ProjectController::class, 'rateEmployee']);
     Route::get('/employee/{employeeId}/performance', [ProjectController::class, 'employeePerformance']);
+    Route::get('/employees/{employeeId}', [ProjectController::class, 'employeeProjectHistory']);
+
 });
 
     

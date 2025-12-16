@@ -233,7 +233,7 @@ endpoints:
         name: marital_status
         description: ''
         required: false
-        example: single
+        example: widowed
         type: string
         enumValues:
           - single
@@ -430,7 +430,7 @@ endpoints:
       phone: architecto
       date_of_birth: architecto
       gender: architecto
-      marital_status: single
+      marital_status: widowed
       nationality: architecto
       address: architecto
       city: architecto
@@ -726,7 +726,7 @@ endpoints:
         name: date_of_birth
         description: 'Must be a valid date.'
         required: false
-        example: '2025-12-16T12:20:19'
+        example: '2025-12-16T13:20:26'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -842,7 +842,7 @@ endpoints:
         name: joining_date
         description: 'Must be a valid date.'
         required: false
-        example: '2025-12-16T12:20:19'
+        example: '2025-12-16T13:20:26'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -864,7 +864,7 @@ endpoints:
         name: employment_type
         description: ''
         required: false
-        example: contract
+        example: part_time
         type: string
         enumValues:
           - full_time
@@ -945,7 +945,7 @@ endpoints:
       last_name: 'n'
       email: gbailey@example.net
       phone: vdljnikhwaykcmyu
-      date_of_birth: '2025-12-16T12:20:19'
+      date_of_birth: '2025-12-16T13:20:26'
       gender: male
       marital_status: widowed
       nationality: architecto
@@ -953,9 +953,9 @@ endpoints:
       city: architecto
       state: architecto
       zip_code: architecto
-      joining_date: '2025-12-16T12:20:19'
+      joining_date: '2025-12-16T13:20:26'
       ending_date: '2052-01-09'
-      employment_type: contract
+      employment_type: part_time
       basic_salary: 22
       salary_currency: gzm
       bank_name: architecto
