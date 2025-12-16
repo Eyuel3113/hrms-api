@@ -13,6 +13,8 @@ use App\Http\Controllers\Api\LeaveController;
 use App\Http\Controllers\Api\LeaveTypeController;
 use App\Http\Controllers\Api\JobController;
 use App\Http\Controllers\Api\CandidateController;
+use App\Http\Controllers\Api\TrainingController;
+
 
 Route::prefix('v1')->group(function () {
 
@@ -119,6 +121,7 @@ Route::prefix('leave-types')->group(function () {
 Route::prefix('recruitment')->group(function () {
     Route::get('/jobs', [JobController::class, 'index']);
     Route::get('/jobs/active', [JobController::class, 'active']);
+    Route::get('/jobs/inactive', [JobController::class, 'inactive']);
     Route::post('/jobs', [JobController::class, 'store']);
     Route::get('/jobs/{id}', [JobController::class, 'show']);
     Route::patch('/jobs/{id}', [JobController::class, 'update']);
@@ -130,6 +133,14 @@ Route::prefix('recruitment')->group(function () {
     Route::get('/candidates/{id}', [CandidateController::class, 'show']);
     Route::patch('/candidates/{id}/status', [CandidateController::class, 'updateStatus']);
     Route::post('/candidates/{id}/hire', [CandidateController::class, 'hire']); 
+});
+
+Route::prefix('trainings')->group(function () {
+    Route::get('/', [TrainingController::class, 'index']);
+    Route::post('/', [TrainingController::class, 'store']);
+    Route::patch('/{id}', [TrainingController::class, 'update']);
+    Route::post('/{id}/assign', [TrainingController::class, 'assignEmployees']);
+    Route::patch('/{trainingId}/attend/{employeeId}', [TrainingController::class, 'markAttendance']);
 });
 
     

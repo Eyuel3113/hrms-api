@@ -76,6 +76,8 @@ public function index(Request $request)
  * @queryParam search string Filter active jobs by title or description. Example: Developer
  * @queryParam department_id string Filter active jobs by department UUID. Example: a1b2c3d4-e5f6-7890-g1h2-i3j4k5l6m7n8
  * @queryParam designation_id string Filter active jobs by designation UUID. Example: b2c3d4e5-f6g7-8901-h2i3-j4k5l6m7n8o9
+ * @queryParam limit integer Items per page. Default 10. Example: 10
+ * @queryParam page integer Page number for pagination. Example: 2
  *
  * @return \Illuminate\Http\JsonResponse
  */
@@ -106,6 +108,57 @@ public function active(Request $request)
 
     return response()->json([
         'message' => 'Active jobs fetched successfully',
+        'data'    => $jobs->items(),
+            'pagination' => [
+            'total'        => $jobs->total(),
+            'per_page'     => $jobs->perPage(),
+            'current_page' => $jobs->currentPage(),
+            'last_page'    => $jobs->lastPage(),
+        ]
+    ]);
+}
+
+/**
+ * List Inactive Jobs
+ *
+ * Display a listing of Inactive jobs (for public view) with optional filtering.
+ *
+ * @group Job Management
+ * @queryParam search string Filter active jobs by title or description. Example: Developer
+ * @queryParam department_id string Filter active jobs by department UUID. Example: a1b2c3d4-e5f6-7890-g1h2-i3j4k5l6m7n8
+ * @queryParam designation_id string Filter active jobs by designation UUID. Example: b2c3d4e5-f6g7-8901-h2i3-j4k5l6m7n8o9
+ * @queryParam limit integer Items per page. Default 10. Example: 10
+ * @queryParam page integer Page number for pagination. Example: 2
+ *
+ * @return \Illuminate\Http\JsonResponse
+ */
+public function inactive(Request $request)
+{
+    $search         = $request->query('search');
+    $departmentId   = $request->query('department_id');
+    $designationId  = $request->query('designation_id');
+    $limit          = $request->query('limit', 10);
+
+    $query = Job::where('is_active',false) // only inactive + open status
+                ->with(['department', 'designation']);
+
+    if ($search) {
+        $query->where('title', 'like', "%{$search}%")
+              ->orWhere('description', 'like', "%{$search}%");
+    }
+
+    if ($departmentId) {
+        $query->where('department_id', $departmentId);
+    }
+
+    if ($designationId) {
+        $query->where('designation_id', $designationId);
+    }
+
+    $jobs = $query->orderBy('created_at', 'desc')->paginate($limit);
+
+    return response()->json([
+        'message' => 'Inactive jobs fetched successfully',
         'data'    => $jobs->items(),
             'pagination' => [
             'total'        => $jobs->total(),

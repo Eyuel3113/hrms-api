@@ -130,7 +130,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: inactive
+        example: active
         type: string
         enumValues:
           - active
@@ -152,7 +152,7 @@ endpoints:
     cleanBodyParameters:
       title: architecto
       description: 'Eius et animi quos velit et.'
-      status: inactive
+      status: active
       department_id: architecto
     fileParameters: []
     responses:

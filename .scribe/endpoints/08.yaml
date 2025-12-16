@@ -155,10 +155,134 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'Items per page. Default 10.'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      page:
+        custom: []
+        name: page
+        description: 'Page number for pagination.'
+        required: false
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
     cleanQueryParameters:
       search: Developer
       department_id: a1b2c3d4-e5f6-7890-g1h2-i3j4k5l6m7n8
       designation_id: b2c3d4e5-f6g7-8901-h2i3-j4k5l6m7n8o9
+      limit: 10
+      page: 2
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          vary: Origin
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/recruitment/jobs/inactive
+    metadata:
+      custom: []
+      groupName: 'Job Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List Inactive Jobs'
+      description: 'Display a listing of Inactive jobs (for public view) with optional filtering.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Filter active jobs by title or description.'
+        required: false
+        example: Developer
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      department_id:
+        custom: []
+        name: department_id
+        description: 'Filter active jobs by department UUID.'
+        required: false
+        example: a1b2c3d4-e5f6-7890-g1h2-i3j4k5l6m7n8
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      designation_id:
+        custom: []
+        name: designation_id
+        description: 'Filter active jobs by designation UUID.'
+        required: false
+        example: b2c3d4e5-f6g7-8901-h2i3-j4k5l6m7n8o9
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'Items per page. Default 10.'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      page:
+        custom: []
+        name: page
+        description: 'Page number for pagination.'
+        required: false
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      search: Developer
+      department_id: a1b2c3d4-e5f6-7890-g1h2-i3j4k5l6m7n8
+      designation_id: b2c3d4e5-f6g7-8901-h2i3-j4k5l6m7n8o9
+      limit: 10
+      page: 2
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -318,7 +442,7 @@ endpoints:
         name: show_salary
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -335,7 +459,7 @@ endpoints:
       max_salary: 84
       salary_currency: ETB
       salary_negotiable: true
-      show_salary: true
+      show_salary: false
     fileParameters: []
     responses: []
     responseFields: []
@@ -548,7 +672,7 @@ endpoints:
         name: salary_negotiable
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -559,7 +683,7 @@ endpoints:
         name: show_salary
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -575,8 +699,8 @@ endpoints:
       min_salary: 39
       max_salary: 84
       salary_currency: ETB
-      salary_negotiable: false
-      show_salary: true
+      salary_negotiable: true
+      show_salary: false
     fileParameters: []
     responses: []
     responseFields: []
