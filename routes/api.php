@@ -138,7 +138,11 @@ Route::prefix('recruitment')->group(function () {
 Route::prefix('trainings')->group(function () {
     Route::get('/', [TrainingController::class, 'index']);
     Route::post('/', [TrainingController::class, 'store']);
+    Route::get('/active', [TrainingController::class, 'active']);
+    Route::get('/inactive', [TrainingController::class, 'inactive']);
+    Route::get('/{id}', [TrainingController::class, 'show']);
     Route::patch('/{id}', [TrainingController::class, 'update']);
+    Route::patch('/{id}/status', [TrainingController::class, 'toggleStatus']);
     Route::post('/{id}/assign', [TrainingController::class, 'assignEmployees']);
     Route::patch('/{trainingId}/attend/{employeeId}', [TrainingController::class, 'markAttendance']);
 });

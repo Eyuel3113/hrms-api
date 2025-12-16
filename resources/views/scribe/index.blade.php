@@ -362,8 +362,20 @@ APIs for managing leave types (Annual, Sick, etc.)</a>
                                                                                 <li class="tocify-item level-2" data-unique="training-management-POSTapi-v1-trainings">
                                 <a href="#training-management-POSTapi-v1-trainings">Create Training</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="training-management-GETapi-v1-trainings-active">
+                                <a href="#training-management-GETapi-v1-trainings-active">List Active Trainings</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="training-management-GETapi-v1-trainings-inactive">
+                                <a href="#training-management-GETapi-v1-trainings-inactive">List Inactive Trainings</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="training-management-GETapi-v1-trainings--id-">
+                                <a href="#training-management-GETapi-v1-trainings--id-">Get Training by ID</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="training-management-PATCHapi-v1-trainings--id-">
                                 <a href="#training-management-PATCHapi-v1-trainings--id-">Update Training</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="training-management-PATCHapi-v1-trainings--id--status">
+                                <a href="#training-management-PATCHapi-v1-trainings--id--status">Toggle Training Active/Inactive</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="training-management-POSTapi-v1-trainings--id--assign">
                                 <a href="#training-management-POSTapi-v1-trainings--id--assign">Assign Employees to Training</a>
@@ -1739,7 +1751,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "email=gbailey@example.net"\
     --form "phone=architecto"\
     --form "cover_letter=architecto"\
-    --form "cv=@C:\Users\user\AppData\Local\Temp\php64F8.tmp" </code></pre></div>
+    --form "cv=@C:\Users\user\AppData\Local\Temp\phpD7D8.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -1900,7 +1912,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>The CV/Resume file (pdf, doc, docx). Max 10MB. Example: <code>C:\Users\user\AppData\Local\Temp\php64F8.tmp</code></p>
+<p>The CV/Resume file (pdf, doc, docx). Max 10MB. Example: <code>C:\Users\user\AppData\Local\Temp\phpD7D8.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>cover_letter</code></b>&nbsp;&nbsp;
@@ -3155,7 +3167,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"name\": \"architecto\",
     \"code\": \"architecto\",
     \"description\": \"Eius et animi quos velit et.\",
-    \"status\": \"active\"
+    \"status\": \"inactive\"
 }"
 </code></pre></div>
 
@@ -3174,7 +3186,7 @@ let body = {
     "name": "architecto",
     "code": "architecto",
     "description": "Eius et animi quos velit et.",
-    "status": "active"
+    "status": "inactive"
 };
 
 fetch(url, {
@@ -3325,10 +3337,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="PATCHapi-v1-departments--id-"
-               value="active"
+               value="inactive"
                data-component="body">
     <br>
-<p>Example: <code>active</code></p>
+<p>Example: <code>inactive</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>active</code></li> <li><code>inactive</code></li></ul>
         </div>
@@ -4651,7 +4663,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "phone=architecto"\
     --form "date_of_birth=architecto"\
     --form "gender=architecto"\
-    --form "marital_status=widowed"\
+    --form "marital_status=divorced"\
     --form "nationality=architecto"\
     --form "address=architecto"\
     --form "city=architecto"\
@@ -4661,13 +4673,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "designation_id=architecto"\
     --form "joining_date=architecto"\
     --form "ending_date=2052-01-09"\
-    --form "employment_type=full-time"\
+    --form "employment_type=part-time"\
     --form "basic_salary=4326.41688"\
     --form "salary_currency=gzm"\
     --form "bank_name=architecto"\
     --form "bank_account_number=architecto"\
     --form "tax_id=architecto"\
-    --form "photo=@C:\Users\user\AppData\Local\Temp\php637B.tmp" </code></pre></div>
+    --form "photo=@C:\Users\user\AppData\Local\Temp\phpD6A9.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -4687,7 +4699,7 @@ body.append('email', 'gbailey@example.net');
 body.append('phone', 'architecto');
 body.append('date_of_birth', 'architecto');
 body.append('gender', 'architecto');
-body.append('marital_status', 'widowed');
+body.append('marital_status', 'divorced');
 body.append('nationality', 'architecto');
 body.append('address', 'architecto');
 body.append('city', 'architecto');
@@ -4697,7 +4709,7 @@ body.append('department_id', 'architecto');
 body.append('designation_id', 'architecto');
 body.append('joining_date', 'architecto');
 body.append('ending_date', '2052-01-09');
-body.append('employment_type', 'full-time');
+body.append('employment_type', 'part-time');
 body.append('basic_salary', '4326.41688');
 body.append('salary_currency', 'gzm');
 body.append('bank_name', 'architecto');
@@ -4855,7 +4867,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Profile photo (image). Example: <code>C:\Users\user\AppData\Local\Temp\php637B.tmp</code></p>
+<p>Profile photo (image). Example: <code>C:\Users\user\AppData\Local\Temp\phpD6A9.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>date_of_birth</code></b>&nbsp;&nbsp;
@@ -4888,10 +4900,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="marital_status"                data-endpoint="POSTapi-v1-employees"
-               value="widowed"
+               value="divorced"
                data-component="body">
     <br>
-<p>Example: <code>widowed</code></p>
+<p>Example: <code>divorced</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>single</code></li> <li><code>married</code></li> <li><code>divorced</code></li> <li><code>widowed</code></li></ul>
         </div>
@@ -5010,10 +5022,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="employment_type"                data-endpoint="POSTapi-v1-employees"
-               value="full-time"
+               value="part-time"
                data-component="body">
     <br>
-<p>Example: <code>full-time</code></p>
+<p>Example: <code>part-time</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>full-time</code></li> <li><code>part-time</code></li> <li><code>contract</code></li> <li><code>internship</code></li></ul>
         </div>
@@ -5455,7 +5467,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "last_name=n"\
     --form "email=gbailey@example.net"\
     --form "phone=vdljnikhwaykcmyu"\
-    --form "date_of_birth=2025-12-16T07:40:39"\
+    --form "date_of_birth=2025-12-16T08:59:47"\
     --form "gender=male"\
     --form "marital_status=married"\
     --form "nationality=architecto"\
@@ -5463,15 +5475,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "city=architecto"\
     --form "state=architecto"\
     --form "zip_code=architecto"\
-    --form "joining_date=2025-12-16T07:40:39"\
+    --form "joining_date=2025-12-16T08:59:47"\
     --form "ending_date=2052-01-09"\
-    --form "employment_type=full_time"\
+    --form "employment_type=contract"\
     --form "basic_salary=22"\
     --form "salary_currency=gzm"\
     --form "bank_name=architecto"\
     --form "bank_account_number=architecto"\
     --form "tax_id=architecto"\
-    --form "photo=@C:\Users\user\AppData\Local\Temp\php63DA.tmp" </code></pre></div>
+    --form "photo=@C:\Users\user\AppData\Local\Temp\phpD6E9.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -5489,7 +5501,7 @@ body.append('first_name', 'architecto');
 body.append('last_name', 'n');
 body.append('email', 'gbailey@example.net');
 body.append('phone', 'vdljnikhwaykcmyu');
-body.append('date_of_birth', '2025-12-16T07:40:39');
+body.append('date_of_birth', '2025-12-16T08:59:47');
 body.append('gender', 'male');
 body.append('marital_status', 'married');
 body.append('nationality', 'architecto');
@@ -5497,9 +5509,9 @@ body.append('address', 'architecto');
 body.append('city', 'architecto');
 body.append('state', 'architecto');
 body.append('zip_code', 'architecto');
-body.append('joining_date', '2025-12-16T07:40:39');
+body.append('joining_date', '2025-12-16T08:59:47');
 body.append('ending_date', '2052-01-09');
-body.append('employment_type', 'full_time');
+body.append('employment_type', 'contract');
 body.append('basic_salary', '22');
 body.append('salary_currency', 'gzm');
 body.append('bank_name', 'architecto');
@@ -5670,7 +5682,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 5120 kilobytes. Example: <code>C:\Users\user\AppData\Local\Temp\php63DA.tmp</code></p>
+<p>Must be an image. Must not be greater than 5120 kilobytes. Example: <code>C:\Users\user\AppData\Local\Temp\phpD6E9.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>date_of_birth</code></b>&nbsp;&nbsp;
@@ -5679,10 +5691,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date_of_birth"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="2025-12-16T07:40:39"
+               value="2025-12-16T08:59:47"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2025-12-16T07:40:39</code></p>
+<p>Must be a valid date. Example: <code>2025-12-16T08:59:47</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -5803,10 +5815,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="joining_date"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="2025-12-16T07:40:39"
+               value="2025-12-16T08:59:47"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2025-12-16T07:40:39</code></p>
+<p>Must be a valid date. Example: <code>2025-12-16T08:59:47</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>ending_date</code></b>&nbsp;&nbsp;
@@ -5827,10 +5839,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="employment_type"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="full_time"
+               value="contract"
                data-component="body">
     <br>
-<p>Example: <code>full_time</code></p>
+<p>Example: <code>contract</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>full_time</code></li> <li><code>part_time</code></li> <li><code>contract</code></li> <li><code>internship</code></li></ul>
         </div>
@@ -6056,7 +6068,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     "http://localhost/api/v1/employees/architecto/photo" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "photo=@C:\Users\user\AppData\Local\Temp\php63EB.tmp" </code></pre></div>
+    --form "photo=@C:\Users\user\AppData\Local\Temp\phpD6FA.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -6187,7 +6199,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Image file (jpeg, png, jpg, max 5MB). Example: <code>C:\Users\user\AppData\Local\Temp\php63EB.tmp</code></p>
+<p>Image file (jpeg, png, jpg, max 5MB). Example: <code>C:\Users\user\AppData\Local\Temp\phpD6FA.tmp</code></p>
         </div>
         </form>
 
@@ -8121,7 +8133,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"deadline\": \"2025-12-31\",
     \"min_salary\": 39,
     \"max_salary\": 84,
-    \"salary_currency\": \"ETB\",
+    \"salary_currency\": \"USD\",
     \"salary_negotiable\": true,
     \"show_salary\": false
 }"
@@ -8147,7 +8159,7 @@ let body = {
     "deadline": "2025-12-31",
     "min_salary": 39,
     "max_salary": 84,
-    "salary_currency": "ETB",
+    "salary_currency": "USD",
     "salary_negotiable": true,
     "show_salary": false
 };
@@ -8337,10 +8349,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="salary_currency"                data-endpoint="POSTapi-v1-recruitment-jobs"
-               value="ETB"
+               value="USD"
                data-component="body">
     <br>
-<p>Example: <code>ETB</code></p>
+<p>Example: <code>USD</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>ETB</code></li> <li><code>USD</code></li> <li><code>EUR</code></li></ul>
         </div>
@@ -8554,9 +8566,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"status\": \"open\",
     \"min_salary\": 39,
     \"max_salary\": 84,
-    \"salary_currency\": \"ETB\",
-    \"salary_negotiable\": true,
-    \"show_salary\": false
+    \"salary_currency\": \"USD\",
+    \"salary_negotiable\": false,
+    \"show_salary\": true
 }"
 </code></pre></div>
 
@@ -8580,9 +8592,9 @@ let body = {
     "status": "open",
     "min_salary": 39,
     "max_salary": 84,
-    "salary_currency": "ETB",
-    "salary_negotiable": true,
-    "show_salary": false
+    "salary_currency": "USD",
+    "salary_negotiable": false,
+    "show_salary": true
 };
 
 fetch(url, {
@@ -8795,10 +8807,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="salary_currency"                data-endpoint="PATCHapi-v1-recruitment-jobs--id-"
-               value="ETB"
+               value="USD"
                data-component="body">
     <br>
-<p>Example: <code>ETB</code></p>
+<p>Example: <code>USD</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>ETB</code></li> <li><code>USD</code></li> <li><code>EUR</code></li></ul>
         </div>
@@ -8822,7 +8834,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>show_salary</code></b>&nbsp;&nbsp;
@@ -8844,7 +8856,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
         </form>
 
@@ -10485,8 +10497,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"name\": \"Casual Leave v2\",
     \"default_days\": 27,
-    \"is_paid\": true,
-    \"requires_approval\": false
+    \"is_paid\": false,
+    \"requires_approval\": true
 }"
 </code></pre></div>
 
@@ -10504,8 +10516,8 @@ const headers = {
 let body = {
     "name": "Casual Leave v2",
     "default_days": 27,
-    "is_paid": true,
-    "requires_approval": false
+    "is_paid": false,
+    "requires_approval": true
 };
 
 fetch(url, {
@@ -10647,7 +10659,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>requires_approval</code></b>&nbsp;&nbsp;
@@ -10669,7 +10681,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
         </form>
 
@@ -12000,7 +12012,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>
 </p>
 
-
+<p>Display a listing of trainings with pagination and filtering.</p>
 
 <span id="example-requests-GETapi-v1-trainings">
 <blockquote>Example request:</blockquote>
@@ -12008,7 +12020,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/v1/trainings?search=architecto&amp;limit=16" \
+    --get "http://localhost/api/v1/trainings?search=Laravel&amp;date=2025-12-20&amp;start_date=2025-12-01&amp;end_date=2025-12-31&amp;limit=10&amp;page=2" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -12019,8 +12031,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const params = {
-    "search": "architecto",
-    "limit": "16",
+    "search": "Laravel",
+    "date": "2025-12-20",
+    "start_date": "2025-12-01",
+    "end_date": "2025-12-31",
+    "limit": "10",
+    "page": "2",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -12134,10 +12150,46 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="search"                data-endpoint="GETapi-v1-trainings"
-               value="architecto"
+               value="Laravel"
                data-component="query">
     <br>
-<p>Filter by title or description Example: <code>architecto</code></p>
+<p>Filter by title or description. Example: <code>Laravel</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="date"                data-endpoint="GETapi-v1-trainings"
+               value="2025-12-20"
+               data-component="query">
+    <br>
+<p>Filter trainings that occur on this date (YYYY-MM-DD). Example: <code>2025-12-20</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>start_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="start_date"                data-endpoint="GETapi-v1-trainings"
+               value="2025-12-01"
+               data-component="query">
+    <br>
+<p>Filter trainings starting on or after this date. Example: <code>2025-12-01</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>end_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="end_date"                data-endpoint="GETapi-v1-trainings"
+               value="2025-12-31"
+               data-component="query">
+    <br>
+<p>Filter trainings ending on or before this date. Example: <code>2025-12-31</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
@@ -12146,10 +12198,22 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="limit"                data-endpoint="GETapi-v1-trainings"
-               value="16"
+               value="10"
                data-component="query">
     <br>
-<p>Items per page. Default 10 Example: <code>16</code></p>
+<p>Items per page. Default 10. Example: <code>10</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="page"                data-endpoint="GETapi-v1-trainings"
+               value="2"
+               data-component="query">
+    <br>
+<p>Page number for pagination. Example: <code>2</code></p>
             </div>
                 </form>
 
@@ -12431,6 +12495,565 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
+                    <h2 id="training-management-GETapi-v1-trainings-active">List Active Trainings</h2>
+
+<p>
+</p>
+
+<p>Display a listing of active trainings with pagination and filtering.</p>
+
+<span id="example-requests-GETapi-v1-trainings-active">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/v1/trainings/active?search=Laravel&amp;date=2025-12-20&amp;start_date=2025-12-01&amp;end_date=2025-12-31&amp;limit=10&amp;page=2" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/trainings/active"
+);
+
+const params = {
+    "search": "Laravel",
+    "date": "2025-12-20",
+    "start_date": "2025-12-01",
+    "end_date": "2025-12-31",
+    "limit": "10",
+    "page": "2",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-trainings-active">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+vary: Origin
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-trainings-active" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-trainings-active"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-trainings-active"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-trainings-active" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-trainings-active">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-trainings-active" data-method="GET"
+      data-path="api/v1/trainings/active"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-trainings-active', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-trainings-active"
+                    onclick="tryItOut('GETapi-v1-trainings-active');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-trainings-active"
+                    onclick="cancelTryOut('GETapi-v1-trainings-active');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-trainings-active"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/trainings/active</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-trainings-active"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-trainings-active"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="search"                data-endpoint="GETapi-v1-trainings-active"
+               value="Laravel"
+               data-component="query">
+    <br>
+<p>Filter by title or description. Example: <code>Laravel</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="date"                data-endpoint="GETapi-v1-trainings-active"
+               value="2025-12-20"
+               data-component="query">
+    <br>
+<p>Filter trainings that occur on this date (YYYY-MM-DD). Example: <code>2025-12-20</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>start_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="start_date"                data-endpoint="GETapi-v1-trainings-active"
+               value="2025-12-01"
+               data-component="query">
+    <br>
+<p>Filter trainings starting on or after this date. Example: <code>2025-12-01</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>end_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="end_date"                data-endpoint="GETapi-v1-trainings-active"
+               value="2025-12-31"
+               data-component="query">
+    <br>
+<p>Filter trainings ending on or before this date. Example: <code>2025-12-31</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-v1-trainings-active"
+               value="10"
+               data-component="query">
+    <br>
+<p>Items per page. Default 10. Example: <code>10</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="page"                data-endpoint="GETapi-v1-trainings-active"
+               value="2"
+               data-component="query">
+    <br>
+<p>Page number for pagination. Example: <code>2</code></p>
+            </div>
+                </form>
+
+                    <h2 id="training-management-GETapi-v1-trainings-inactive">List Inactive Trainings</h2>
+
+<p>
+</p>
+
+<p>Display a listing of inactive trainings with pagination and filtering.</p>
+
+<span id="example-requests-GETapi-v1-trainings-inactive">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/v1/trainings/inactive?search=Laravel&amp;date=2025-12-20&amp;start_date=2025-12-01&amp;end_date=2025-12-31&amp;limit=10&amp;page=2" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/trainings/inactive"
+);
+
+const params = {
+    "search": "Laravel",
+    "date": "2025-12-20",
+    "start_date": "2025-12-01",
+    "end_date": "2025-12-31",
+    "limit": "10",
+    "page": "2",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-trainings-inactive">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+vary: Origin
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-trainings-inactive" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-trainings-inactive"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-trainings-inactive"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-trainings-inactive" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-trainings-inactive">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-trainings-inactive" data-method="GET"
+      data-path="api/v1/trainings/inactive"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-trainings-inactive', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-trainings-inactive"
+                    onclick="tryItOut('GETapi-v1-trainings-inactive');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-trainings-inactive"
+                    onclick="cancelTryOut('GETapi-v1-trainings-inactive');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-trainings-inactive"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/trainings/inactive</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-trainings-inactive"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-trainings-inactive"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="search"                data-endpoint="GETapi-v1-trainings-inactive"
+               value="Laravel"
+               data-component="query">
+    <br>
+<p>Filter inactive trainings by title or description. Example: <code>Laravel</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="date"                data-endpoint="GETapi-v1-trainings-inactive"
+               value="2025-12-20"
+               data-component="query">
+    <br>
+<p>Filter inactive trainings that occur on this date (YYYY-MM-DD). Example: <code>2025-12-20</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>start_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="start_date"                data-endpoint="GETapi-v1-trainings-inactive"
+               value="2025-12-01"
+               data-component="query">
+    <br>
+<p>Filter inactive trainings starting on or after this date. Example: <code>2025-12-01</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>end_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="end_date"                data-endpoint="GETapi-v1-trainings-inactive"
+               value="2025-12-31"
+               data-component="query">
+    <br>
+<p>Filter inactive trainings ending on or before this date. Example: <code>2025-12-31</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-v1-trainings-inactive"
+               value="10"
+               data-component="query">
+    <br>
+<p>Items per page. Default 10. Example: <code>10</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="page"                data-endpoint="GETapi-v1-trainings-inactive"
+               value="2"
+               data-component="query">
+    <br>
+<p>Page number for pagination. Example: <code>2</code></p>
+            </div>
+                </form>
+
+                    <h2 id="training-management-GETapi-v1-trainings--id-">Get Training by ID</h2>
+
+<p>
+</p>
+
+<p>Display the specified training with employee count and details.</p>
+
+<span id="example-requests-GETapi-v1-trainings--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/v1/trainings/d89ce8a1-d119-4d27-9ce2-9a6a7b04dfd2" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/trainings/d89ce8a1-d119-4d27-9ce2-9a6a7b04dfd2"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-trainings--id-">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+vary: Origin
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-trainings--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-trainings--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-trainings--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-trainings--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-trainings--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-trainings--id-" data-method="GET"
+      data-path="api/v1/trainings/{id}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-trainings--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-trainings--id-"
+                    onclick="tryItOut('GETapi-v1-trainings--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-trainings--id-"
+                    onclick="cancelTryOut('GETapi-v1-trainings--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-trainings--id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/trainings/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-trainings--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-trainings--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="GETapi-v1-trainings--id-"
+               value="d89ce8a1-d119-4d27-9ce2-9a6a7b04dfd2"
+               data-component="url">
+    <br>
+<p>The UUID of the training. Example: <code>d89ce8a1-d119-4d27-9ce2-9a6a7b04dfd2</code></p>
+            </div>
+                    </form>
+
                     <h2 id="training-management-PATCHapi-v1-trainings--id-">Update Training</h2>
 
 <p>
@@ -12444,13 +13067,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://localhost/api/v1/trainings/architecto" \
+    "http://localhost/api/v1/trainings/922248e5-07ee-49d0-b9e5-f92dc5fbdd28" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"title\": \"b\",
     \"description\": \"Eius et animi quos velit et.\",
-    \"start_date\": \"2025-12-16T07:40:40\",
+    \"start_date\": \"2025-12-16T08:59:48\",
     \"end_date\": \"2052-01-09\",
     \"trainer_name\": \"n\",
     \"location\": \"g\",
@@ -12465,7 +13088,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/trainings/architecto"
+    "http://localhost/api/v1/trainings/922248e5-07ee-49d0-b9e5-f92dc5fbdd28"
 );
 
 const headers = {
@@ -12476,7 +13099,7 @@ const headers = {
 let body = {
     "title": "b",
     "description": "Eius et animi quos velit et.",
-    "start_date": "2025-12-16T07:40:40",
+    "start_date": "2025-12-16T08:59:48",
     "end_date": "2052-01-09",
     "trainer_name": "n",
     "location": "g",
@@ -12576,10 +13199,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="PATCHapi-v1-trainings--id-"
-               value="architecto"
+               value="922248e5-07ee-49d0-b9e5-f92dc5fbdd28"
                data-component="url">
     <br>
-<p>The ID of the training. Example: <code>architecto</code></p>
+<p>The ID of the training. Example: <code>922248e5-07ee-49d0-b9e5-f92dc5fbdd28</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -12613,10 +13236,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="start_date"                data-endpoint="PATCHapi-v1-trainings--id-"
-               value="2025-12-16T07:40:40"
+               value="2025-12-16T08:59:48"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2025-12-16T07:40:40</code></p>
+<p>Must be a valid date. Example: <code>2025-12-16T08:59:48</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>end_date</code></b>&nbsp;&nbsp;
@@ -12748,6 +13371,129 @@ Must be one of:
         </div>
         </form>
 
+                    <h2 id="training-management-PATCHapi-v1-trainings--id--status">Toggle Training Active/Inactive</h2>
+
+<p>
+</p>
+
+<p>Toggle the visibility of a training (show/hide from list).</p>
+
+<span id="example-requests-PATCHapi-v1-trainings--id--status">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PATCH \
+    "http://localhost/api/v1/trainings/architecto/status" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/trainings/architecto/status"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "PATCH",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-PATCHapi-v1-trainings--id--status">
+</span>
+<span id="execution-results-PATCHapi-v1-trainings--id--status" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PATCHapi-v1-trainings--id--status"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PATCHapi-v1-trainings--id--status"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PATCHapi-v1-trainings--id--status" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PATCHapi-v1-trainings--id--status">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PATCHapi-v1-trainings--id--status" data-method="PATCH"
+      data-path="api/v1/trainings/{id}/status"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PATCHapi-v1-trainings--id--status', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PATCHapi-v1-trainings--id--status"
+                    onclick="tryItOut('PATCHapi-v1-trainings--id--status');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PATCHapi-v1-trainings--id--status"
+                    onclick="cancelTryOut('PATCHapi-v1-trainings--id--status');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PATCHapi-v1-trainings--id--status"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-purple">PATCH</small>
+            <b><code>api/v1/trainings/{id}/status</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PATCHapi-v1-trainings--id--status"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PATCHapi-v1-trainings--id--status"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="PATCHapi-v1-trainings--id--status"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The UUID of the training. Example: <code>architecto</code></p>
+            </div>
+                    </form>
+
                     <h2 id="training-management-POSTapi-v1-trainings--id--assign">Assign Employees to Training</h2>
 
 <p>
@@ -12761,7 +13507,7 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/v1/trainings/architecto/assign" \
+    "http://localhost/api/v1/trainings/922248e5-07ee-49d0-b9e5-f92dc5fbdd28/assign" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -12774,7 +13520,7 @@ Must be one of:
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/trainings/architecto/assign"
+    "http://localhost/api/v1/trainings/922248e5-07ee-49d0-b9e5-f92dc5fbdd28/assign"
 );
 
 const headers = {
@@ -12877,10 +13623,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="POSTapi-v1-trainings--id--assign"
-               value="architecto"
+               value="922248e5-07ee-49d0-b9e5-f92dc5fbdd28"
                data-component="url">
     <br>
-<p>The ID of the training. Example: <code>architecto</code></p>
+<p>The ID of the training. Example: <code>922248e5-07ee-49d0-b9e5-f92dc5fbdd28</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -12912,7 +13658,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://localhost/api/v1/trainings/architecto/attend/architecto" \
+    "http://localhost/api/v1/trainings/922248e5-07ee-49d0-b9e5-f92dc5fbdd28/attend/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -12924,7 +13670,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/trainings/architecto/attend/architecto"
+    "http://localhost/api/v1/trainings/922248e5-07ee-49d0-b9e5-f92dc5fbdd28/attend/architecto"
 );
 
 const headers = {
@@ -13026,10 +13772,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="trainingId"                data-endpoint="PATCHapi-v1-trainings--trainingId--attend--employeeId-"
-               value="architecto"
+               value="922248e5-07ee-49d0-b9e5-f92dc5fbdd28"
                data-component="url">
     <br>
-<p>Example: <code>architecto</code></p>
+<p>Example: <code>922248e5-07ee-49d0-b9e5-f92dc5fbdd28</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>employeeId</code></b>&nbsp;&nbsp;

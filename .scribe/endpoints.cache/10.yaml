@@ -15,7 +15,7 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'List Trainings'
-      description: ''
+      description: 'Display a listing of trainings with pagination and filtering.'
       authenticated: false
       deprecated: false
     headers:
@@ -27,28 +27,76 @@ endpoints:
       search:
         custom: []
         name: search
-        description: 'Filter by title or description'
+        description: 'Filter by title or description.'
         required: false
-        example: architecto
+        example: Laravel
         type: string
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      date:
+        custom: []
+        name: date
+        description: 'Filter trainings that occur on this date (YYYY-MM-DD).'
+        required: false
+        example: '2025-12-20'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      start_date:
+        custom: []
+        name: start_date
+        description: 'Filter trainings starting on or after this date.'
+        required: false
+        example: '2025-12-01'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      end_date:
+        custom: []
+        name: end_date
+        description: 'Filter trainings ending on or before this date.'
+        required: false
+        example: '2025-12-31'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
         nullable: false
         deprecated: false
       limit:
         custom: []
         name: limit
-        description: 'Items per page. Default 10'
+        description: 'Items per page. Default 10.'
         required: false
-        example: 16
+        example: 10
         type: integer
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      page:
+        custom: []
+        name: page
+        description: 'Page number for pagination.'
+        required: false
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
         nullable: false
         deprecated: false
     cleanQueryParameters:
-      search: architecto
-      limit: 16
+      search: Laravel
+      date: '2025-12-20'
+      start_date: '2025-12-01'
+      end_date: '2025-12-31'
+      limit: 10
+      page: 2
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -221,6 +269,282 @@ endpoints:
   -
     custom: []
     httpMethods:
+      - GET
+    uri: api/v1/trainings/active
+    metadata:
+      custom: []
+      groupName: 'Training Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List Active Trainings'
+      description: 'Display a listing of active trainings with pagination and filtering.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Filter by title or description.'
+        required: false
+        example: Laravel
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      date:
+        custom: []
+        name: date
+        description: 'Filter trainings that occur on this date (YYYY-MM-DD).'
+        required: false
+        example: '2025-12-20'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      start_date:
+        custom: []
+        name: start_date
+        description: 'Filter trainings starting on or after this date.'
+        required: false
+        example: '2025-12-01'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      end_date:
+        custom: []
+        name: end_date
+        description: 'Filter trainings ending on or before this date.'
+        required: false
+        example: '2025-12-31'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'Items per page. Default 10.'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      page:
+        custom: []
+        name: page
+        description: 'Page number for pagination.'
+        required: false
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      search: Laravel
+      date: '2025-12-20'
+      start_date: '2025-12-01'
+      end_date: '2025-12-31'
+      limit: 10
+      page: 2
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          vary: Origin
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/trainings/inactive
+    metadata:
+      custom: []
+      groupName: 'Training Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List Inactive Trainings'
+      description: 'Display a listing of inactive trainings with pagination and filtering.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      search:
+        custom: []
+        name: search
+        description: 'Filter inactive trainings by title or description.'
+        required: false
+        example: Laravel
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      date:
+        custom: []
+        name: date
+        description: 'Filter inactive trainings that occur on this date (YYYY-MM-DD).'
+        required: false
+        example: '2025-12-20'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      start_date:
+        custom: []
+        name: start_date
+        description: 'Filter inactive trainings starting on or after this date.'
+        required: false
+        example: '2025-12-01'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      end_date:
+        custom: []
+        name: end_date
+        description: 'Filter inactive trainings ending on or before this date.'
+        required: false
+        example: '2025-12-31'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'Items per page. Default 10.'
+        required: false
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      page:
+        custom: []
+        name: page
+        description: 'Page number for pagination.'
+        required: false
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      search: Laravel
+      date: '2025-12-20'
+      start_date: '2025-12-01'
+      end_date: '2025-12-31'
+      limit: 10
+      page: 2
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          vary: Origin
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/trainings/{id}'
+    metadata:
+      custom: []
+      groupName: 'Training Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get Training by ID'
+      description: 'Display the specified training with employee count and details.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The UUID of the training.'
+        required: true
+        example: d89ce8a1-d119-4d27-9ce2-9a6a7b04dfd2
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: d89ce8a1-d119-4d27-9ce2-9a6a7b04dfd2
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          vary: Origin
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
       - PATCH
     uri: 'api/v1/trainings/{id}'
     metadata:
@@ -242,14 +566,14 @@ endpoints:
         name: id
         description: 'The ID of the training.'
         required: true
-        example: architecto
+        example: 922248e5-07ee-49d0-b9e5-f92dc5fbdd28
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      id: architecto
+      id: 922248e5-07ee-49d0-b9e5-f92dc5fbdd28
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -280,7 +604,7 @@ endpoints:
         name: start_date
         description: 'Must be a valid date.'
         required: false
-        example: '2025-12-16T07:40:40'
+        example: '2025-12-16T08:59:48'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -380,7 +704,7 @@ endpoints:
     cleanBodyParameters:
       title: b
       description: 'Eius et animi quos velit et.'
-      start_date: '2025-12-16T07:40:40'
+      start_date: '2025-12-16T08:59:48'
       end_date: '2052-01-09'
       trainer_name: 'n'
       location: g
@@ -389,6 +713,49 @@ endpoints:
       type: certification
       is_mandatory: true
       is_active: false
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/v1/trainings/{id}/status'
+    metadata:
+      custom: []
+      groupName: 'Training Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Toggle Training Active/Inactive'
+      description: 'Toggle the visibility of a training (show/hide from list).'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The UUID of the training.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
     responses: []
     responseFields: []
@@ -420,14 +787,14 @@ endpoints:
         name: id
         description: 'The ID of the training.'
         required: true
-        example: architecto
+        example: 922248e5-07ee-49d0-b9e5-f92dc5fbdd28
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      id: architecto
+      id: 922248e5-07ee-49d0-b9e5-f92dc5fbdd28
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -477,7 +844,7 @@ endpoints:
         name: trainingId
         description: ''
         required: true
-        example: architecto
+        example: 922248e5-07ee-49d0-b9e5-f92dc5fbdd28
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -495,7 +862,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      trainingId: architecto
+      trainingId: 922248e5-07ee-49d0-b9e5-f92dc5fbdd28
       employeeId: architecto
     queryParameters: []
     cleanQueryParameters: []

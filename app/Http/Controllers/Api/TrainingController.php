@@ -11,39 +11,222 @@ use Illuminate\Http\Request;
 
 class TrainingController extends Controller
 {
-    /**
-     * List Trainings
-     *
-     * @group Training Management
-     * @queryParam search string Filter by title or description
-     * @queryParam limit integer Items per page. Default 10
-     */
-    public function index(Request $request)
-    {
-        $search = $request->query('search');
-        $limit  = $request->query('limit', 10);
+/**
+ * List Trainings
+ *
+ * Display a listing of trainings with pagination and filtering.
+ *
+ * @group Training Management
+ * @queryParam search string Filter by title or description. Example: Laravel
+ * @queryParam date string Filter trainings that occur on this date (YYYY-MM-DD). Example: 2025-12-20
+ * @queryParam start_date string Filter trainings starting on or after this date. Example: 2025-12-01
+ * @queryParam end_date string Filter trainings ending on or before this date. Example: 2025-12-31
+ * @queryParam limit integer Items per page. Default 10. Example: 10
+ * @queryParam page integer Page number for pagination. Example: 2
+ *
+ * @param Request $request
+ * @return \Illuminate\Http\JsonResponse
+ */
+public function index(Request $request)
+{
+    $search     = $request->query('search');
+    $date       = $request->query('date');        // exact date (training overlaps)
+    $startDate  = $request->query('start_date');  // from this date
+    $endDate    = $request->query('end_date');    // to this date
+    $limit      = $request->query('limit', 10);
 
-        $query = Training::withCount('employees');
+    $query = Training::withCount('employees');
 
-        if ($search) {
-            $query->where('title', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%");
-        }
-
-        $trainings = $query->orderBy('start_date', 'desc')->paginate($limit);
-
-        return response()->json([
-            'message'    => 'Trainings fetched successfully',
-            'data'       => $trainings->items(),
-            'pagination' => [
-                'total'        => $trainings->total(),
-                'per_page'     => $trainings->perPage(),
-                'current_page' => $trainings->currentPage(),
-                'last_page'    => $trainings->lastPage(),
-            ]
-        ]);
+    if ($search) {
+        $query->where('title', 'like', "%{$search}%")
+              ->orWhere('description', 'like', "%{$search}%");
     }
 
+    // Filter by exact date (training overlaps this date)
+    if ($date) {
+        $query->where(function ($q) use ($date) {
+            $q->whereDate('start_date', '<=', $date)
+              ->whereDate('end_date', '>=', $date);
+        });
+    }
+
+    // Filter by start date (trainings starting after)
+    if ($startDate) {
+        $query->whereDate('start_date', '>=', $startDate);
+    }
+
+    // Filter by end date (trainings ending before)
+    if ($endDate) {
+        $query->whereDate('end_date', '<=', $endDate);
+    }
+
+    $trainings = $query->orderBy('start_date', 'desc')->paginate($limit);
+
+    return response()->json([
+        'message'    => 'Trainings fetched successfully',
+        'data'       => $trainings->items(),
+        'pagination' => [
+            'total'        => $trainings->total(),
+            'per_page'     => $trainings->perPage(),
+            'current_page' => $trainings->currentPage(),
+            'last_page'    => $trainings->lastPage(),
+        ]
+    ]);
+}
+
+
+/**
+ * List Active Trainings
+ *
+ * Display a listing of active trainings with pagination and filtering.
+ *
+ * @group Training Management
+ * @queryParam search string Filter by title or description. Example: Laravel
+ * @queryParam date string Filter trainings that occur on this date (YYYY-MM-DD). Example: 2025-12-20
+ * @queryParam start_date string Filter trainings starting on or after this date. Example: 2025-12-01
+ * @queryParam end_date string Filter trainings ending on or before this date. Example: 2025-12-31
+ * @queryParam limit integer Items per page. Default 10. Example: 10
+ * @queryParam page integer Page number for pagination. Example: 2
+ *
+ * @param Request $request
+ * @return \Illuminate\Http\JsonResponse
+ */
+public function active(Request $request)
+{
+    $search     = $request->query('search');
+    $date       = $request->query('date');        // exact date (training overlaps)
+    $startDate  = $request->query('start_date');  // from this date
+    $endDate    = $request->query('end_date');    // to this date
+    $limit      = $request->query('limit', 10);
+
+    $query = Training::where('is_active', true)->withCount('employees');
+// serch active only
+  if ($search) {
+        $query->where(function ($q) use ($search) {
+            $q->where('title', 'like', "%{$search}%")
+              ->orWhere('description', 'like', "%{$search}%");
+        });
+    }
+
+    // Filter by exact date (training overlaps this date)
+    if ($date) {
+        $query->where(function ($q) use ($date) {
+            $q->whereDate('start_date', '<=', $date)
+              ->whereDate('end_date', '>=', $date);
+        });
+    }
+
+    // Filter by start date (trainings starting after)
+    if ($startDate) {
+        $query->whereDate('start_date', '>=', $startDate);
+    }
+
+    // Filter by end date (trainings ending before)
+    if ($endDate) {
+        $query->whereDate('end_date', '<=', $endDate);
+    }
+
+    $trainings = $query->orderBy('start_date', 'desc')->paginate($limit);
+
+    return response()->json([
+        'message'    => 'Acive trainings fetched successfully',
+        'data'       => $trainings->items(),
+        'pagination' => [
+            'total'        => $trainings->total(),
+            'per_page'     => $trainings->perPage(),
+            'current_page' => $trainings->currentPage(),
+            'last_page'    => $trainings->lastPage(),
+        ]
+    ]);
+}
+
+/**
+ * Get Training by ID
+ *
+ * Display the specified training with employee count and details.
+ *
+ * @group Training Management
+ * @urlParam id string required The UUID of the training. Example: d89ce8a1-d119-4d27-9ce2-9a6a7b04dfd2
+ *
+ * @param string $id
+ * @return \Illuminate\Http\JsonResponse
+ */
+public function show($id)
+{
+    $training = Training::with(['employees' => function ($query) {
+        $query->withPivot('status', 'attended_at', 'feedback');
+    }])->withCount('employees')->findOrFail($id);
+
+    return response()->json([
+        'message' => 'Training retrieved successfully',
+        'data'    => $training
+    ]);
+}
+
+/**
+ * List Inactive Trainings
+ *
+ * Display a listing of inactive trainings with pagination and filtering.
+ *
+ * @group Training Management
+ * @queryParam search string Filter inactive trainings by title or description. Example: Laravel
+ * @queryParam date string Filter inactive trainings that occur on this date (YYYY-MM-DD). Example: 2025-12-20
+ * @queryParam start_date string Filter inactive trainings starting on or after this date. Example: 2025-12-01
+ * @queryParam end_date string Filter inactive trainings ending on or before this date. Example: 2025-12-31
+ * @queryParam limit integer Items per page. Default 10. Example: 10
+ * @queryParam page integer Page number for pagination. Example: 2
+ *
+ * @param Request $request
+ * @return \Illuminate\Http\JsonResponse
+ */
+public function inactive(Request $request)
+{
+    $search     = $request->query('search');
+    $date       = $request->query('date');
+    $startDate  = $request->query('start_date');
+    $endDate    = $request->query('end_date');
+    $limit      = $request->query('limit', 10);
+
+    // Base query — ONLY INACTIVE TRAININGS
+    $query = Training::where('is_active', false)->withCount('employees');
+
+    // SEARCH — only in inactive
+    if ($search) {
+        $query->where(function ($q) use ($search) {
+            $q->where('title', 'like', "%{$search}%")
+              ->orWhere('description', 'like', "%{$search}%");
+        });
+    }
+
+    // DATE FILTERS — only in inactive
+    if ($date) {
+        $query->where(function ($q) use ($date) {
+            $q->whereDate('start_date', '<=', $date)
+              ->whereDate('end_date', '>=', $date);
+        });
+    }
+
+    if ($startDate) {
+        $query->whereDate('start_date', '>=', $startDate);
+    }
+
+    if ($endDate) {
+        $query->whereDate('end_date', '<=', $endDate);
+    }
+
+    $trainings = $query->orderBy('start_date', 'desc')->paginate($limit);
+
+    return response()->json([
+        'message'    => 'Inactive trainings fetched successfully', // ← fixed typo "Acive" → "Inactive"
+        'data'       => $trainings->items(),
+        'pagination' => [
+            'total'        => $trainings->total(),
+            'per_page'     => $trainings->perPage(),
+            'current_page' => $trainings->currentPage(),
+            'last_page'    => $trainings->lastPage(),
+        ]
+    ]);
+}
     /**
      * Create Training
      *
@@ -128,7 +311,7 @@ class TrainingController extends Controller
 
         $request->validate([
             'status' => 'required|in:registered,attended,absent,certified',
-            'feedback' => 'nullable|string',
+             'feedback' => 'nullable|string',
         ]);
 
         $attendee->update([
@@ -139,4 +322,28 @@ class TrainingController extends Controller
 
         return response()->json(['message' => 'Attendance marked successfully']);
     }
+
+    /**
+ * Toggle Training Active/Inactive
+ *
+ * Toggle the visibility of a training (show/hide from list).
+ *
+ * @group Training Management
+ * @urlParam id string required The UUID of the training.
+ *
+ * @param string $id
+ * @return \Illuminate\Http\JsonResponse
+ */
+public function toggleStatus($id)
+{
+    $training = Training::findOrFail($id);
+    $training->is_active = !$training->is_active;
+    $training->save();
+
+    return response()->json([
+        'message'   => 'Training status updated successfully',
+        'is_active' => $training->is_active,
+        'data'      => $training
+    ]);
+}
 }
