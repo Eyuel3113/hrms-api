@@ -296,6 +296,45 @@ public function inactive(Request $request)
         return response()->json(['message' => 'Employees assigned to training successfully']);
     }
 
+
+    /**
+ * Assign All Employees to Training
+ *
+ * Assign all active employees to a training (useful for mandatory trainings).
+ *
+ * @group Training Management
+ * @urlParam id string required The UUID of the training.
+ *
+ * @param string $id
+ * @return \Illuminate\Http\JsonResponse
+ */
+public function assignAllEmployees($id)
+{
+    $training = Training::findOrFail($id);
+
+    // Get all active employees
+    $employees = Employee::where('status', 'active')->get();
+
+    $assignedCount = 0;
+
+    foreach ($employees as $employee) {
+        $created = TrainingAttendee::firstOrCreate(
+            ['training_id' => $training->id, 'employee_id' => $employee->id],
+            ['id' => (string) \Illuminate\Support\Str::uuid(), 'status' => 'registered']
+        );
+
+        if ($created->wasRecentlyCreated) {
+            $assignedCount++;
+        }
+    }
+
+    return response()->json([
+        'message' => "All active employees assigned to training",
+        'assigned_count' => $assignedCount,
+        'total_employees' => $employees->count()
+    ]);
+}
+
     /**
      * Mark Attendance
      *

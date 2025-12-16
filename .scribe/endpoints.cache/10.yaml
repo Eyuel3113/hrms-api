@@ -604,7 +604,7 @@ endpoints:
         name: start_date
         description: 'Must be a valid date.'
         required: false
-        example: '2025-12-16T08:59:48'
+        example: '2025-12-16T12:20:19'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -695,7 +695,7 @@ endpoints:
         name: is_active
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -704,7 +704,7 @@ endpoints:
     cleanBodyParameters:
       title: b
       description: 'Eius et animi quos velit et.'
-      start_date: '2025-12-16T08:59:48'
+      start_date: '2025-12-16T12:20:19'
       end_date: '2052-01-09'
       trainer_name: 'n'
       location: g
@@ -712,7 +712,7 @@ endpoints:
       has_incentive: false
       type: certification
       is_mandatory: true
-      is_active: false
+      is_active: true
     fileParameters: []
     responses: []
     responseFields: []
@@ -823,6 +823,49 @@ endpoints:
   -
     custom: []
     httpMethods:
+      - POST
+    uri: 'api/v1/trainings/{id}/assign-all'
+    metadata:
+      custom: []
+      groupName: 'Training Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Assign All Employees to Training'
+      description: 'Assign all active employees to a training (useful for mandatory trainings).'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The UUID of the training.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
       - PATCH
     uri: 'api/v1/trainings/{trainingId}/attend/{employeeId}'
     metadata:
@@ -892,6 +935,49 @@ endpoints:
     cleanBodyParameters:
       status: architecto
       feedback: architecto
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/projects/{id}/assign-all'
+    metadata:
+      custom: []
+      groupName: 'Training Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Assign All Employees to Training'
+      description: 'Assign all active employees to a training (useful for mandatory trainings).'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The UUID of the training.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
     responses: []
     responseFields: []

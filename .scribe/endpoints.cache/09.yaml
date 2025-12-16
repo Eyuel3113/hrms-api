@@ -206,7 +206,7 @@ endpoints:
       subgroup: ''
       subgroupDescription: ''
       title: 'Get Candidate by ID'
-      description: 'Display the specified candidate with job details.'
+      description: 'Display the specified candidate with job details and public CV URL.'
       authenticated: false
       deprecated: false
     headers:

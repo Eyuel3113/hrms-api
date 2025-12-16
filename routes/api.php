@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\LeaveTypeController;
 use App\Http\Controllers\Api\JobController;
 use App\Http\Controllers\Api\CandidateController;
 use App\Http\Controllers\Api\TrainingController;
+use App\Http\Controllers\Api\ProjectController;
 
 
 Route::prefix('v1')->group(function () {
@@ -135,6 +136,8 @@ Route::prefix('recruitment')->group(function () {
     Route::post('/candidates/{id}/hire', [CandidateController::class, 'hire']); 
 });
 
+// TRAININGS
+
 Route::prefix('trainings')->group(function () {
     Route::get('/', [TrainingController::class, 'index']);
     Route::post('/', [TrainingController::class, 'store']);
@@ -144,7 +147,24 @@ Route::prefix('trainings')->group(function () {
     Route::patch('/{id}', [TrainingController::class, 'update']);
     Route::patch('/{id}/status', [TrainingController::class, 'toggleStatus']);
     Route::post('/{id}/assign', [TrainingController::class, 'assignEmployees']);
+    Route::post('/{id}/assign-all', [TrainingController::class, 'assignAllEmployees']);
     Route::patch('/{trainingId}/attend/{employeeId}', [TrainingController::class, 'markAttendance']);
+});
+
+// PROJECTS
+
+Route::prefix('projects')->group(function () {
+    Route::get('/', [ProjectController::class, 'index']);
+    Route::get('/active', [ProjectController::class, 'active']);
+    Route::get('/inactive', [ProjectController::class, 'inactive']);
+    Route::get('/{id}', [ProjectController::class, 'show']);
+    Route::post('/', [ProjectController::class, 'store']);
+    Route::patch('/{id}', [ProjectController::class, 'update']);
+    Route::patch('/{id}/status', [ProjectController::class, 'toggleStatus']);
+    Route::post('/{id}/assign', [ProjectController::class, 'assignEmployees']);
+    Route::post('/{id}/assign-all', [TrainingController::class, 'assignAllEmployees']);
+    Route::patch('/{projectId}/rate/{employeeId}', [ProjectController::class, 'rateEmployee']);
+    Route::get('/employee/{employeeId}/performance', [ProjectController::class, 'employeePerformance']);
 });
 
     
