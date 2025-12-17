@@ -12,9 +12,13 @@ class Shift extends Model
 
     protected $fillable = [
         'name',
+        'type',
         'start_time',
         'end_time',
+        'break_start_time',
+        'break_end_time',
         'late_threshold_minutes',
+        'grace_period_minutes',
         'half_day_minutes',
         'overtime_rate',
         'is_default',
@@ -24,6 +28,8 @@ class Shift extends Model
     protected $casts = [
         'start_time' => 'string',
         'end_time'   => 'string',
+        'break_start_time' => 'string',
+        'break_end_time' => 'string',
         'is_default' => 'boolean',
         'is_active'  => 'boolean',
         'overtime_rate' => 'decimal:2',
@@ -55,5 +61,15 @@ class Shift extends Model
     public function scopeDefault($query)
     {
         return $query->where('is_default', true);
+    }
+
+    public function isSplit(): bool
+    {
+        return $this->type === 'split';
+    }
+
+    public function isNight(): bool
+    {
+        return $this->start_time > $this->end_time;
     }
 }

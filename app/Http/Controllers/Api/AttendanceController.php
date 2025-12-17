@@ -33,22 +33,58 @@ class AttendanceController extends Controller
     public function today()
     {
         $today = today()->toDateString();
+        $yesterday = today()->subDay()->toDateString();
 
         $attendances = Attendance::with(['employee.personalInfo'])
-            ->where('date', $today)
+            ->where(function($query) use ($today, $yesterday) {
+                $query->where('date', $today)
+                      ->orWhere(function($subQuery) use ($yesterday) {
+                          // Include shifts from yesterday that haven't ended yet (Night Shifts)
+                          $subQuery->where('date', $yesterday)->whereNull('check_out');
+                      });
+            })
             ->orderBy('check_in')
             ->get();
+
+        // Group by employee to aggregate sessions
+        $employeeAttendance = $attendances->groupBy('employee_id')->map(function ($sessions) {
+            $morningSession = $sessions->first(function ($session) {
+                $checkIn = \Carbon\Carbon::parse($session->check_in);
+                return $checkIn->lessThan(\Carbon\Carbon::parse('12:00:00')->setDateFrom($checkIn));
+            });
+            
+            $afternoonSession = $sessions->first(function ($session) {
+                $checkIn = \Carbon\Carbon::parse($session->check_in);
+                return $checkIn->greaterThanOrEqualTo(\Carbon\Carbon::parse('13:00:00')->setDateFrom($checkIn));
+            });
+
+            // Determine overall daily status
+            $morningOk = $morningSession && in_array($morningSession->status, ['present', 'late']);
+            $afternoonOk = $afternoonSession && in_array($afternoonSession->status, ['present', 'late']);
+            
+            $dailyStatus = 'absent';
+            if ($morningOk && $afternoonOk) {
+                $dailyStatus = 'present';
+            } elseif ($morningOk || $afternoonOk) {
+                $dailyStatus = 'half_day';
+            }
+
+            return [
+                'employee' => $sessions->first()->employee,
+                'sessions' => $sessions,
+                'daily_status' => $dailyStatus,
+            ];
+        })->values();
 
         return response()->json([
             'success' => true,
             'date'    => $today,
             'ethiopian_date' => EthiopianCalendar::format($today),
-            'total'   => $attendances->count(),
-            'present' => $attendances->where('status', 'present')->count(),
-            'late'    => $attendances->where('status', 'late')->count(),
-            'absent'  => Employee::count() - $attendances->count(),
-            'half_day' => $attendances->where('status','half_day')->count(), 
-            'data'    => $attendances
+            'total'   => Employee::count(),
+            'present' => $employeeAttendance->where('daily_status', 'present')->count(),
+            'half_day' => $employeeAttendance->where('daily_status', 'half_day')->count(),
+            'absent'  => Employee::count() - $employeeAttendance->count(),
+            'data'    => $employeeAttendance
         ]);
     }
 
@@ -323,17 +359,21 @@ private function calculateWorkedHours($checkIn, $checkOut)
         $shift = $employee->shift ?? Shift::default()->first();
 
         if (!$shift) {
+            // Fallback default shift object if none exists
             $shift = (object) [
+                'type' => 'regular',
                 'start_time' => '09:00:00',
                 'end_time'   => '17:30:00',
+                'break_start_time' => '12:00:00',
+                'break_end_time' => '13:00:00',
                 'late_threshold_minutes' => 15,
+                'grace_period_minutes' => 15, // New field fallback
                 'half_day_minutes' => 240,
                 'overtime_rate' => 1.50,
             ];
         }
 
         // Parse Check In/Out
-        // Attributes are cast to datetime in model, so they might already be Carbon instances
         $checkIn  = $attendance->check_in;
         if ($checkIn && !($checkIn instanceof \Carbon\Carbon)) {
             $checkIn = \Carbon\Carbon::parse($checkIn);
@@ -344,74 +384,130 @@ private function calculateWorkedHours($checkIn, $checkOut)
             $checkOut = \Carbon\Carbon::parse($checkOut);
         }
 
-        // Parse Shift Times (robustly handle H:i or H:i:s) using CheckIn date for alignment
-        // This prevents "today" vs "yesterday" issues if attendance is for a past date
-        $officeStart = \Carbon\Carbon::parse($shift->start_time);
-        $officeEnd   = \Carbon\Carbon::parse($shift->end_time);
-        
-        // Align office times to the same date as check-in
-        if ($checkIn) {
-            $officeStart->setDateFrom($checkIn);
-            $officeEnd->setDateFrom($checkIn);
-            
-            // If it's an overnight shift (end < start), move end to next day
-            if ($officeEnd->lessThan($officeStart)) {
-                $officeEnd->addDay();
-            }
+        if (!$checkIn) {
+            $attendance->update(['status' => 'absent']);
+            return;
         }
 
-        $status = 'absent';
+        // Align Shift Dates
+        $shiftStart = \Carbon\Carbon::parse($shift->start_time)->setDateFrom($checkIn);
+        $shiftEnd   = \Carbon\Carbon::parse($shift->end_time)->setDateFrom($checkIn);
+        
+        // Handle Overnight Shift
+        if ($shiftEnd->lessThan($shiftStart)) {
+            $shiftEnd->addDay();
+        }
+
+        $status = 'present';
         $lateMinutes = 0;
         $earlyLeaveMinutes = 0;
         $workedMinutes = 0;
         $overtimeMinutes = 0;
 
-        // 1. Calculate Late Minutes (Depends only on Check In)
-        if ($checkIn) {
-            $lateThresholdTime = $officeStart->copy()->addMinutes($shift->late_threshold_minutes);
+        // --- SPLIT SHIFT LOGIC ---
+        if (isset($shift->type) && $shift->type === 'split') {
+            $breakStart = \Carbon\Carbon::parse($shift->break_start_time)->setDateFrom($checkIn);
+            $breakEnd   = \Carbon\Carbon::parse($shift->break_end_time)->setDateFrom($checkIn);
+
+            // Determine Session
+            // Morning: Before Break Start
+            // Afternoon: After Break End
+            $isMorning   = $checkIn->lessThan($breakStart); 
+            $isAfternoon = $checkIn->greaterThanOrEqualTo($breakEnd);
             
-            // Only calculate late if checkIn is AFTER threshold
-            if ($checkIn->greaterThan($lateThresholdTime)) {
-                $lateMinutes = abs($checkIn->diffInMinutes($officeStart));
-            }
-            $status = ($lateMinutes > 0) ? 'late' : 'present';
-        }
-
-        // 2. Calculate Worked, Early Leave, Overtime (Depends on Check Out)
-        if ($checkIn && $checkOut) {
-            // Handle overnight shifts if checkout is "earlier" than checkin (next day)
-            if ($checkOut->lessThan($checkIn)) {
-                $checkOut->addDay();
+            // Note: If checked in BETWEEN break_start and break_end, it's ambiguous. 
+            // We treat it as Late Afternoon usually, or Late Morning return? 
+            // Let's assume Afternoon if closest to Break End.
+            if (!$isMorning && !$isAfternoon) {
+                 $isAfternoon = true; // Late return case
             }
 
-            $workedMinutes = abs($checkIn->diffInMinutes($checkOut));
-
-            // Early Leave
-            // If they left before office end
-            if ($checkOut->lessThan($officeEnd)) {
-                $earlyLeaveMinutes = abs($officeEnd->diffInMinutes($checkOut));
+            if ($isMorning) {
+                // Expected: Shift Start -> Break Start
+                $sessionStart = $shiftStart;
+                $sessionEnd   = $breakStart;
+            } else { // Afternoon
+                // Expected: Break End -> Shift End
+                $sessionStart = $breakEnd;
+                $sessionEnd   = $shiftEnd;
             }
 
-            // Overtime
-            // If they left after office end
-            if ($checkOut->greaterThan($officeEnd)) {
-                $overtimeMinutes = abs($checkOut->diffInMinutes($officeEnd));
+            // 1. Late Calculation
+            // Use grace_period_minutes if available, else late_threshold
+            $grace = $shift->grace_period_minutes ?? $shift->late_threshold_minutes;
+            $lateThreshold = $sessionStart->copy()->addMinutes($grace);
+
+            if ($checkIn->greaterThan($lateThreshold)) {
+                $lateMinutes = abs($checkIn->diffInMinutes($sessionStart));
+                $status = 'late';
             }
 
-            // Status Priority: Half Day > Late > Present
-            // (Note: 'late' status from step 1 might be overwritten here if it's a half-day)
-            
-            if ($workedMinutes < $shift->half_day_minutes) {
-                $status = 'half_day';
-            } else {
-                // Keep 'late' if already late, otherwise 'present'
-                // Re-affirming the status logic:
-                if ($lateMinutes > 0) {
-                    $status = 'late';
-                } else {
-                    $status = 'present';
-                }
+            // 2. Worked & Early Leave & Overtime (Requires CheckOut)
+            if ($checkOut) {
+                 if ($checkOut->lessThan($checkIn)) $checkOut->addDay();
+                 
+                 $workedMinutes = abs($checkIn->diffInMinutes($checkOut));
+
+                 // Early Leave
+                 if ($checkOut->lessThan($sessionEnd)) {
+                     // Check if flexible? No, strict for now.
+                     // Allow small buffer? using grace period for early leave too?
+                     // Let's stay strict: checkOut < sessionEnd IS early leave.
+                     $earlyLeaveMinutes = abs($sessionEnd->diffInMinutes($checkOut));
+                 }
+
+                 // Overtime (Only for Afternoon session usually? Or both?)
+                 // Usually overtime is only after day end.
+                 if ($isAfternoon && $checkOut->greaterThan($sessionEnd)) {
+                     // Only count if > min_overtime_minutes (if field existed, else 0)
+                     $overtimeMinutes = abs($checkOut->diffInMinutes($sessionEnd));
+                 }
+
+                 // Half Day Check per session? 
+                 // If worked < 50% of THIS session duration?
+                 $sessionDuration = $sessionStart->diffInMinutes($sessionEnd);
+                 if ($workedMinutes < ($sessionDuration / 2)) {
+                     $status = 'half_day';
+                 }
             }
+
+        } 
+        // --- REGULAR SHIFT LOGIC ---
+        else {
+             // 1. Late
+             $grace = $shift->grace_period_minutes ?? $shift->late_threshold_minutes;
+             $lateThreshold = $shiftStart->copy()->addMinutes($grace);
+
+             if ($checkIn->greaterThan($lateThreshold)) {
+                 $lateMinutes = abs($checkIn->diffInMinutes($shiftStart));
+                 $status = 'late';
+             }
+
+             // 2. Out Logic
+             if ($checkOut) {
+                 if ($checkOut->lessThan($checkIn)) $checkOut->addDay();
+
+                 $workedMinutes = abs($checkIn->diffInMinutes($checkOut));
+
+                 // Deduct Break? 
+                 // If break times are defined for regular shift, we can deduct them if worked through them?
+                 // Simple logic for now: Gross worked minutes.
+                 
+                 // Early Leave
+                 if ($checkOut->lessThan($shiftEnd)) {
+                     $earlyLeaveMinutes = abs($shiftEnd->diffInMinutes($checkOut));
+                 }
+
+                 // Overtime
+                 if ($checkOut->greaterThan($shiftEnd)) {
+                     $overtimeMinutes = abs($checkOut->diffInMinutes($shiftEnd));
+                 }
+
+                 // Half Day
+                 if ($workedMinutes < $shift->half_day_minutes) {
+                     $status = 'half_day'; 
+                 }
+             }
         }
 
         $attendance->update([
