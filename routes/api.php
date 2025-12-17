@@ -144,6 +144,7 @@ Route::prefix('trainings')->group(function () {
     Route::get('/active', [TrainingController::class, 'active']);
     Route::get('/inactive', [TrainingController::class, 'inactive']);
     Route::get('/employee/{employeeId}', [TrainingController::class, 'employeeTrainingHistory']);
+    Route::get('/{id}/attendees', [TrainingController::class, 'attendees']);
     Route::get('/{id}', [TrainingController::class, 'show']);
     Route::patch('/{id}', [TrainingController::class, 'update']);
     Route::patch('/{id}/status', [TrainingController::class, 'toggleStatus']);
@@ -162,6 +163,7 @@ Route::prefix('projects')->group(function () {
     Route::get('/{id}', [ProjectController::class, 'show']);
     Route::post('/', [ProjectController::class, 'store']);
     Route::patch('/{id}', [ProjectController::class, 'update']);
+    Route::get('/{id}/members', [ProjectController::class, 'members']);
     Route::patch('/{id}/status', [ProjectController::class, 'toggleStatus']);
     Route::post('/{id}/assign', [ProjectController::class, 'assignEmployees']);
     Route::post('/{id}/assign-all', [TrainingController::class, 'assignAllEmployees']);

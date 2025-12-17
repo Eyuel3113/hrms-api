@@ -26,7 +26,7 @@ class CandidateStoreRequest extends FormRequest
             'full_name'     => 'required|string|max:255',
             'email'         => 'required|email|unique:candidates,email',
             'phone'         => 'required|string|max:20',
-            'cv'            => 'required|file|mimes:pdf,doc,docx|max:10240',
+            'cv'            => 'required|file|mimes:pdf,doc,docx|max:2048',
             'cover_letter'  => 'nullable|string',
         ];
     }

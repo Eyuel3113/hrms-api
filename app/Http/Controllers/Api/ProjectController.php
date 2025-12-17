@@ -467,4 +467,75 @@ public function employeeProjectHistory(Request $request, $employeeId)
         ]
     ]);
 }
+
+/**
+ * List Members in a Project
+ *
+ * Display all employees assigned to a specific project with pagination, search, and rating filter.
+ *
+ * @group Project Management
+ * @urlParam id string required The UUID of the project.
+ * @queryParam search string optional Search by employee name, email, or phone. Example: Abebe
+ * @queryParam rating integer optional Filter by rating (1-5). Example: 5
+ * @queryParam limit integer optional Items per page. Default 10. Example: 20
+ *
+ * @param Request $request
+ * @param string $id
+ * @return \Illuminate\Http\JsonResponse
+ */
+public function members(Request $request, $id)
+{
+    $search = $request->query('search');
+    $rating = $request->query('rating');
+    $limit  = $request->query('limit', 10);
+
+    $project = Project::findOrFail($id);
+
+    $query = $project->employees()
+        ->join('employee_personal_infos', 'employees.id', '=', 'employee_personal_infos.employee_id')
+        ->select(
+            'employees.id',
+            'employee_personal_infos.first_name',
+            'employee_personal_infos.last_name',
+            'employee_personal_infos.email',
+            'employee_personal_infos.phone',
+            'project_members.rating',
+            'project_members.feedback',
+            'project_members.rated_at'
+        );
+
+    if ($search) {
+        $query->where(function ($q) use ($search) {
+            $q->where('employee_personal_infos.first_name', 'like', "%{$search}%")
+              ->orWhere('employee_personal_infos.last_name', 'like', "%{$search}%")
+              ->orWhere('employee_personal_infos.email', 'like', "%{$search}%")
+              ->orWhere('employee_personal_infos.phone', 'like', "%{$search}%");
+        });
+    }
+
+    if ($rating) {
+        $query->where('project_members.rating', $rating);
+    }
+
+    $members = $query->orderBy('employee_personal_infos.first_name')
+                     ->paginate($limit);
+
+    return response()->json([
+        'message' => 'Project members fetched successfully',
+        'project' => [
+            'id' => $project->id,
+            'title' => $project->title,
+            'total_members' => $members->total(),
+            'average_rating' => $project->average_rating
+        ],
+        'data' => $members->items(),
+        'pagination' => [
+            'total'        => $members->total(),
+            'per_page'     => $members->perPage(),
+            'current_page' => $members->currentPage(),
+            'last_page'    => $members->lastPage(),
+        ]
+    ]);
+}
+
 }

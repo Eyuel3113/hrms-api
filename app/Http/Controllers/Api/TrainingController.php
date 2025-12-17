@@ -395,6 +395,7 @@ public function toggleStatus($id)
  * @urlParam employeeId string required The UUID of the employee.
  * @queryParam search string optional Search by training title or description. Example: Laravel
  * @queryParam limit integer optional Items per page. Default 10. Example: 20
+ * @queryParam page integer Page number for pagination. Example: 2
  *
  * @param string $employeeId
  * @param Request $request
@@ -454,6 +455,76 @@ public function employeeTrainingHistory(Request $request, $employeeId)
             'per_page'     => $trainings->perPage(),
             'current_page' => $trainings->currentPage(),
             'last_page'    => $trainings->lastPage(),
+        ]
+    ]);
+}
+
+
+/**
+ * List Attendees/Employee in a Training
+ *
+ * Display all employees assigned to a specific training with pagination, search, and status filter.
+ *
+ * @group Training Management
+ * @urlParam id string required The UUID of the training.
+ * @queryParam search string optional Search by employee name, email, or phone. Example: Abebe
+ * @queryParam status string optional Filter by attendance status (registered, attended, absent, certified). Example: attended
+ * @queryParam limit integer optional Items per page. Default 10. Example: 20
+ *
+ * @param Request $request
+ * @param string $id
+ * @return \Illuminate\Http\JsonResponse
+ */
+public function attendees(Request $request, $id)
+{
+    $search = $request->query('search');
+    $status = $request->query('status');
+    $limit  = $request->query('limit', 10);
+
+    $training = Training::findOrFail($id);
+
+    $query = $training->employees()
+        ->join('employee_personal_infos', 'employees.id', '=', 'employee_personal_infos.employee_id')
+        ->select(
+            'employees.id',
+            'employee_personal_infos.first_name',
+            'employee_personal_infos.last_name',
+            'employee_personal_infos.email',
+            'employee_personal_infos.phone',
+            'training_attendees.status',
+            'training_attendees.attended_at',
+            'training_attendees.feedback'
+        );
+
+    if ($search) {
+        $query->where(function ($q) use ($search) {
+            $q->where('employee_personal_infos.first_name', 'like', "%{$search}%")
+              ->orWhere('employee_personal_infos.last_name', 'like', "%{$search}%")
+              ->orWhere('employee_personal_infos.email', 'like', "%{$search}%")
+              ->orWhere('employee_personal_infos.phone', 'like', "%{$search}%");
+        });
+    }
+
+    if ($status) {
+        $query->where('training_attendees.status', $status);
+    }
+
+    $attendees = $query->orderBy('employee_personal_infos.first_name')
+                       ->paginate($limit);
+
+    return response()->json([
+        'message' => 'Training attendees fetched successfully',
+        'training' => [
+            'id' => $training->id,
+            'title' => $training->title,
+            'total_attendees' => $attendees->total(),
+        ],
+        'data' => $attendees->items(),
+        'pagination' => [
+            'total'        => $attendees->total(),
+            'per_page'     => $attendees->perPage(),
+            'current_page' => $attendees->currentPage(),
+            'last_page'    => $attendees->lastPage(),
         ]
     ]);
 }

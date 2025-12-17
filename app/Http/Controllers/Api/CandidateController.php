@@ -109,7 +109,7 @@ public function show($id)
      * @bodyParam full_name string required Candidate's full name.
      * @bodyParam email string required Candidate's email address.
      * @bodyParam phone string required Candidate's phone number.
-     * @bodyParam cv file required The CV/Resume file (pdf, doc, docx). Max 10MB.
+     * @bodyParam cv file required The CV/Resume file (pdf, doc, docx). Max 2MB.
      * @bodyParam cover_letter string optional Cover letter text.
      *
      * @param \App\Http\Requests\Candidate\CandidateStoreRequest $request

@@ -83,8 +83,13 @@ class AttendanceController extends Controller
 
         $today = today()->toDateString();
 
+        // Check for holiday
+        if (Holiday::active()->where('date', $today)->exists()) {
+            return response()->json(['message' => 'Today is a holiday. Attendance not allowed.'], 400);
+        }
+
+        // Only check if there's an OPEN session (not checked out yet)
         $activeSession = Attendance::where('employee_id', $employeeid)
-            ->where('date', $today)
             ->whereNull('check_out')
             ->first();
 
@@ -174,18 +179,11 @@ class AttendanceController extends Controller
             return response()->json(['message' => 'Employee not found'], 404);
         }
 
-        $today = today()->toDateString();
-        // Holiday check
-        if (Holiday::active()->where('date', $today)->exists()) {
-            return response()->json(['message' => 'Today is a holiday. Attendance not allowed.'], 400);
-        }
-        $now = now()->format('H:i:s');  
-
+        // Find the latest active check-in (regardless of date, to support night shifts)
         $attendance = Attendance::where('employee_id', $employee->id)
-            ->where('date', $today)
             ->whereNotNull('check_in')
             ->whereNull('check_out')
-            ->latest()
+            ->latest('check_in')
             ->first();
 
         if (!$attendance) {
@@ -225,7 +223,7 @@ class AttendanceController extends Controller
             'check_in'     => $checkInTime,
             'check_out'    => $now,
             'worked_hours' => $this->calculateWorkedHours($checkInTime, $now),  
-            'ethiopian'    => EthiopianCalendar::format($today),
+            'ethiopian'    => EthiopianCalendar::format($attendance->date),
         ]);
     }
 
