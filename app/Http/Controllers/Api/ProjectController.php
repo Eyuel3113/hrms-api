@@ -293,17 +293,18 @@ class ProjectController extends Controller
     }
 
 
-/**
- * Assign All Employees to Project
- *
- * Assign all active employees to a project (useful for company-wide projects).
- *
- * @group Project Management
- * @urlParam id string required The UUID of the project.
- *
- * @param string $id
- * @return \Illuminate\Http\JsonResponse
- */
+    /**
+     * Assign All Employees to Project
+     *
+     * Assign All employees to a project.
+     *
+     * @group Project Management
+     * @urlParam id string required The UUID of the project.
+     *
+     * @param Request $request
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
+     */
 public function assignAllEmployees($id)
 {
     $project = Project::findOrFail($id);

@@ -139,7 +139,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: active
+        example: inactive
         type: string
         enumValues:
           - active
@@ -151,7 +151,7 @@ endpoints:
       name: architecto
       code: architecto
       description: 'Eius et animi quos velit et.'
-      status: active
+      status: inactive
     fileParameters: []
     responses:
       -
@@ -349,7 +349,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: inactive
+        example: active
         type: string
         enumValues:
           - active
@@ -361,7 +361,7 @@ endpoints:
       name: architecto
       code: architecto
       description: 'Eius et animi quos velit et.'
-      status: inactive
+      status: active
     fileParameters: []
     responses:
       -

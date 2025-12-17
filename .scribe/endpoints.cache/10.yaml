@@ -545,8 +545,108 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
+      page:
+        custom: []
+        name: page
+        description: 'Page number for pagination.'
+        required: false
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
     cleanQueryParameters:
       search: Laravel
+      limit: 20
+      page: 2
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          vary: Origin
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/trainings/{id}/attendees'
+    metadata:
+      custom: []
+      groupName: 'Training Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List Attendees/Employee in a Training'
+      description: 'Display all employees assigned to a specific training with pagination, search, and status filter.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The UUID of the training.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters:
+      search:
+        custom: []
+        name: search
+        description: 'optional Search by employee name, email, or phone.'
+        required: false
+        example: Abebe
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'optional Filter by attendance status (registered, attended, absent, certified).'
+        required: false
+        example: attended
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'optional Items per page. Default 10.'
+        required: false
+        example: 20
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      search: Abebe
+      status: attended
       limit: 20
     bodyParameters: []
     cleanBodyParameters: []
@@ -680,7 +780,7 @@ endpoints:
         name: start_date
         description: 'Must be a valid date.'
         required: false
-        example: '2025-12-16T13:20:26'
+        example: '2025-12-17T09:17:06'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -691,7 +791,7 @@ endpoints:
         name: end_date
         description: 'Must be a valid date. Must be a date after or equal to <code>start_date</code>.'
         required: false
-        example: '2052-01-09'
+        example: '2052-01-10'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -735,7 +835,7 @@ endpoints:
         name: has_incentive
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -746,7 +846,7 @@ endpoints:
         name: type
         description: ''
         required: false
-        example: certification
+        example: external
         type: string
         enumValues:
           - internal
@@ -760,7 +860,7 @@ endpoints:
         name: is_mandatory
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -771,7 +871,7 @@ endpoints:
         name: is_active
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -780,15 +880,15 @@ endpoints:
     cleanBodyParameters:
       title: b
       description: 'Eius et animi quos velit et.'
-      start_date: '2025-12-16T13:20:26'
-      end_date: '2052-01-09'
+      start_date: '2025-12-17T09:17:06'
+      end_date: '2052-01-10'
       trainer_name: 'n'
       location: g
       incentive_amount: 12
-      has_incentive: true
-      type: certification
-      is_mandatory: false
-      is_active: false
+      has_incentive: false
+      type: external
+      is_mandatory: true
+      is_active: true
     fileParameters: []
     responses: []
     responseFields: []

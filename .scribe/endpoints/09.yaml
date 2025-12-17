@@ -71,7 +71,7 @@ endpoints:
       cv:
         custom: []
         name: cv
-        description: 'The CV/Resume file (pdf, doc, docx). Max 10MB.'
+        description: 'The CV/Resume file (pdf, doc, docx). Max 2MB.'
         required: true
         example: null
         type: file

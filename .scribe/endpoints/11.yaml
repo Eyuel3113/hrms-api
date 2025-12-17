@@ -454,6 +454,94 @@ endpoints:
   -
     custom: []
     httpMethods:
+      - GET
+    uri: 'api/v1/projects/{id}/members'
+    metadata:
+      custom: []
+      groupName: 'Project Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List Members in a Project'
+      description: 'Display all employees assigned to a specific project with pagination, search, and rating filter.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The UUID of the project.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters:
+      search:
+        custom: []
+        name: search
+        description: 'optional Search by employee name, email, or phone.'
+        required: false
+        example: Abebe
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      rating:
+        custom: []
+        name: rating
+        description: 'optional Filter by rating (1-5).'
+        required: false
+        example: 5
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'optional Items per page. Default 10.'
+        required: false
+        example: 20
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      search: Abebe
+      rating: 5
+      limit: 20
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          vary: Origin
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
       - PATCH
     uri: 'api/v1/projects/{id}/status'
     metadata:
