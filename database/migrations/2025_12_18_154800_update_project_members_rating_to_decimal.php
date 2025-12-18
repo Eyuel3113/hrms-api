@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('project_members', function (Blueprint $table) {
-            $table->decimal('rating', 3, 2)->change();
+            $table->decimal('rating', 3, 2)->nullable()->change();
         });
     }
 

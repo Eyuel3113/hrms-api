@@ -20,14 +20,14 @@ return new class extends Migration {
             // Earnings
             $table->decimal('overtime_pay', 12, 2)->default(0);
             $table->decimal('holiday_pay', 12, 2)->default(0);
-            $table->decimal('incentives', 12, 2)->default(0); -- Training incentives
+            $table->decimal('incentives', 12, 2)->default(0); // Training incentives
             $table->decimal('performance_bonus', 12, 2)->default(0);
             
             // Deductions
             $table->decimal('late_deduction', 12, 2)->default(0);
             $table->decimal('absent_deduction', 12, 2)->default(0);
             $table->decimal('unpaid_leave_deduction', 12, 2)->default(0);
-            $table->decimal('pension_contribution', 12, 2)->default(0); -- 7% usually
+            $table->decimal('pension_contribution', 12, 2)->default(0); // 7% usually
             $table->decimal('income_tax', 15, 2)->default(0);
             
             $table->decimal('gross_earnings', 15, 2);
@@ -35,9 +35,9 @@ return new class extends Migration {
             $table->decimal('net_pay', 15, 2);
             
             $table->enum('status', ['draft', 'locked', 'paid'])->default('draft');
-            $table->json('calculation_details')->nullable(); -- Store breakdown
+            $table->json('calculation_details')->nullable(); // Store breakdown
             
-            $table->uuid('generated_by')->nullable(); -- Employee ID of HR
+            $table->uuid('generated_by')->nullable(); // Employee ID of HR
             $table->timestamp('locked_at')->nullable();
             $table->uuid('locked_by')->nullable();
             
