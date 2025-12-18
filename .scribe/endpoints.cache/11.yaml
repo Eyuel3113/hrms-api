@@ -655,6 +655,49 @@ endpoints:
   -
     custom: []
     httpMethods:
+      - POST
+    uri: 'api/v1/projects/{id}/assign-all'
+    metadata:
+      custom: []
+      groupName: 'Project Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Assign All Employees to Project'
+      description: 'Assign All employees to a project.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The UUID of the project.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
       - PATCH
     uri: 'api/v1/projects/{projectId}/rate/{employeeId}'
     metadata:

@@ -358,6 +358,9 @@ APIs for managing leave types (Annual, Sick, etc.)</a>
                                                                                 <li class="tocify-item level-2" data-unique="project-management-POSTapi-v1-projects--id--assign">
                                 <a href="#project-management-POSTapi-v1-projects--id--assign">Assign Employees to Project</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="project-management-POSTapi-v1-projects--id--assign-all">
+                                <a href="#project-management-POSTapi-v1-projects--id--assign-all">Assign All Employees to Project</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="project-management-PATCHapi-v1-projects--projectId--rate--employeeId-">
                                 <a href="#project-management-PATCHapi-v1-projects--projectId--rate--employeeId-">Rate Employee in Project</a>
                             </li>
@@ -435,9 +438,6 @@ APIs for managing leave types (Annual, Sick, etc.)</a>
                                                                                 <li class="tocify-item level-2" data-unique="training-management-PATCHapi-v1-trainings--trainingId--attend--employeeId-">
                                 <a href="#training-management-PATCHapi-v1-trainings--trainingId--attend--employeeId-">Mark Attendance</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="training-management-POSTapi-v1-projects--id--assign-all">
-                                <a href="#training-management-POSTapi-v1-projects--id--assign-all">Assign All Employees to Training</a>
-                            </li>
                                                                         </ul>
                             </ul>
             </div>
@@ -449,7 +449,7 @@ APIs for managing leave types (Annual, Sick, etc.)</a>
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: December 17, 2025</li>
+        <li>Last updated: December 18, 2025</li>
     </ul>
 </div>
 
@@ -1806,7 +1806,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "email=gbailey@example.net"\
     --form "phone=architecto"\
     --form "cover_letter=architecto"\
-    --form "cv=@C:\Users\user\AppData\Local\Temp\php1DD.tmp" </code></pre></div>
+    --form "cv=@C:\Users\user\AppData\Local\Temp\php12AB.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -1967,7 +1967,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>The CV/Resume file (pdf, doc, docx). Max 2MB. Example: <code>C:\Users\user\AppData\Local\Temp\php1DD.tmp</code></p>
+<p>The CV/Resume file (pdf, doc, docx). Max 2MB. Example: <code>C:\Users\user\AppData\Local\Temp\php12AB.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>cover_letter</code></b>&nbsp;&nbsp;
@@ -2763,7 +2763,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"name\": \"architecto\",
     \"code\": \"architecto\",
     \"description\": \"Eius et animi quos velit et.\",
-    \"status\": \"inactive\"
+    \"status\": \"active\"
 }"
 </code></pre></div>
 
@@ -2782,7 +2782,7 @@ let body = {
     "name": "architecto",
     "code": "architecto",
     "description": "Eius et animi quos velit et.",
-    "status": "inactive"
+    "status": "active"
 };
 
 fetch(url, {
@@ -2920,10 +2920,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="POSTapi-v1-departments"
-               value="inactive"
+               value="active"
                data-component="body">
     <br>
-<p>Example: <code>inactive</code></p>
+<p>Example: <code>active</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>active</code></li> <li><code>inactive</code></li></ul>
         </div>
@@ -3722,7 +3722,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"title\": \"architecto\",
     \"description\": \"Eius et animi quos velit et.\",
-    \"status\": \"inactive\",
+    \"status\": \"active\",
     \"department_id\": \"architecto\"
 }"
 </code></pre></div>
@@ -3741,7 +3741,7 @@ const headers = {
 let body = {
     "title": "architecto",
     "description": "Eius et animi quos velit et.",
-    "status": "inactive",
+    "status": "active",
     "department_id": "architecto"
 };
 
@@ -3868,10 +3868,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="POSTapi-v1-designations"
-               value="inactive"
+               value="active"
                data-component="body">
     <br>
-<p>Example: <code>inactive</code></p>
+<p>Example: <code>active</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>active</code></li> <li><code>inactive</code></li></ul>
         </div>
@@ -4727,14 +4727,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "department_id=architecto"\
     --form "designation_id=architecto"\
     --form "joining_date=architecto"\
-    --form "ending_date=2052-01-10"\
-    --form "employment_type=full-time"\
+    --form "ending_date=2052-01-11"\
+    --form "employment_type=internship"\
     --form "basic_salary=4326.41688"\
     --form "salary_currency=gzm"\
     --form "bank_name=architecto"\
     --form "bank_account_number=architecto"\
     --form "tax_id=architecto"\
-    --form "photo=@C:\Users\user\AppData\Local\Temp\php9F.tmp" </code></pre></div>
+    --form "photo=@C:\Users\user\AppData\Local\Temp\phpCC9.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -4763,8 +4763,8 @@ body.append('zip_code', 'architecto');
 body.append('department_id', 'architecto');
 body.append('designation_id', 'architecto');
 body.append('joining_date', 'architecto');
-body.append('ending_date', '2052-01-10');
-body.append('employment_type', 'full-time');
+body.append('ending_date', '2052-01-11');
+body.append('employment_type', 'internship');
 body.append('basic_salary', '4326.41688');
 body.append('salary_currency', 'gzm');
 body.append('bank_name', 'architecto');
@@ -4922,7 +4922,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Profile photo (image). Example: <code>C:\Users\user\AppData\Local\Temp\php9F.tmp</code></p>
+<p>Profile photo (image). Example: <code>C:\Users\user\AppData\Local\Temp\phpCC9.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>date_of_birth</code></b>&nbsp;&nbsp;
@@ -5065,10 +5065,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="ending_date"                data-endpoint="POSTapi-v1-employees"
-               value="2052-01-10"
+               value="2052-01-11"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after <code>joining_date</code>. Example: <code>2052-01-10</code></p>
+<p>Must be a valid date. Must be a date after <code>joining_date</code>. Example: <code>2052-01-11</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>employment_type</code></b>&nbsp;&nbsp;
@@ -5077,10 +5077,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="employment_type"                data-endpoint="POSTapi-v1-employees"
-               value="full-time"
+               value="internship"
                data-component="body">
     <br>
-<p>Example: <code>full-time</code></p>
+<p>Example: <code>internship</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>full-time</code></li> <li><code>part-time</code></li> <li><code>contract</code></li> <li><code>internship</code></li></ul>
         </div>
@@ -5522,23 +5522,23 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "last_name=n"\
     --form "email=gbailey@example.net"\
     --form "phone=vdljnikhwaykcmyu"\
-    --form "date_of_birth=2025-12-17T09:17:05"\
-    --form "gender=male"\
+    --form "date_of_birth=2025-12-18T09:02:32"\
+    --form "gender=female"\
     --form "marital_status=married"\
     --form "nationality=architecto"\
     --form "address=architecto"\
     --form "city=architecto"\
     --form "state=architecto"\
     --form "zip_code=architecto"\
-    --form "joining_date=2025-12-17T09:17:05"\
-    --form "ending_date=2052-01-10"\
-    --form "employment_type=full_time"\
+    --form "joining_date=2025-12-18T09:02:32"\
+    --form "ending_date=2052-01-11"\
+    --form "employment_type=internship"\
     --form "basic_salary=22"\
     --form "salary_currency=gzm"\
     --form "bank_name=architecto"\
     --form "bank_account_number=architecto"\
     --form "tax_id=architecto"\
-    --form "photo=@C:\Users\user\AppData\Local\Temp\phpDE.tmp" </code></pre></div>
+    --form "photo=@C:\Users\user\AppData\Local\Temp\phpDB4.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -5556,17 +5556,17 @@ body.append('first_name', 'architecto');
 body.append('last_name', 'n');
 body.append('email', 'gbailey@example.net');
 body.append('phone', 'vdljnikhwaykcmyu');
-body.append('date_of_birth', '2025-12-17T09:17:05');
-body.append('gender', 'male');
+body.append('date_of_birth', '2025-12-18T09:02:32');
+body.append('gender', 'female');
 body.append('marital_status', 'married');
 body.append('nationality', 'architecto');
 body.append('address', 'architecto');
 body.append('city', 'architecto');
 body.append('state', 'architecto');
 body.append('zip_code', 'architecto');
-body.append('joining_date', '2025-12-17T09:17:05');
-body.append('ending_date', '2052-01-10');
-body.append('employment_type', 'full_time');
+body.append('joining_date', '2025-12-18T09:02:32');
+body.append('ending_date', '2052-01-11');
+body.append('employment_type', 'internship');
 body.append('basic_salary', '22');
 body.append('salary_currency', 'gzm');
 body.append('bank_name', 'architecto');
@@ -5737,7 +5737,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 5120 kilobytes. Example: <code>C:\Users\user\AppData\Local\Temp\phpDE.tmp</code></p>
+<p>Must be an image. Must not be greater than 5120 kilobytes. Example: <code>C:\Users\user\AppData\Local\Temp\phpDB4.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>date_of_birth</code></b>&nbsp;&nbsp;
@@ -5746,10 +5746,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date_of_birth"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="2025-12-17T09:17:05"
+               value="2025-12-18T09:02:32"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2025-12-17T09:17:05</code></p>
+<p>Must be a valid date. Example: <code>2025-12-18T09:02:32</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -5758,10 +5758,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="gender"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="male"
+               value="female"
                data-component="body">
     <br>
-<p>Example: <code>male</code></p>
+<p>Example: <code>female</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>male</code></li> <li><code>female</code></li></ul>
         </div>
@@ -5870,10 +5870,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="joining_date"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="2025-12-17T09:17:05"
+               value="2025-12-18T09:02:32"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2025-12-17T09:17:05</code></p>
+<p>Must be a valid date. Example: <code>2025-12-18T09:02:32</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>ending_date</code></b>&nbsp;&nbsp;
@@ -5882,10 +5882,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="ending_date"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="2052-01-10"
+               value="2052-01-11"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after <code>joining_date</code>. Example: <code>2052-01-10</code></p>
+<p>Must be a valid date. Must be a date after <code>joining_date</code>. Example: <code>2052-01-11</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>employment_type</code></b>&nbsp;&nbsp;
@@ -5894,10 +5894,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="employment_type"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="full_time"
+               value="internship"
                data-component="body">
     <br>
-<p>Example: <code>full_time</code></p>
+<p>Example: <code>internship</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>full_time</code></li> <li><code>part_time</code></li> <li><code>contract</code></li> <li><code>internship</code></li></ul>
         </div>
@@ -6123,7 +6123,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     "http://localhost/api/v1/employees/architecto/photo" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "photo=@C:\Users\user\AppData\Local\Temp\phpF0.tmp" </code></pre></div>
+    --form "photo=@C:\Users\user\AppData\Local\Temp\phpDB6.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -6254,7 +6254,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Image file (jpeg, png, jpg, max 5MB). Example: <code>C:\Users\user\AppData\Local\Temp\phpF0.tmp</code></p>
+<p>Image file (jpeg, png, jpg, max 5MB). Example: <code>C:\Users\user\AppData\Local\Temp\phpDB6.tmp</code></p>
         </div>
         </form>
 
@@ -8189,7 +8189,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"min_salary\": 39,
     \"max_salary\": 84,
     \"salary_currency\": \"EUR\",
-    \"salary_negotiable\": false,
+    \"salary_negotiable\": true,
     \"show_salary\": true
 }"
 </code></pre></div>
@@ -8215,7 +8215,7 @@ let body = {
     "min_salary": 39,
     "max_salary": 84,
     "salary_currency": "EUR",
-    "salary_negotiable": false,
+    "salary_negotiable": true,
     "show_salary": true
 };
 
@@ -8431,7 +8431,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>show_salary</code></b>&nbsp;&nbsp;
@@ -8622,8 +8622,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"min_salary\": 39,
     \"max_salary\": 84,
     \"salary_currency\": \"ETB\",
-    \"salary_negotiable\": false,
-    \"show_salary\": true
+    \"salary_negotiable\": true,
+    \"show_salary\": false
 }"
 </code></pre></div>
 
@@ -8648,8 +8648,8 @@ let body = {
     "min_salary": 39,
     "max_salary": 84,
     "salary_currency": "ETB",
-    "salary_negotiable": false,
-    "show_salary": true
+    "salary_negotiable": true,
+    "show_salary": false
 };
 
 fetch(url, {
@@ -8889,7 +8889,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>show_salary</code></b>&nbsp;&nbsp;
@@ -8911,7 +8911,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
         </form>
 
@@ -12484,6 +12484,129 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
+                    <h2 id="project-management-POSTapi-v1-projects--id--assign-all">Assign All Employees to Project</h2>
+
+<p>
+</p>
+
+<p>Assign All employees to a project.</p>
+
+<span id="example-requests-POSTapi-v1-projects--id--assign-all">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost/api/v1/projects/architecto/assign-all" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/projects/architecto/assign-all"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-projects--id--assign-all">
+</span>
+<span id="execution-results-POSTapi-v1-projects--id--assign-all" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-projects--id--assign-all"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-projects--id--assign-all"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-projects--id--assign-all" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-projects--id--assign-all">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-projects--id--assign-all" data-method="POST"
+      data-path="api/v1/projects/{id}/assign-all"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-projects--id--assign-all', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-projects--id--assign-all"
+                    onclick="tryItOut('POSTapi-v1-projects--id--assign-all');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-projects--id--assign-all"
+                    onclick="cancelTryOut('POSTapi-v1-projects--id--assign-all');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-projects--id--assign-all"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/projects/{id}/assign-all</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-projects--id--assign-all"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-projects--id--assign-all"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="POSTapi-v1-projects--id--assign-all"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The UUID of the project. Example: <code>architecto</code></p>
+            </div>
+                    </form>
+
                     <h2 id="project-management-PATCHapi-v1-projects--projectId--rate--employeeId-">Rate Employee in Project</h2>
 
 <p>
@@ -15469,18 +15592,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://localhost/api/v1/trainings/922248e5-07ee-49d0-b9e5-f92dc5fbdd28" \
+    "http://localhost/api/v1/trainings/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
     \"title\": \"b\",
     \"description\": \"Eius et animi quos velit et.\",
-    \"start_date\": \"2025-12-17T09:17:06\",
-    \"end_date\": \"2052-01-10\",
+    \"start_date\": \"2025-12-18T09:02:33\",
+    \"end_date\": \"2052-01-11\",
     \"trainer_name\": \"n\",
     \"location\": \"g\",
     \"incentive_amount\": 12,
-    \"has_incentive\": false,
+    \"has_incentive\": true,
     \"type\": \"external\",
     \"is_mandatory\": true,
     \"is_active\": true
@@ -15490,7 +15613,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/trainings/922248e5-07ee-49d0-b9e5-f92dc5fbdd28"
+    "http://localhost/api/v1/trainings/architecto"
 );
 
 const headers = {
@@ -15501,12 +15624,12 @@ const headers = {
 let body = {
     "title": "b",
     "description": "Eius et animi quos velit et.",
-    "start_date": "2025-12-17T09:17:06",
-    "end_date": "2052-01-10",
+    "start_date": "2025-12-18T09:02:33",
+    "end_date": "2052-01-11",
     "trainer_name": "n",
     "location": "g",
     "incentive_amount": 12,
-    "has_incentive": false,
+    "has_incentive": true,
     "type": "external",
     "is_mandatory": true,
     "is_active": true
@@ -15601,10 +15724,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="PATCHapi-v1-trainings--id-"
-               value="922248e5-07ee-49d0-b9e5-f92dc5fbdd28"
+               value="architecto"
                data-component="url">
     <br>
-<p>The ID of the training. Example: <code>922248e5-07ee-49d0-b9e5-f92dc5fbdd28</code></p>
+<p>The ID of the training. Example: <code>architecto</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -15638,10 +15761,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="start_date"                data-endpoint="PATCHapi-v1-trainings--id-"
-               value="2025-12-17T09:17:06"
+               value="2025-12-18T09:02:33"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2025-12-17T09:17:06</code></p>
+<p>Must be a valid date. Example: <code>2025-12-18T09:02:33</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>end_date</code></b>&nbsp;&nbsp;
@@ -15650,10 +15773,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="end_date"                data-endpoint="PATCHapi-v1-trainings--id-"
-               value="2052-01-10"
+               value="2052-01-11"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>start_date</code>. Example: <code>2052-01-10</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>start_date</code>. Example: <code>2052-01-11</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>trainer_name</code></b>&nbsp;&nbsp;
@@ -15711,7 +15834,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>type</code></b>&nbsp;&nbsp;
@@ -15909,7 +16032,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/v1/trainings/922248e5-07ee-49d0-b9e5-f92dc5fbdd28/assign" \
+    "http://localhost/api/v1/trainings/architecto/assign" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -15922,7 +16045,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/trainings/922248e5-07ee-49d0-b9e5-f92dc5fbdd28/assign"
+    "http://localhost/api/v1/trainings/architecto/assign"
 );
 
 const headers = {
@@ -16025,10 +16148,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="POSTapi-v1-trainings--id--assign"
-               value="922248e5-07ee-49d0-b9e5-f92dc5fbdd28"
+               value="architecto"
                data-component="url">
     <br>
-<p>The ID of the training. Example: <code>922248e5-07ee-49d0-b9e5-f92dc5fbdd28</code></p>
+<p>The ID of the training. Example: <code>architecto</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -16183,7 +16306,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PATCH \
-    "http://localhost/api/v1/trainings/922248e5-07ee-49d0-b9e5-f92dc5fbdd28/attend/architecto" \
+    "http://localhost/api/v1/trainings/architecto/attend/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -16195,7 +16318,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/trainings/922248e5-07ee-49d0-b9e5-f92dc5fbdd28/attend/architecto"
+    "http://localhost/api/v1/trainings/architecto/attend/architecto"
 );
 
 const headers = {
@@ -16297,10 +16420,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="trainingId"                data-endpoint="PATCHapi-v1-trainings--trainingId--attend--employeeId-"
-               value="922248e5-07ee-49d0-b9e5-f92dc5fbdd28"
+               value="architecto"
                data-component="url">
     <br>
-<p>Example: <code>922248e5-07ee-49d0-b9e5-f92dc5fbdd28</code></p>
+<p>Example: <code>architecto</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>employeeId</code></b>&nbsp;&nbsp;
@@ -16340,129 +16463,6 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>optional Example: <code>architecto</code></p>
         </div>
         </form>
-
-                    <h2 id="training-management-POSTapi-v1-projects--id--assign-all">Assign All Employees to Training</h2>
-
-<p>
-</p>
-
-<p>Assign all active employees to a training (useful for mandatory trainings).</p>
-
-<span id="example-requests-POSTapi-v1-projects--id--assign-all">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/v1/projects/architecto/assign-all" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/projects/architecto/assign-all"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "POST",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-POSTapi-v1-projects--id--assign-all">
-</span>
-<span id="execution-results-POSTapi-v1-projects--id--assign-all" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-POSTapi-v1-projects--id--assign-all"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-v1-projects--id--assign-all"
-      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-POSTapi-v1-projects--id--assign-all" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-v1-projects--id--assign-all">
-
-Tip: Check that you&#039;re properly connected to the network.
-If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
-You can check the Dev Tools console for debugging information.</code></pre>
-</span>
-<form id="form-POSTapi-v1-projects--id--assign-all" data-method="POST"
-      data-path="api/v1/projects/{id}/assign-all"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-projects--id--assign-all', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-v1-projects--id--assign-all"
-                    onclick="tryItOut('POSTapi-v1-projects--id--assign-all');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-v1-projects--id--assign-all"
-                    onclick="cancelTryOut('POSTapi-v1-projects--id--assign-all');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-v1-projects--id--assign-all"
-                    data-initial-text="Send Request 💥"
-                    data-loading-text="⏱ Sending..."
-                    hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-black">POST</small>
-            <b><code>api/v1/projects/{id}/assign-all</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-v1-projects--id--assign-all"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-v1-projects--id--assign-all"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
-                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="id"                data-endpoint="POSTapi-v1-projects--id--assign-all"
-               value="architecto"
-               data-component="url">
-    <br>
-<p>The UUID of the training. Example: <code>architecto</code></p>
-            </div>
-                    </form>
 
             
 

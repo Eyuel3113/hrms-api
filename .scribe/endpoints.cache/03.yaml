@@ -336,7 +336,7 @@ endpoints:
         name: ending_date
         description: 'Must be a valid date. Must be a date after <code>joining_date</code>.'
         required: false
-        example: '2052-01-10'
+        example: '2052-01-11'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -347,7 +347,7 @@ endpoints:
         name: employment_type
         description: ''
         required: true
-        example: full-time
+        example: internship
         type: string
         enumValues:
           - full-time
@@ -439,8 +439,8 @@ endpoints:
       department_id: architecto
       designation_id: architecto
       joining_date: architecto
-      ending_date: '2052-01-10'
-      employment_type: full-time
+      ending_date: '2052-01-11'
+      employment_type: internship
       basic_salary: 4326.41688
       salary_currency: gzm
       bank_name: architecto
@@ -726,7 +726,7 @@ endpoints:
         name: date_of_birth
         description: 'Must be a valid date.'
         required: false
-        example: '2025-12-17T09:17:05'
+        example: '2025-12-18T09:02:32'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -737,7 +737,7 @@ endpoints:
         name: gender
         description: ''
         required: false
-        example: male
+        example: female
         type: string
         enumValues:
           - male
@@ -842,7 +842,7 @@ endpoints:
         name: joining_date
         description: 'Must be a valid date.'
         required: false
-        example: '2025-12-17T09:17:05'
+        example: '2025-12-18T09:02:32'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -853,7 +853,7 @@ endpoints:
         name: ending_date
         description: 'Must be a valid date. Must be a date after <code>joining_date</code>.'
         required: false
-        example: '2052-01-10'
+        example: '2052-01-11'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -864,7 +864,7 @@ endpoints:
         name: employment_type
         description: ''
         required: false
-        example: full_time
+        example: internship
         type: string
         enumValues:
           - full_time
@@ -945,17 +945,17 @@ endpoints:
       last_name: 'n'
       email: gbailey@example.net
       phone: vdljnikhwaykcmyu
-      date_of_birth: '2025-12-17T09:17:05'
-      gender: male
+      date_of_birth: '2025-12-18T09:02:32'
+      gender: female
       marital_status: married
       nationality: architecto
       address: architecto
       city: architecto
       state: architecto
       zip_code: architecto
-      joining_date: '2025-12-17T09:17:05'
-      ending_date: '2052-01-10'
-      employment_type: full_time
+      joining_date: '2025-12-18T09:02:32'
+      ending_date: '2052-01-11'
+      employment_type: internship
       basic_salary: 22
       salary_currency: gzm
       bank_name: architecto
