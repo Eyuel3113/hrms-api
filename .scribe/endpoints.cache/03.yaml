@@ -726,7 +726,7 @@ endpoints:
         name: date_of_birth
         description: 'Must be a valid date.'
         required: false
-        example: '2025-12-18T09:02:32'
+        example: '2025-12-18T16:02:40'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -737,7 +737,7 @@ endpoints:
         name: gender
         description: ''
         required: false
-        example: female
+        example: male
         type: string
         enumValues:
           - male
@@ -750,7 +750,7 @@ endpoints:
         name: marital_status
         description: ''
         required: false
-        example: married
+        example: divorced
         type: string
         enumValues:
           - single
@@ -842,7 +842,7 @@ endpoints:
         name: joining_date
         description: 'Must be a valid date.'
         required: false
-        example: '2025-12-18T09:02:32'
+        example: '2025-12-18T16:02:40'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -945,15 +945,15 @@ endpoints:
       last_name: 'n'
       email: gbailey@example.net
       phone: vdljnikhwaykcmyu
-      date_of_birth: '2025-12-18T09:02:32'
-      gender: female
-      marital_status: married
+      date_of_birth: '2025-12-18T16:02:40'
+      gender: male
+      marital_status: divorced
       nationality: architecto
       address: architecto
       city: architecto
       state: architecto
       zip_code: architecto
-      joining_date: '2025-12-18T09:02:32'
+      joining_date: '2025-12-18T16:02:40'
       ending_date: '2052-01-11'
       employment_type: internship
       basic_salary: 22

@@ -740,14 +740,14 @@ endpoints:
         name: id
         description: 'The ID of the training.'
         required: true
-        example: architecto
+        example: abebb2ac-eb62-486b-848c-efe9e6068600
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      id: architecto
+      id: abebb2ac-eb62-486b-848c-efe9e6068600
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -778,7 +778,7 @@ endpoints:
         name: start_date
         description: 'Must be a valid date.'
         required: false
-        example: '2025-12-18T09:02:33'
+        example: '2025-12-18T16:02:41'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -833,7 +833,7 @@ endpoints:
         name: has_incentive
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -844,7 +844,7 @@ endpoints:
         name: type
         description: ''
         required: false
-        example: external
+        example: internal
         type: string
         enumValues:
           - internal
@@ -869,7 +869,7 @@ endpoints:
         name: is_active
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -878,15 +878,15 @@ endpoints:
     cleanBodyParameters:
       title: b
       description: 'Eius et animi quos velit et.'
-      start_date: '2025-12-18T09:02:33'
+      start_date: '2025-12-18T16:02:41'
       end_date: '2052-01-11'
       trainer_name: 'n'
       location: g
       incentive_amount: 12
-      has_incentive: true
-      type: external
+      has_incentive: false
+      type: internal
       is_mandatory: true
-      is_active: true
+      is_active: false
     fileParameters: []
     responses: []
     responseFields: []
@@ -961,14 +961,14 @@ endpoints:
         name: id
         description: 'The ID of the training.'
         required: true
-        example: architecto
+        example: abebb2ac-eb62-486b-848c-efe9e6068600
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      id: architecto
+      id: abebb2ac-eb62-486b-848c-efe9e6068600
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1061,7 +1061,7 @@ endpoints:
         name: trainingId
         description: ''
         required: true
-        example: architecto
+        example: abebb2ac-eb62-486b-848c-efe9e6068600
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1079,7 +1079,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      trainingId: architecto
+      trainingId: abebb2ac-eb62-486b-848c-efe9e6068600
       employeeId: architecto
     queryParameters: []
     cleanQueryParameters: []

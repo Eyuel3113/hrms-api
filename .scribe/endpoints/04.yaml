@@ -204,3 +204,103 @@ endpoints:
     controller: null
     method: null
     route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/attendance/{employeeId}/attendance'
+    metadata:
+      custom: []
+      groupName: Attendance
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Employee Attendance History by ID'
+      description: 'Get all attendance records for a specific employee with pagination, search by date, and status filter.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      employeeId:
+        custom: []
+        name: employeeId
+        description: 'The UUID of the employee.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      employeeId: architecto
+    queryParameters:
+      start_date:
+        custom: []
+        name: start_date
+        description: 'optional Filter from date (YYYY-MM-DD).'
+        required: false
+        example: '2025-12-01'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      end_date:
+        custom: []
+        name: end_date
+        description: 'optional Filter to date (YYYY-MM-DD).'
+        required: false
+        example: '2025-12-31'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'optional Filter by status (present, late, absent, half_day).'
+        required: false
+        example: late
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'optional Items per page. Default 10.'
+        required: false
+        example: 30
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      start_date: '2025-12-01'
+      end_date: '2025-12-31'
+      status: late
+      limit: 30
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          vary: Origin
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null

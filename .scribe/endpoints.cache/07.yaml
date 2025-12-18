@@ -205,7 +205,7 @@ endpoints:
         type: date
         enumValues: []
         exampleWasSpecified: true
-        nullable: false
+        nullable: true
         deprecated: false
       reason:
         custom: []
@@ -318,6 +318,97 @@ endpoints:
     cleanBodyParameters: []
     fileParameters: []
     responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/leaves/{employeeId}/leaves'
+    metadata:
+      custom: []
+      groupName: 'Leave Management'
+      groupDescription: ''
+      subgroup: |-
+        Leave Requests
+
+        APIs for managing employee leave requests and approvals.
+      subgroupDescription: ''
+      title: 'Employee Leave History by ID'
+      description: 'Get all leave requests for a specific employee with pagination, search, and status filter.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      employeeId:
+        custom: []
+        name: employeeId
+        description: 'The UUID of the employee.'
+        required: true
+        example: a1b2c3d4-e5f6-7890-g1h2-i3j4k5l6m7n8
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      employeeId: a1b2c3d4-e5f6-7890-g1h2-i3j4k5l6m7n8
+    queryParameters:
+      search:
+        custom: []
+        name: search
+        description: 'optional Search by reason.'
+        required: false
+        example: vacation
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'optional Filter by status (pending, approved, rejected).'
+        required: false
+        example: approved
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'optional Items per page. Default 10.'
+        required: false
+        example: 20
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      search: vacation
+      status: approved
+      limit: 20
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          vary: Origin
+        description: null
     responseFields: []
     auth: []
     controller: null
@@ -654,7 +745,7 @@ endpoints:
         name: requires_approval
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -664,7 +755,7 @@ endpoints:
       name: 'Casual Leave v2'
       default_days: 27
       is_paid: false
-      requires_approval: false
+      requires_approval: true
     fileParameters: []
     responses: []
     responseFields: []

@@ -13,8 +13,8 @@ class Attendance extends Model
 
     protected $casts = [
         'date' => 'date',
-        'check_in' => 'datetime:H:i',
-        'check_out' => 'datetime:H:i',
+        'check_in' => 'datetime:h:i A',
+        'check_out' => 'datetime:h:i A',
         'latitude' => 'decimal:8',
         'longitude' => 'decimal:8',
     ];

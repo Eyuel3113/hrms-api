@@ -15,6 +15,7 @@ class ProjectMember extends Model
     protected $fillable = ['project_id', 'employee_id', 'rating', 'feedback', 'rated_at'];
 
     protected $casts = [
+        'rating'   => 'decimal:2',
         'rated_at' => 'datetime',
     ];
 

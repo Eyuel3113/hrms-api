@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\JobController;
 use App\Http\Controllers\Api\CandidateController;
 use App\Http\Controllers\Api\TrainingController;
 use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\PayrollController;
 
 
 Route::prefix('v1')->group(function () {
@@ -76,6 +77,7 @@ Route::prefix('v1')->group(function () {
          Route::get('/today', [AttendanceController::class, 'today'])->name('today');
          Route::post('/check-in', [AttendanceController::class, 'checkIn'])->name('checkin');
          Route::post('/check-out', [AttendanceController::class, 'checkOut'])->name('checkout');
+         Route::get('/{employeeId}/attendance', [AttendanceController::class, 'employeeAttendanceHistory']);
     });
           // HOLIDAYS
     Route::prefix('holidays')->group(function () {
@@ -104,6 +106,7 @@ Route::prefix('leaves')->group(function () {
     Route::post('/', [LeaveController::class, 'store']);
     Route::patch('/{id}/approve', [LeaveController::class, 'approve']);
     Route::patch('/{id}/reject', [LeaveController::class, 'reject']);
+    Route::get('/{employeeId}/leaves', [LeaveController::class, 'employeeLeaveHistory']);
 });
 
 // LEAVE TYPES
@@ -173,6 +176,16 @@ Route::prefix('projects')->group(function () {
 
 });
 
+// PAYROLL
+Route::prefix('payroll')->group(function () {
+    Route::post('/generate', [PayrollController::class, 'generate']);
+    Route::get('/', [PayrollController::class, 'index']);
+    Route::get('/{id}', [PayrollController::class, 'show']);
+    Route::patch('/{id}', [PayrollController::class, 'update']);
+    Route::post('/lock', [PayrollController::class, 'lock']);
+    Route::get('/export/bank', [PayrollController::class, 'exportBankExcel']);
+    Route::get('/{id}/payslip', [PayrollController::class, 'downloadPayslip']);
+});
     
 });
 

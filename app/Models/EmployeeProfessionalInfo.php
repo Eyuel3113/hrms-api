@@ -10,8 +10,14 @@ class EmployeeProfessionalInfo extends Model
     public $incrementing = false;
     protected $fillable = [
         'employee_id', 'department_id', 'designation_id', 'joining_date', 'ending_date',
-        'employment_type', 'basic_salary', 'salary_currency', 'bank_name',
-        'bank_account_number', 'tax_id'
+        'employment_type', 'basic_salary', 'transport_allowance', 'has_pension',
+        'salary_currency', 'bank_name', 'bank_account_number', 'tax_id'
+    ];
+
+    protected $casts = [
+        'basic_salary' => 'decimal:2',
+        'transport_allowance' => 'decimal:2',
+        'has_pension' => 'boolean',
     ];
 
     protected static function boot()

@@ -35,56 +35,75 @@ class AttendanceController extends Controller
         $today = today()->toDateString();
         $yesterday = today()->subDay()->toDateString();
 
-        $attendances = Attendance::with(['employee.personalInfo'])
-            ->where(function($query) use ($today, $yesterday) {
+        $employees = Employee::with(['personalInfo', 'shift'])->get();
+        $attendances = Attendance::where(function($query) use ($today, $yesterday) {
                 $query->where('date', $today)
                       ->orWhere(function($subQuery) use ($yesterday) {
-                          // Include shifts from yesterday that haven't ended yet (Night Shifts)
                           $subQuery->where('date', $yesterday)->whereNull('check_out');
                       });
             })
-            ->orderBy('check_in')
-            ->get();
+            ->get()
+            ->groupBy('employee_id');
 
-        // Group by employee to aggregate sessions
-        $employeeAttendance = $attendances->groupBy('employee_id')->map(function ($sessions) {
-            $morningSession = $sessions->first(function ($session) {
-                $checkIn = \Carbon\Carbon::parse($session->check_in);
-                return $checkIn->lessThan(\Carbon\Carbon::parse('12:00:00')->setDateFrom($checkIn));
-            });
-            
-            $afternoonSession = $sessions->first(function ($session) {
-                $checkIn = \Carbon\Carbon::parse($session->check_in);
-                return $checkIn->greaterThanOrEqualTo(\Carbon\Carbon::parse('13:00:00')->setDateFrom($checkIn));
-            });
+        $defaultShift = Shift::where('is_default', true)->first();
 
-            // Determine overall daily status
-            $morningOk = $morningSession && in_array($morningSession->status, ['present', 'late']);
-            $afternoonOk = $afternoonSession && in_array($afternoonSession->status, ['present', 'late']);
-            
+        $data = $employees->map(function ($employee) use ($attendances, $defaultShift) {
+            $sessions = $attendances->get($employee->id, collect());
+            $shift = $employee->shift ?? $defaultShift;
+
             $dailyStatus = 'absent';
-            if ($morningOk && $afternoonOk) {
-                $dailyStatus = 'present';
-            } elseif ($morningOk || $afternoonOk) {
-                $dailyStatus = 'half_day';
+            $morningSession = null;
+            $afternoonSession = null;
+
+            if ($sessions->isNotEmpty()) {
+                if ($shift && $shift->type === 'split') {
+                    $breakStart = \Carbon\Carbon::parse($shift->break_start_time);
+                    $breakEnd = \Carbon\Carbon::parse($shift->break_end_time);
+
+                    $morningSession = $sessions->first(function ($s) use ($breakStart) {
+                        return \Carbon\Carbon::parse($s->check_in)->lessThan($breakStart->setDateFrom(\Carbon\Carbon::parse($s->check_in)));
+                    });
+
+                    $afternoonSession = $sessions->first(function ($s) use ($breakEnd) {
+                        return \Carbon\Carbon::parse($s->check_in)->greaterThanOrEqualTo($breakEnd->setDateFrom(\Carbon\Carbon::parse($s->check_in)));
+                    });
+
+                    $morningOk = $morningSession && in_array($morningSession->status, ['present', 'late']);
+                    $afternoonOk = $afternoonSession && in_array($afternoonSession->status, ['present', 'late']);
+
+                    if ($morningOk && $afternoonOk) {
+                        $dailyStatus = 'present';
+                    } elseif ($morningOk || $afternoonOk) {
+                        $dailyStatus = 'half_day';
+                    }
+                } else {
+                    // Regular Shift
+                    $session = $sessions->first();
+                    $dailyStatus = $session->status;
+                }
             }
 
             return [
-                'employee' => $sessions->first()->employee,
+                'employee' => [
+                    'id' => $employee->id,
+                    'full_name' => $employee->personalInfo->first_name . ' ' . $employee->personalInfo->last_name,
+                    'employee_code' => $employee->employee_code,
+                ],
                 'sessions' => $sessions,
                 'daily_status' => $dailyStatus,
             ];
-        })->values();
+        });
 
         return response()->json([
             'success' => true,
             'date'    => $today,
             'ethiopian_date' => EthiopianCalendar::format($today),
-            'total'   => Employee::count(),
-            'present' => $employeeAttendance->where('daily_status', 'present')->count(),
-            'half_day' => $employeeAttendance->where('daily_status', 'half_day')->count(),
-            'absent'  => Employee::count() - $employeeAttendance->count(),
-            'data'    => $employeeAttendance
+            'total'   => $employees->count(),
+            'present' => $data->where('daily_status', 'present')->count(),
+            'late'    => $data->where('daily_status', 'late')->count(),
+            'half_day' => $data->where('daily_status', 'half_day')->count(),
+            'absent'  => $data->where('daily_status', 'absent')->count(),
+            'data'    => $data
         ]);
     }
 
@@ -164,7 +183,7 @@ class AttendanceController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $employee->personalInfo->first_name . ' checked in at ' . now()->format('H:i'),
+            'message' => $employee->personalInfo->first_name . ' checked in at ' . now()->format('h:i A'),
             'employee_code' => $employee->employee_code,
             'ethiopian' => EthiopianCalendar::format($today),
         ]);
@@ -255,13 +274,93 @@ class AttendanceController extends Controller
 
         return response()->json([
             'success'      => true,
-            'message'      => $employee->personalInfo->first_name . ' checked out at ' . $now,
+            'message'      => $employee->personalInfo->first_name . ' checked out at ' . now()->format('h:i A'),
             'check_in'     => $checkInTime,
-            'check_out'    => $now,
+            'check_out'    => now()->format('h:i A'),
             'worked_hours' => $this->calculateWorkedHours($checkInTime, $now),  
             'ethiopian'    => EthiopianCalendar::format($attendance->date),
         ]);
     }
+
+
+    /**
+ * Employee Attendance History by ID
+ *
+ * Get all attendance records for a specific employee with pagination, search by date, and status filter.
+ *
+ * @group Attendance
+ * @urlParam employeeId string required The UUID of the employee.
+ * @queryParam start_date string optional Filter from date (YYYY-MM-DD). Example: 2025-12-01
+ * @queryParam end_date string optional Filter to date (YYYY-MM-DD). Example: 2025-12-31
+ * @queryParam status string optional Filter by status (present, late, absent, half_day). Example: late
+ * @queryParam limit integer optional Items per page. Default 10. Example: 30
+ *
+ * @param Request $request
+ * @param string $employeeId
+ * @return \Illuminate\Http\JsonResponse
+ */
+public function employeeAttendanceHistory(Request $request, $employeeId)
+{
+    $startDate = $request->query('start_date');
+    $endDate   = $request->query('end_date');
+    $status    = $request->query('status');
+    $limit     = $request->query('limit', 10);
+
+    $employee = Employee::with('personalInfo')->findOrFail($employeeId);
+
+    $query = Attendance::where('employee_id', $employeeId);
+
+    if ($startDate) {
+        $query->whereDate('date', '>=', $startDate);
+    }
+
+    if ($endDate) {
+        $query->whereDate('date', '<=', $endDate);
+    }
+
+    if ($status) {
+        $query->where('status', $status);
+    }
+
+    $attendances = $query->orderBy('date', 'desc')
+                         ->paginate($limit);
+
+    return response()->json([
+        'message' => 'Employee attendance history fetched successfully',
+        'employee' => [
+            'id' => $employee->id,
+            'full_name' => $employee->personalInfo->first_name . ' ' . $employee->personalInfo->last_name,
+            'email' => $employee->personalInfo->email,
+            'phone' => $employee->personalInfo->phone,
+        ],
+        'total_records' => $attendances->total(),
+        'data' => $attendances->items(),
+        'summary' => [
+            'present' => Attendance::where('employee_id', $employeeId)
+                ->when($startDate, fn($q) => $q->whereDate('date', '>=', $startDate))
+                ->when($endDate, fn($q) => $q->whereDate('date', '<=', $endDate))
+                ->where('status', 'present')->count(),
+            'late' => Attendance::where('employee_id', $employeeId)
+                ->when($startDate, fn($q) => $q->whereDate('date', '>=', $startDate))
+                ->when($endDate, fn($q) => $q->whereDate('date', '<=', $endDate))
+                ->where('status', 'late')->count(),
+            'absent' => Attendance::where('employee_id', $employeeId)
+                ->when($startDate, fn($q) => $q->whereDate('date', '>=', $startDate))
+                ->when($endDate, fn($q) => $q->whereDate('date', '<=', $endDate))
+                ->where('status', 'absent')->count(),
+            'half_day' => Attendance::where('employee_id', $employeeId)
+                ->when($startDate, fn($q) => $q->whereDate('date', '>=', $startDate))
+                ->when($endDate, fn($q) => $q->whereDate('date', '<=', $endDate))
+                ->where('status', 'half_day')->count(),
+        ],
+        'pagination' => [
+            'total'        => $attendances->total(),
+            'per_page'     => $attendances->perPage(),
+            'current_page' => $attendances->currentPage(),
+            'last_page'    => $attendances->lastPage(),
+        ]
+    ]);
+}
 
 private function calculateWorkedHours($checkIn, $checkOut)
 {

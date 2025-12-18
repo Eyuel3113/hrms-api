@@ -417,7 +417,7 @@ endpoints:
         name: salary_currency
         description: ''
         required: false
-        example: EUR
+        example: ETB
         type: string
         enumValues:
           - ETB
@@ -457,7 +457,7 @@ endpoints:
       deadline: '2025-12-31'
       min_salary: 39
       max_salary: 84
-      salary_currency: EUR
+      salary_currency: ETB
       salary_negotiable: true
       show_salary: true
     fileParameters: []
