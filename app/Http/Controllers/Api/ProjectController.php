@@ -356,7 +356,7 @@ public function assignAllEmployees($id)
                                ->firstOrFail();
 
         $request->validate([
-            'rating'    => 'required|integer|min:1|max:5',
+            'rating' => 'required|numeric|min:1|max:5|multiple_of:0.25',
             'feedback'  => 'nullable|string',
         ]);
 

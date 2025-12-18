@@ -166,7 +166,7 @@ Route::prefix('projects')->group(function () {
     Route::get('/{id}/members', [ProjectController::class, 'members']);
     Route::patch('/{id}/status', [ProjectController::class, 'toggleStatus']);
     Route::post('/{id}/assign', [ProjectController::class, 'assignEmployees']);
-    Route::post('/{id}/assign-all', [TrainingController::class, 'assignAllEmployees']);
+    Route::post('/{id}/assign-all', [ProjectController::class, 'assignAllEmployees']);
     Route::patch('/{projectId}/rate/{employeeId}', [ProjectController::class, 'rateEmployee']);
     Route::get('/employee/{employeeId}/performance', [ProjectController::class, 'employeePerformance']);
     Route::get('/employees/{employeeId}', [ProjectController::class, 'employeeProjectHistory']);
