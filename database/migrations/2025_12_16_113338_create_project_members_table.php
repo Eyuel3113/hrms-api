@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->uuid('id')->primary();
             $table->foreignUuid('project_id')->constrained('projects')->cascadeOnDelete();
             $table->foreignUuid('employee_id')->constrained('employees')->cascadeOnDelete();
-            $table->integer('rating')->nullable()->comment('1 to 5');
+            $table->integer('rating')->nullable()->comment('0.25 to 5');
             $table->text('feedback')->nullable();
             $table->timestamp('rated_at')->nullable();
             $table->timestamps();

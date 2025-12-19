@@ -1,4 +1,4 @@
-name: Payroll
+name: 'Payroll Management'
 description: ''
 endpoints:
   -
@@ -8,12 +8,12 @@ endpoints:
     uri: api/v1/payroll/generate
     metadata:
       custom: []
-      groupName: Payroll
+      groupName: 'Payroll Management'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Generate Payroll'
-      description: 'Auto generate monthly payroll for all active employees.'
+      title: 'Generate Payroll for Month'
+      description: 'Generate payroll for all active employees for a specific month/year.'
       authenticated: false
       deprecated: false
     headers:
@@ -24,10 +24,21 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
+      year:
+        custom: []
+        name: year
+        description: Year.
+        required: true
+        example: 2025
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
       month:
         custom: []
         name: month
-        description: 1-12.
+        description: 'Month (1-12).'
         required: true
         example: 12
         type: integer
@@ -35,20 +46,9 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         deprecated: false
-      year:
-        custom: []
-        name: year
-        description: required.
-        required: false
-        example: 2025
-        type: integer
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        deprecated: false
     cleanBodyParameters:
-      month: 12
       year: 2025
+      month: 12
     fileParameters: []
     responses: []
     responseFields: []
@@ -63,7 +63,7 @@ endpoints:
     uri: api/v1/payroll
     metadata:
       custom: []
-      groupName: Payroll
+      groupName: 'Payroll Management'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
@@ -77,21 +77,10 @@ endpoints:
     urlParameters: []
     cleanUrlParameters: []
     queryParameters:
-      month:
-        custom: []
-        name: month
-        description: ''
-        required: false
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
       year:
         custom: []
         name: year
-        description: ''
+        description: optional
         required: false
         example: 16
         type: integer
@@ -99,10 +88,21 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      status:
+      month:
         custom: []
-        name: status
-        description: ''
+        name: month
+        description: optional
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      employee_id:
+        custom: []
+        name: employee_id
+        description: optional
         required: false
         example: architecto
         type: string
@@ -110,10 +110,86 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'optional draft, locked, paid'
+        required: false
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'optional Default 10'
+        required: false
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanQueryParameters:
-      month: 16
       year: 16
+      month: 16
+      employee_id: architecto
       status: architecto
+      limit: 16
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          vary: Origin
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/payroll/{id}'
+    metadata:
+      custom: []
+      groupName: 'Payroll Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get Payroll by ID'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'Payroll UUID'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -136,14 +212,14 @@ endpoints:
     custom: []
     httpMethods:
       - PATCH
-    uri: 'api/v1/payroll/{id}'
+    uri: 'api/v1/payroll/{id}/lock'
     metadata:
       custom: []
-      groupName: Payroll
+      groupName: 'Payroll Management'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Update Payroll (Manual Override)'
+      title: 'Lock Payroll'
       description: ''
       authenticated: false
       deprecated: false
@@ -154,7 +230,7 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'The ID of the payroll.'
+        description: 'Payroll UUID'
         required: true
         example: architecto
         type: string
@@ -166,83 +242,51 @@ endpoints:
       id: architecto
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters:
-      basic_salary:
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PATCH
+    uri: 'api/v1/payroll/{id}/paid'
+    metadata:
+      custom: []
+      groupName: 'Payroll Management'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Mark Payroll as Paid'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
         custom: []
-        name: basic_salary
-        description: ''
-        required: false
-        example: 4326.41688
-        type: number
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      overtime_pay:
-        custom: []
-        name: overtime_pay
-        description: ''
-        required: false
-        example: 4326.41688
-        type: number
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      performance_bonus:
-        custom: []
-        name: performance_bonus
-        description: ''
-        required: false
-        example: 4326.41688
-        type: number
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      late_deduction:
-        custom: []
-        name: late_deduction
-        description: ''
-        required: false
-        example: 4326.41688
-        type: number
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      net_pay:
-        custom: []
-        name: net_pay
-        description: ''
-        required: false
-        example: 4326.41688
-        type: number
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: ''
-        required: false
-        example: locked
+        name: id
+        description: 'Payroll UUID'
+        required: true
+        example: architecto
         type: string
-        enumValues:
-          - draft
-          - locked
-          - paid
+        enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-    cleanBodyParameters:
-      basic_salary: 4326.41688
-      overtime_pay: 4326.41688
-      performance_bonus: 4326.41688
-      late_deduction: 4326.41688
-      net_pay: 4326.41688
-      status: locked
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
     responses: []
     responseFields: []

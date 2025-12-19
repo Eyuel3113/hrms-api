@@ -231,7 +231,7 @@ endpoints:
         name: marital_status
         description: ''
         required: false
-        example: widowed
+        example: married
         type: string
         enumValues:
           - single
@@ -334,7 +334,7 @@ endpoints:
         name: ending_date
         description: 'Must be a valid date. Must be a date after <code>joining_date</code>.'
         required: false
-        example: '2052-01-11'
+        example: '2052-01-12'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -345,7 +345,7 @@ endpoints:
         name: employment_type
         description: ''
         required: true
-        example: internship
+        example: part-time
         type: string
         enumValues:
           - full-time
@@ -428,7 +428,7 @@ endpoints:
       phone: architecto
       date_of_birth: architecto
       gender: architecto
-      marital_status: widowed
+      marital_status: married
       nationality: architecto
       address: architecto
       city: architecto
@@ -437,8 +437,8 @@ endpoints:
       department_id: architecto
       designation_id: architecto
       joining_date: architecto
-      ending_date: '2052-01-11'
-      employment_type: internship
+      ending_date: '2052-01-12'
+      employment_type: part-time
       basic_salary: 4326.41688
       salary_currency: gzm
       bank_name: architecto
@@ -724,7 +724,7 @@ endpoints:
         name: date_of_birth
         description: 'Must be a valid date.'
         required: false
-        example: '2025-12-18T16:02:40'
+        example: '2025-12-19T10:50:42'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -840,7 +840,7 @@ endpoints:
         name: joining_date
         description: 'Must be a valid date.'
         required: false
-        example: '2025-12-18T16:02:40'
+        example: '2025-12-19T10:50:42'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -851,7 +851,7 @@ endpoints:
         name: ending_date
         description: 'Must be a valid date. Must be a date after <code>joining_date</code>.'
         required: false
-        example: '2052-01-11'
+        example: '2052-01-12'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -862,7 +862,7 @@ endpoints:
         name: employment_type
         description: ''
         required: false
-        example: internship
+        example: full_time
         type: string
         enumValues:
           - full_time
@@ -943,7 +943,7 @@ endpoints:
       last_name: 'n'
       email: gbailey@example.net
       phone: vdljnikhwaykcmyu
-      date_of_birth: '2025-12-18T16:02:40'
+      date_of_birth: '2025-12-19T10:50:42'
       gender: male
       marital_status: divorced
       nationality: architecto
@@ -951,9 +951,9 @@ endpoints:
       city: architecto
       state: architecto
       zip_code: architecto
-      joining_date: '2025-12-18T16:02:40'
-      ending_date: '2052-01-11'
-      employment_type: internship
+      joining_date: '2025-12-19T10:50:42'
+      ending_date: '2052-01-12'
+      employment_type: full_time
       basic_salary: 22
       salary_currency: gzm
       bank_name: architecto

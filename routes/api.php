@@ -176,16 +176,15 @@ Route::prefix('projects')->group(function () {
 
 });
 
-// PAYROLL
 Route::prefix('payroll')->group(function () {
-    Route::post('/generate', [PayrollController::class, 'generate']);
-    Route::get('/', [PayrollController::class, 'index']);
-    Route::get('/{id}', [PayrollController::class, 'show']);
-    Route::patch('/{id}', [PayrollController::class, 'update']);
-    Route::post('/lock', [PayrollController::class, 'lock']);
-    Route::get('/export/bank', [PayrollController::class, 'exportBankExcel']);
-    Route::get('/{id}/payslip', [PayrollController::class, 'downloadPayslip']);
+    Route::post('/generate', [PayrollController::class, 'generate']); 
+    Route::get('/', [PayrollController::class, 'index']); 
+    Route::get('/{id}', [PayrollController::class, 'show']); 
+    Route::patch('/{id}/lock', [PayrollController::class, 'lock']); 
+    Route::patch('/{id}/paid', [PayrollController::class, 'markPaid']); 
 });
+
+
     
 });
 
