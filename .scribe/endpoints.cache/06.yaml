@@ -194,13 +194,37 @@ endpoints:
       end_time:
         custom: []
         name: end_time
-        description: 'End time (e.g., "17:30:00").'
+        description: |-
+          End time (e.g., "17:30:00").
+          bodyParam  break_start_time
         required: true
         example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
+        deprecated: false
+      break_start_time:
+        custom: []
+        name: break_start_time
+        description: ''
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      break_end_time:
+        custom: []
+        name: break_end_time
+        description: ''
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
         deprecated: false
       late_threshold_minutes:
         custom: []
@@ -338,6 +362,28 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         nullable: false
+        deprecated: false
+      break_start_time:
+        custom: []
+        name: break_start_time
+        description: ''
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      break_end_time:
+        custom: []
+        name: break_end_time
+        description: ''
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
         deprecated: false
       late_threshold_minutes:
         custom: []

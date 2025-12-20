@@ -108,6 +108,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="authentication-GETapi-v1-auth-me">
                                 <a href="#authentication-GETapi-v1-auth-me">Get User Profile</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="authentication-POSTapi-v1-auth-change-password">
+                                <a href="#authentication-POSTapi-v1-auth-change-password">Change Password</a>
+                            </li>
                                                                         </ul>
                             </ul>
                     <ul id="tocify-header-candidate-management" class="tocify-header">
@@ -477,7 +480,7 @@ APIs for managing leave types (Annual, Sick, etc.)</a>
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: December 19, 2025</li>
+        <li>Last updated: December 20, 2025</li>
     </ul>
 </div>
 
@@ -2006,6 +2009,167 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
+                    <h2 id="authentication-POSTapi-v1-auth-change-password">Change Password</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Allow authenticated admin to change their password.</p>
+
+<span id="example-requests-POSTapi-v1-auth-change-password">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost/api/v1/auth/change-password" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"current_password\": \"architecto\",
+    \"new_password\": \"architecto\",
+    \"new_password_confirmation\": \"architecto\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/auth/change-password"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "current_password": "architecto",
+    "new_password": "architecto",
+    "new_password_confirmation": "architecto"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-auth-change-password">
+</span>
+<span id="execution-results-POSTapi-v1-auth-change-password" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-auth-change-password"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-auth-change-password"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-auth-change-password" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-auth-change-password">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-auth-change-password" data-method="POST"
+      data-path="api/v1/auth/change-password"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-auth-change-password', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-auth-change-password"
+                    onclick="tryItOut('POSTapi-v1-auth-change-password');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-auth-change-password"
+                    onclick="cancelTryOut('POSTapi-v1-auth-change-password');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-auth-change-password"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/auth/change-password</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-auth-change-password"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-auth-change-password"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>current_password</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="current_password"                data-endpoint="POSTapi-v1-auth-change-password"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Current password. Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>new_password</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="new_password"                data-endpoint="POSTapi-v1-auth-change-password"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>New password (min 8 characters). Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>new_password_confirmation</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="new_password_confirmation"                data-endpoint="POSTapi-v1-auth-change-password"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Must match new_password. Example: <code>architecto</code></p>
+        </div>
+        </form>
+
                 <h1 id="candidate-management">Candidate Management</h1>
 
     <p>APIs for managing candidates, applications, and hiring.</p>
@@ -2031,7 +2195,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "email=gbailey@example.net"\
     --form "phone=architecto"\
     --form "cover_letter=architecto"\
-    --form "cv=@C:\Users\user\AppData\Local\Temp\php9DBA.tmp" </code></pre></div>
+    --form "cv=@C:\Users\user\AppData\Local\Temp\php97D0.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2192,7 +2356,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>The CV/Resume file (pdf, doc, docx). Max 2MB. Example: <code>C:\Users\user\AppData\Local\Temp\php9DBA.tmp</code></p>
+<p>The CV/Resume file (pdf, doc, docx). Max 2MB. Example: <code>C:\Users\user\AppData\Local\Temp\php97D0.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>cover_letter</code></b>&nbsp;&nbsp;
@@ -2988,7 +3152,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"name\": \"architecto\",
     \"code\": \"architecto\",
     \"description\": \"Eius et animi quos velit et.\",
-    \"status\": \"active\"
+    \"status\": \"inactive\"
 }"
 </code></pre></div>
 
@@ -3007,7 +3171,7 @@ let body = {
     "name": "architecto",
     "code": "architecto",
     "description": "Eius et animi quos velit et.",
-    "status": "active"
+    "status": "inactive"
 };
 
 fetch(url, {
@@ -3145,10 +3309,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="POSTapi-v1-departments"
-               value="active"
+               value="inactive"
                data-component="body">
     <br>
-<p>Example: <code>active</code></p>
+<p>Example: <code>inactive</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>active</code></li> <li><code>inactive</code></li></ul>
         </div>
@@ -3447,7 +3611,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"name\": \"architecto\",
     \"code\": \"architecto\",
     \"description\": \"Eius et animi quos velit et.\",
-    \"status\": \"active\"
+    \"status\": \"inactive\"
 }"
 </code></pre></div>
 
@@ -3466,7 +3630,7 @@ let body = {
     "name": "architecto",
     "code": "architecto",
     "description": "Eius et animi quos velit et.",
-    "status": "active"
+    "status": "inactive"
 };
 
 fetch(url, {
@@ -3617,10 +3781,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="PATCHapi-v1-departments--id-"
-               value="active"
+               value="inactive"
                data-component="body">
     <br>
-<p>Example: <code>active</code></p>
+<p>Example: <code>inactive</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>active</code></li> <li><code>inactive</code></li></ul>
         </div>
@@ -3947,7 +4111,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"title\": \"architecto\",
     \"description\": \"Eius et animi quos velit et.\",
-    \"status\": \"active\",
+    \"status\": \"inactive\",
     \"department_id\": \"architecto\"
 }"
 </code></pre></div>
@@ -3966,7 +4130,7 @@ const headers = {
 let body = {
     "title": "architecto",
     "description": "Eius et animi quos velit et.",
-    "status": "active",
+    "status": "inactive",
     "department_id": "architecto"
 };
 
@@ -4093,10 +4257,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="POSTapi-v1-designations"
-               value="active"
+               value="inactive"
                data-component="body">
     <br>
-<p>Example: <code>active</code></p>
+<p>Example: <code>inactive</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>active</code></li> <li><code>inactive</code></li></ul>
         </div>
@@ -4952,14 +5116,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "department_id=architecto"\
     --form "designation_id=architecto"\
     --form "joining_date=architecto"\
-    --form "ending_date=2052-01-12"\
-    --form "employment_type=part-time"\
+    --form "ending_date=2052-01-13"\
+    --form "employment_type=internship"\
     --form "basic_salary=4326.41688"\
     --form "salary_currency=gzm"\
     --form "bank_name=architecto"\
     --form "bank_account_number=architecto"\
     --form "tax_id=architecto"\
-    --form "photo=@C:\Users\user\AppData\Local\Temp\php9C7C.tmp" </code></pre></div>
+    --form "photo=@C:\Users\user\AppData\Local\Temp\php9038.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -4988,8 +5152,8 @@ body.append('zip_code', 'architecto');
 body.append('department_id', 'architecto');
 body.append('designation_id', 'architecto');
 body.append('joining_date', 'architecto');
-body.append('ending_date', '2052-01-12');
-body.append('employment_type', 'part-time');
+body.append('ending_date', '2052-01-13');
+body.append('employment_type', 'internship');
 body.append('basic_salary', '4326.41688');
 body.append('salary_currency', 'gzm');
 body.append('bank_name', 'architecto');
@@ -5147,7 +5311,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Profile photo (image). Example: <code>C:\Users\user\AppData\Local\Temp\php9C7C.tmp</code></p>
+<p>Profile photo (image). Example: <code>C:\Users\user\AppData\Local\Temp\php9038.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>date_of_birth</code></b>&nbsp;&nbsp;
@@ -5290,10 +5454,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="ending_date"                data-endpoint="POSTapi-v1-employees"
-               value="2052-01-12"
+               value="2052-01-13"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after <code>joining_date</code>. Example: <code>2052-01-12</code></p>
+<p>Must be a valid date. Must be a date after <code>joining_date</code>. Example: <code>2052-01-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>employment_type</code></b>&nbsp;&nbsp;
@@ -5302,10 +5466,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="employment_type"                data-endpoint="POSTapi-v1-employees"
-               value="part-time"
+               value="internship"
                data-component="body">
     <br>
-<p>Example: <code>part-time</code></p>
+<p>Example: <code>internship</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>full-time</code></li> <li><code>part-time</code></li> <li><code>contract</code></li> <li><code>internship</code></li></ul>
         </div>
@@ -5747,23 +5911,23 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "last_name=n"\
     --form "email=gbailey@example.net"\
     --form "phone=vdljnikhwaykcmyu"\
-    --form "date_of_birth=2025-12-19T10:50:42"\
+    --form "date_of_birth=2025-12-20T11:23:18"\
     --form "gender=male"\
-    --form "marital_status=divorced"\
+    --form "marital_status=single"\
     --form "nationality=architecto"\
     --form "address=architecto"\
     --form "city=architecto"\
     --form "state=architecto"\
     --form "zip_code=architecto"\
-    --form "joining_date=2025-12-19T10:50:42"\
-    --form "ending_date=2052-01-12"\
-    --form "employment_type=full_time"\
+    --form "joining_date=2025-12-20T11:23:18"\
+    --form "ending_date=2052-01-13"\
+    --form "employment_type=contract"\
     --form "basic_salary=22"\
     --form "salary_currency=gzm"\
     --form "bank_name=architecto"\
     --form "bank_account_number=architecto"\
     --form "tax_id=architecto"\
-    --form "photo=@C:\Users\user\AppData\Local\Temp\php9CBB.tmp" </code></pre></div>
+    --form "photo=@C:\Users\user\AppData\Local\Temp\php927B.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -5781,17 +5945,17 @@ body.append('first_name', 'architecto');
 body.append('last_name', 'n');
 body.append('email', 'gbailey@example.net');
 body.append('phone', 'vdljnikhwaykcmyu');
-body.append('date_of_birth', '2025-12-19T10:50:42');
+body.append('date_of_birth', '2025-12-20T11:23:18');
 body.append('gender', 'male');
-body.append('marital_status', 'divorced');
+body.append('marital_status', 'single');
 body.append('nationality', 'architecto');
 body.append('address', 'architecto');
 body.append('city', 'architecto');
 body.append('state', 'architecto');
 body.append('zip_code', 'architecto');
-body.append('joining_date', '2025-12-19T10:50:42');
-body.append('ending_date', '2052-01-12');
-body.append('employment_type', 'full_time');
+body.append('joining_date', '2025-12-20T11:23:18');
+body.append('ending_date', '2052-01-13');
+body.append('employment_type', 'contract');
 body.append('basic_salary', '22');
 body.append('salary_currency', 'gzm');
 body.append('bank_name', 'architecto');
@@ -5962,7 +6126,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 5120 kilobytes. Example: <code>C:\Users\user\AppData\Local\Temp\php9CBB.tmp</code></p>
+<p>Must be an image. Must not be greater than 5120 kilobytes. Example: <code>C:\Users\user\AppData\Local\Temp\php927B.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>date_of_birth</code></b>&nbsp;&nbsp;
@@ -5971,10 +6135,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date_of_birth"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="2025-12-19T10:50:42"
+               value="2025-12-20T11:23:18"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2025-12-19T10:50:42</code></p>
+<p>Must be a valid date. Example: <code>2025-12-20T11:23:18</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -5997,10 +6161,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="marital_status"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="divorced"
+               value="single"
                data-component="body">
     <br>
-<p>Example: <code>divorced</code></p>
+<p>Example: <code>single</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>single</code></li> <li><code>married</code></li> <li><code>divorced</code></li> <li><code>widowed</code></li></ul>
         </div>
@@ -6095,10 +6259,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="joining_date"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="2025-12-19T10:50:42"
+               value="2025-12-20T11:23:18"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2025-12-19T10:50:42</code></p>
+<p>Must be a valid date. Example: <code>2025-12-20T11:23:18</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>ending_date</code></b>&nbsp;&nbsp;
@@ -6107,10 +6271,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="ending_date"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="2052-01-12"
+               value="2052-01-13"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after <code>joining_date</code>. Example: <code>2052-01-12</code></p>
+<p>Must be a valid date. Must be a date after <code>joining_date</code>. Example: <code>2052-01-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>employment_type</code></b>&nbsp;&nbsp;
@@ -6119,10 +6283,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="employment_type"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="full_time"
+               value="contract"
                data-component="body">
     <br>
-<p>Example: <code>full_time</code></p>
+<p>Example: <code>contract</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>full_time</code></li> <li><code>part_time</code></li> <li><code>contract</code></li> <li><code>internship</code></li></ul>
         </div>
@@ -6348,7 +6512,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     "http://localhost/api/v1/employees/architecto/photo" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "photo=@C:\Users\user\AppData\Local\Temp\php9CBD.tmp" </code></pre></div>
+    --form "photo=@C:\Users\user\AppData\Local\Temp\php92BC.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -6479,7 +6643,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Image file (jpeg, png, jpg, max 5MB). Example: <code>C:\Users\user\AppData\Local\Temp\php9CBD.tmp</code></p>
+<p>Image file (jpeg, png, jpg, max 5MB). Example: <code>C:\Users\user\AppData\Local\Temp\php92BC.tmp</code></p>
         </div>
         </form>
 
@@ -8413,7 +8577,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"deadline\": \"2025-12-31\",
     \"min_salary\": 39,
     \"max_salary\": 84,
-    \"salary_currency\": \"ETB\",
+    \"salary_currency\": \"USD\",
     \"salary_negotiable\": true,
     \"show_salary\": true
 }"
@@ -8439,7 +8603,7 @@ let body = {
     "deadline": "2025-12-31",
     "min_salary": 39,
     "max_salary": 84,
-    "salary_currency": "ETB",
+    "salary_currency": "USD",
     "salary_negotiable": true,
     "show_salary": true
 };
@@ -8629,10 +8793,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="salary_currency"                data-endpoint="POSTapi-v1-recruitment-jobs"
-               value="ETB"
+               value="USD"
                data-component="body">
     <br>
-<p>Example: <code>ETB</code></p>
+<p>Example: <code>USD</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>ETB</code></li> <li><code>USD</code></li> <li><code>EUR</code></li></ul>
         </div>
@@ -8846,9 +9010,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"status\": \"open\",
     \"min_salary\": 39,
     \"max_salary\": 84,
-    \"salary_currency\": \"EUR\",
-    \"salary_negotiable\": false,
-    \"show_salary\": true
+    \"salary_currency\": \"USD\",
+    \"salary_negotiable\": true,
+    \"show_salary\": false
 }"
 </code></pre></div>
 
@@ -8872,9 +9036,9 @@ let body = {
     "status": "open",
     "min_salary": 39,
     "max_salary": 84,
-    "salary_currency": "EUR",
-    "salary_negotiable": false,
-    "show_salary": true
+    "salary_currency": "USD",
+    "salary_negotiable": true,
+    "show_salary": false
 };
 
 fetch(url, {
@@ -9087,10 +9251,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="salary_currency"                data-endpoint="PATCHapi-v1-recruitment-jobs--id-"
-               value="EUR"
+               value="USD"
                data-component="body">
     <br>
-<p>Example: <code>EUR</code></p>
+<p>Example: <code>USD</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>ETB</code></li> <li><code>USD</code></li> <li><code>EUR</code></li></ul>
         </div>
@@ -9114,7 +9278,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>show_salary</code></b>&nbsp;&nbsp;
@@ -9136,7 +9300,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
         </form>
 
@@ -14725,7 +14889,32 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="architecto"
                data-component="body">
     <br>
-<p>End time (e.g., &quot;17:30:00&quot;). Example: <code>architecto</code></p>
+<p>End time (e.g., &quot;17:30:00&quot;).
+bodyParam  break_start_time Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>break_start_time</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="break_start_time"                data-endpoint="POSTapi-v1-shifts"
+               value=""
+               data-component="body">
+    <br>
+
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>break_end_time</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="break_end_time"                data-endpoint="POSTapi-v1-shifts"
+               value=""
+               data-component="body">
+    <br>
+
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>late_threshold_minutes</code></b>&nbsp;&nbsp;
@@ -14975,6 +15164,30 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="body">
     <br>
 <p>optional Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>break_start_time</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="break_start_time"                data-endpoint="PATCHapi-v1-shifts--id-"
+               value=""
+               data-component="body">
+    <br>
+
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>break_end_time</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="break_end_time"                data-endpoint="PATCHapi-v1-shifts--id-"
+               value=""
+               data-component="body">
+    <br>
+
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>late_threshold_minutes</code></b>&nbsp;&nbsp;
@@ -16739,15 +16952,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"title\": \"b\",
     \"description\": \"Eius et animi quos velit et.\",
-    \"start_date\": \"2025-12-19T10:50:42\",
-    \"end_date\": \"2052-01-12\",
+    \"start_date\": \"2025-12-20T11:23:20\",
+    \"end_date\": \"2052-01-13\",
     \"trainer_name\": \"n\",
     \"location\": \"g\",
     \"incentive_amount\": 12,
-    \"has_incentive\": true,
-    \"type\": \"external\",
-    \"is_mandatory\": true,
-    \"is_active\": true
+    \"has_incentive\": false,
+    \"type\": \"internal\",
+    \"is_mandatory\": false,
+    \"is_active\": false
 }"
 </code></pre></div>
 
@@ -16765,15 +16978,15 @@ const headers = {
 let body = {
     "title": "b",
     "description": "Eius et animi quos velit et.",
-    "start_date": "2025-12-19T10:50:42",
-    "end_date": "2052-01-12",
+    "start_date": "2025-12-20T11:23:20",
+    "end_date": "2052-01-13",
     "trainer_name": "n",
     "location": "g",
     "incentive_amount": 12,
-    "has_incentive": true,
-    "type": "external",
-    "is_mandatory": true,
-    "is_active": true
+    "has_incentive": false,
+    "type": "internal",
+    "is_mandatory": false,
+    "is_active": false
 };
 
 fetch(url, {
@@ -16902,10 +17115,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="start_date"                data-endpoint="PATCHapi-v1-trainings--id-"
-               value="2025-12-19T10:50:42"
+               value="2025-12-20T11:23:20"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2025-12-19T10:50:42</code></p>
+<p>Must be a valid date. Example: <code>2025-12-20T11:23:20</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>end_date</code></b>&nbsp;&nbsp;
@@ -16914,10 +17127,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="end_date"                data-endpoint="PATCHapi-v1-trainings--id-"
-               value="2052-01-12"
+               value="2052-01-13"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>start_date</code>. Example: <code>2052-01-12</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>start_date</code>. Example: <code>2052-01-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>trainer_name</code></b>&nbsp;&nbsp;
@@ -16975,7 +17188,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>type</code></b>&nbsp;&nbsp;
@@ -16984,10 +17197,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="type"                data-endpoint="PATCHapi-v1-trainings--id-"
-               value="external"
+               value="internal"
                data-component="body">
     <br>
-<p>Example: <code>external</code></p>
+<p>Example: <code>internal</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>internal</code></li> <li><code>external</code></li> <li><code>certification</code></li></ul>
         </div>
@@ -17011,7 +17224,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>is_active</code></b>&nbsp;&nbsp;
@@ -17033,7 +17246,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
         </form>
 
