@@ -88,6 +88,7 @@ class ShiftController extends Controller
      * @bodyParam name string required Shift name (e.g., "Morning Shift").
      * @bodyParam start_time string required Start time (e.g., "09:00:00").
      * @bodyParam end_time string required End time (e.g., "17:30:00").
+     * bodyParam  break_start_time 
      * @bodyParam late_threshold_minutes integer required Grace period in minutes.
      * @bodyParam half_day_minutes integer required Minimum minutes for full day.
      * @bodyParam overtime_rate numeric required Overtime multiplier (e.g., 1.5).

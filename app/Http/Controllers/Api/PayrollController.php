@@ -10,6 +10,8 @@ use App\Models\Leave;
 use App\Models\TrainingAttendee;
 use App\Models\ProjectMember;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 use Carbon\Carbon;
 
 class PayrollController extends Controller

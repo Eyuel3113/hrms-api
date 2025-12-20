@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use App\Models\User;
 use Illuminate\Support\Facades\Password;
 use Laravel\Sanctum\PersonalAccessToken;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -199,4 +200,42 @@ public function resetPassword(Request $request)
         ? response()->json(['message' => 'Password has been successfully reset'])
         : response()->json(['message' => 'Invalid token or email'], 400);
 }
+
+/**
+ * Change Password
+ *
+ * Allow authenticated admin to change their password.
+ *
+ * @group Authentication
+ * @authenticated
+ * @bodyParam current_password string required Current password.
+ * @bodyParam new_password string required New password (min 8 characters).
+ * @bodyParam new_password_confirmation string required Must match new_password.
+ *
+ * @param Request $request
+ * @return \Illuminate\Http\JsonResponse
+ */
+public function changePassword(Request $request)
+{
+    $user = Auth::user();
+
+    $request->validate([
+        'current_password' => 'required',
+        'new_password' => 'required|min:4|confirmed',
+    ]);
+
+    if (!Hash::check($request->current_password, $user->password)) {
+        return response()->json([
+            'message' => 'Current password is incorrect'
+        ], 400);
+    }
+
+    $user->password = Hash::make($request->new_password);
+    $user->save();
+
+    return response()->json([
+        'message' => 'Password changed successfully'
+    ]);
+}
+
 }
