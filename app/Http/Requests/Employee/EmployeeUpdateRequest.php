@@ -36,7 +36,7 @@ class EmployeeUpdateRequest extends FormRequest
             'designation_id' => 'sometimes|exists:designations,id',
             'joining_date' => 'sometimes|date',
             'ending_date' => 'nullable|date|after:joining_date',
-            'employment_type' => 'sometimes|in:full_time,part_time,contract,internship',
+            'employment_type' => 'sometimes|in:full-time,part-time,contract,internship,remote',
             'basic_salary' => 'sometimes|numeric|min:1',
             'salary_currency' => 'sometimes|string|size:3',
             'bank_name' => 'nullable|string',
