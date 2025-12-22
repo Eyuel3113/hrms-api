@@ -209,7 +209,7 @@ public function resetPassword(Request $request)
  * @group Authentication
  * @authenticated
  * @bodyParam current_password string required Current password.
- * @bodyParam new_password string required New password (min 8 characters).
+ * @bodyParam new_password string required New password (min 4 characters).
  * @bodyParam new_password_confirmation string required Must match new_password.
  *
  * @param Request $request

@@ -28,123 +28,141 @@ class PayrollController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function generate(Request $request)
-    {
-        $request->validate([
-            'year' => 'required|integer|min:2020',
-            'month' => 'required|integer|min:1|max:12',
-        ]);
+public function generate(Request $request)
+{
+    $request->validate([
+        'year' => 'required|integer|min:2020',
+        'month' => 'required|integer|min:1|max:12',
+    ]);
 
-        $year = $request->year;
-        $month = $request->month;
+    $year = $request->year;
+    $month = $request->month;
 
-        $startDate = Carbon::create($year, $month, 1)->startOfMonth();
-        $endDate = $startDate->copy()->endOfMonth();
+    $startDate = Carbon::create($year, $month, 1)->startOfMonth();
+    $endDate = $startDate->copy()->endOfMonth();
 
-        $employees = Employee::where('status', 'active')
-            ->with(['personalInfo', 'professionalInfo'])
-            ->get();
+    $employees = Employee::where('status', 'active')
+        ->with(['personalInfo', 'professionalInfo'])
+        ->get();
 
-        $generated = 0;
+    $generated = 0;
 
-        foreach ($employees as $employee) {
-            // Skip if payroll already exists
-            if (Payroll::where('employee_id', $employee->id)->where('year', $year)->where('month', $month)->exists()) {
-                continue;
-            }
-
-            $basicSalary = $employee->professionalInfo->basic_salary ?? 0;
-
-            // Attendance
-            $attendanceSummary = Attendance::where('employee_id', $employee->id)
-                ->whereBetween('date', [$startDate, $endDate])
-                ->selectRaw('
-                    SUM(overtime_minutes) as overtime_minutes,
-                    SUM(late_minutes) as late_minutes,
-                    SUM(early_leave_minutes) as early_leave_minutes,
-                    COUNT(CASE WHEN status = "absent" THEN 1 END) as absent_days
-                ')
-                ->first();
-
-            $overtimeMinutes = $attendanceSummary->overtime_minutes ?? 0;
-            $lateMinutes = $attendanceSummary->late_minutes ?? 0;
-            $absentDays = $attendanceSummary->absent_days ?? 0;
-
-            $hourlyRate = $basicSalary / 173.33; // Ethiopian standard monthly hours
-
-            $overtimePay = ($overtimeMinutes / 60) * $hourlyRate * 1.5; // 1.5x
-            $lateDeduction = ($lateMinutes / 60) * $hourlyRate * 0.5; // 0.5x deduction
-
-            // Holiday Work (if you have is_holiday flag in attendance)
-            $holidayPay = 0; // Add logic if needed
-
-            // Training Incentive
-            $trainingIncentive = TrainingAttendee::join('trainings', 'training_attendees.training_id', '=', 'trainings.id')
-                ->where('training_attendees.employee_id', $employee->id)
-                ->where('training_attendees.status', 'attended')
-                ->where('trainings.has_incentive', true)
-                ->whereBetween('trainings.start_date', [$startDate, $endDate])
-                ->sum('trainings.incentive_amount');
-
-            // Project Performance Bonus
-            $performanceRating = ProjectMember::where('employee_id', $employee->id)
-                ->whereNotNull('rating')
-                ->avg('rating') ?? 0;
-
-            $performanceBonus = $performanceRating >= 4.0 ? $basicSalary * 0.10 : 0;
-
-            // Leave Deduction
-            $dailyRate = $basicSalary / 26;
-
-            $unpaidLeaveDays = Leave::where('employee_id', $employee->id)
-                ->where('status', 'approved')
-                ->whereHas('leaveType', fn($q) => $q->where('is_paid', false))
-                ->whereBetween('start_date', [$startDate, $endDate])
-                ->sum('total_days');
-
-            $absentDeduction = $absentDays * $dailyRate;
-            $unpaidLeaveDeduction = $unpaidLeaveDays * $dailyRate;
-
-            $grossSalary = $basicSalary + $overtimePay + $holidayPay + $trainingIncentive + $performanceBonus;
-
-            $taxableIncome = $grossSalary - $lateDeduction - $absentDeduction - $unpaidLeaveDeduction;
-
-            $incomeTax = $this->calculateIncomeTax($taxableIncome);
-
-            $pension = $taxableIncome * 0.07; // 7% employee pension
-
-            $netSalary = $taxableIncome - $incomeTax - $pension;
-
-            Payroll::create([
-                'id' => (string) Str::uuid(),
-                'employee_id' => $employee->id,
-                'year' => $year,
-                'month' => $month,
-                'basic_salary' => $basicSalary,
-                'overtime_pay' => $overtimePay,
-                'holiday_pay' => $holidayPay,
-                'training_incentive' => $trainingIncentive,
-                'performance_bonus' => $performanceBonus,
-                'gross_salary' => $grossSalary,
-                'late_deduction' => $lateDeduction,
-                'absent_deduction' => $absentDeduction,
-                'unpaid_leave_deduction' => $unpaidLeaveDeduction,
-                'taxable_income' => $taxableIncome,
-                'income_tax' => $incomeTax,
-                'pension_employee' => $pension,
-                'net_salary' => $netSalary,
-                'status' => 'draft',
-            ]);
-
-            $generated++;
+    foreach ($employees as $employee) {
+        // Skip if payroll already exists
+        if (Payroll::where('employee_id', $employee->id)->where('year', $year)->where('month', $month)->exists()) {
+            continue;
         }
 
-        return response()->json([
-            'message' => "Payroll generated for {$generated} employees",
+        $basicSalary = $employee->professionalInfo->basic_salary ?? 0;
+        if ($basicSalary == 0) continue; // skip if no salary
+
+        // === COUNT WORKED DAYS ===
+        $attendanceRecords = Attendance::where('employee_id', $employee->id)
+            ->whereBetween('date', [$startDate, $endDate])
+            ->get();
+
+        // Present = 1 day, half_day = 0.5 day
+        $presentDays = $attendanceRecords->where('status', 'present')->count();
+        $halfDays = $attendanceRecords->where('status', 'half_day')->count();
+        $effectiveWorkedDays = $presentDays + ($halfDays * 0.5);
+
+        // Total working days in Ethiopia = 26
+        $totalWorkingDays = 26;
+        $dailyRate = $basicSalary / $totalWorkingDays;
+
+        // Prorated basic salary
+        $proratedBasicSalary = $effectiveWorkedDays * $dailyRate;
+
+        // === ATTENDANCE SUMMARY ===
+        $attendanceSummary = $attendanceRecords->groupBy('date')->map(function ($dayRecords) {
+            return [
+                'overtime_minutes' => $dayRecords->sum('overtime_minutes'),
+                'late_minutes' => $dayRecords->sum('late_minutes'),
+                'early_leave_minutes' => $dayRecords->sum('early_leave_minutes'),
+            ];
+        });
+
+        $overtimeMinutes = $attendanceSummary->sum('overtime_minutes');
+        $lateMinutes = $attendanceSummary->sum('late_minutes');
+
+        $hourlyRate = $basicSalary / 173.33;
+
+        $overtimePay = ($overtimeMinutes / 60) * $hourlyRate * 1.5;
+        $lateDeduction = ($lateMinutes / 60) * $hourlyRate * 0.5;
+
+        // Holiday Pay (if worked on holiday)
+        $holidayPay = 0; // You can add logic later
+
+        // Training Incentive
+        $trainingIncentive = TrainingAttendee::join('trainings', 'training_attendees.training_id', '=', 'trainings.id')
+            ->where('training_attendees.employee_id', $employee->id)
+            ->where('training_attendees.status', 'attended')
+            ->where('trainings.has_incentive', true)
+            ->whereBetween('trainings.start_date', [$startDate, $endDate])
+            ->sum('trainings.incentive_amount');
+
+        // Project Performance Bonus
+        $performanceRating = ProjectMember::where('employee_id', $employee->id)
+            ->whereNotNull('rating')
+            ->avg('rating') ?? 0;
+
+        $performanceBonus = $performanceRating >= 4.0 ? $basicSalary * 0.10 : 0;
+
+        // Absent & Unpaid Leave Deduction
+        $absentDays = $attendanceRecords->where('status', 'absent')->count();
+
+        $unpaidLeaveDays = Leave::where('employee_id', $employee->id)
+            ->where('status', 'approved')
+            ->whereHas('leaveType', fn($q) => $q->where('is_paid', false))
+            ->whereBetween('start_date', [$startDate, $endDate])
+            ->sum('total_days');
+
+        $absentDeduction = $absentDays * $dailyRate;
+        $unpaidLeaveDeduction = $unpaidLeaveDays * $dailyRate;
+
+        // Gross Salary
+        $grossSalary = $proratedBasicSalary + $overtimePay + $holidayPay + $trainingIncentive + $performanceBonus;
+
+        // Taxable Income
+        $taxableIncome = $grossSalary - $lateDeduction - $absentDeduction - $unpaidLeaveDeduction;
+
+        // Tax & Pension
+        $incomeTax = $this->calculateIncomeTax($taxableIncome);
+        $pension = $taxableIncome * 0.07;
+
+        // Net Salary
+        $netSalary = $taxableIncome - $incomeTax - $pension;
+
+        Payroll::create([
+            'id' => (string) Str::uuid(),
+            'employee_id' => $employee->id,
             'year' => $year,
             'month' => $month,
+            'basic_salary' => $proratedBasicSalary, // ← NOW PRORATED
+            'overtime_pay' => $overtimePay,
+            'holiday_pay' => $holidayPay,
+            'training_incentive' => $trainingIncentive,
+            'performance_bonus' => $performanceBonus,
+            'gross_salary' => $grossSalary,
+            'late_deduction' => $lateDeduction,
+            'absent_deduction' => $absentDeduction,
+            'unpaid_leave_deduction' => $unpaidLeaveDeduction,
+            'taxable_income' => $taxableIncome,
+            'income_tax' => $incomeTax,
+            'pension_employee' => $pension,
+            'net_salary' => $netSalary,
+            'status' => 'draft',
         ]);
+
+        $generated++;
     }
+
+    return response()->json([
+        'message' => "Payroll generated for {$generated} employees",
+        'year' => $year,
+        'month' => $month,
+    ]);
+}
 
     private function calculateIncomeTax($taxableIncome)
     {
