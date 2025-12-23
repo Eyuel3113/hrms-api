@@ -1,19 +1,19 @@
-name: Designations
+name: 'Activity Logs'
 description: ''
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: api/v1/designations
+    uri: api/v1/activity-logs
     metadata:
       custom: []
-      groupName: Designations
+      groupName: 'Activity Logs'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'List Designations'
-      description: 'Get a paginated list of designations.'
+      title: 'Get Activity Logs'
+      description: 'Get a list of system activity logs.'
       authenticated: false
       deprecated: false
     headers:
@@ -22,10 +22,10 @@ endpoints:
     urlParameters: []
     cleanUrlParameters: []
     queryParameters:
-      search:
+      subject_type:
         custom: []
-        name: search
-        description: 'Search by title or description.'
+        name: subject_type
+        description: 'Filter by subject type (e.g., App\Models\Employee).'
         required: false
         example: architecto
         type: string
@@ -33,10 +33,10 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      status:
+      causer_id:
         custom: []
-        name: status
-        description: 'Filter by status.'
+        name: causer_id
+        description: 'Filter by causer ID (user ID).'
         required: false
         example: architecto
         type: string
@@ -44,156 +44,10 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      limit:
+      event:
         custom: []
-        name: limit
-        description: 'Items per page. Default 10.'
-        required: false
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanQueryParameters:
-      search: architecto
-      status: architecto
-      limit: 16
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-           "data": [ ... ],
-           "pagination": { ... }
-          }
-        headers: []
-        description: ''
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: api/v1/designations
-    metadata:
-      custom: []
-      groupName: Designations
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Create Designation'
-      description: 'Create a new designation.'
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      title:
-        custom: []
-        name: title
-        description: 'Title of the designation.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      description:
-        custom: []
-        name: description
-        description: ''
-        required: false
-        example: 'Eius et animi quos velit et.'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: ''
-        required: false
-        example: inactive
-        type: string
-        enumValues:
-          - active
-          - inactive
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      department_id:
-        custom: []
-        name: department_id
-        description: 'Department ID.'
-        required: true
-        example: architecto
-        type: uuid
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      title: architecto
-      description: 'Eius et animi quos velit et.'
-      status: inactive
-      department_id: architecto
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 201
-        content: |-
-          {
-           "message": "Designation created successfully",
-           "designation": { ... }
-          }
-        headers: []
-        description: ''
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: api/v1/designations/all
-    metadata:
-      custom: []
-      groupName: Designations
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'List Designations'
-      description: 'Get a paginated list of designations.'
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters:
-      search:
-        custom: []
-        name: search
-        description: 'Search by title or description.'
+        name: event
+        description: 'Filter by event type (created, updated, deleted).'
         required: false
         example: architecto
         type: string
@@ -202,7 +56,9 @@ endpoints:
         nullable: false
         deprecated: false
     cleanQueryParameters:
-      search: architecto
+      subject_type: architecto
+      causer_id: architecto
+      event: architecto
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -212,202 +68,8 @@ endpoints:
         status: 200
         content: |-
           {
-           "data": [ ... ],
-           "pagination": { ... }
-          }
-        headers: []
-        description: ''
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: 'api/v1/designations/{id}'
-    metadata:
-      custom: []
-      groupName: Designations
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Get Designation'
-      description: 'Get designation details by ID.'
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        custom: []
-        name: id
-        description: 'The ID of the designation.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      id: architecto
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-           "message": "Designation retrieved successfully",
-           "data": { ... }
-          }
-        headers: []
-        description: ''
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - PATCH
-    uri: 'api/v1/designations/{id}'
-    metadata:
-      custom: []
-      groupName: Designations
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Update Designation'
-      description: 'Update designation details.'
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        custom: []
-        name: id
-        description: 'The ID of the designation.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      id: architecto
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      title:
-        custom: []
-        name: title
-        description: 'Must not be greater than 255 characters.'
-        required: false
-        example: b
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      description:
-        custom: []
-        name: description
-        description: ''
-        required: false
-        example: 'Eius et animi quos velit et.'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      department_id:
-        custom: []
-        name: department_id
-        description: 'The <code>id</code> of an existing record in the departments table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      title: b
-      description: 'Eius et animi quos velit et.'
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-           "message": "Designation updated successfully",
-           "data": { ... }
-          }
-        headers: []
-        description: ''
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - PATCH
-    uri: 'api/v1/designations/{id}/status'
-    metadata:
-      custom: []
-      groupName: Designations
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Toggle Status'
-      description: 'Toggle designation status.'
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        custom: []
-        name: id
-        description: 'The ID of the designation.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      id: architecto
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-           "message": "Designation status updated successfully",
-           "status": "active"
+           "message": "Activity logs fetched successfully",
+           "data": [ ... ]
           }
         headers: []
         description: ''

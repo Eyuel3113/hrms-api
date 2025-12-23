@@ -367,7 +367,7 @@ endpoints:
       new_password:
         custom: []
         name: new_password
-        description: 'New password (min 8 characters).'
+        description: 'New password (min 4 characters).'
         required: true
         example: architecto
         type: string

@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Department extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
     protected $keyType = 'string';
     public $incrementing = false;
@@ -58,5 +60,13 @@ class Department extends Model
             'id', // Local key on departments table...
             'employee_id' // Local key on employee_professional_infos table...
         );
+    }
+
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly(['name', 'status', 'code'])
+        ->setDescriptionForEvent(fn(string $eventName) => "Department has been {$eventName}");
     }
 }

@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Leave extends Model
 {
+    use LogsActivity;
     protected $keyType = 'string';
     public $incrementing = false;
     protected $primaryKey = 'id';
@@ -79,5 +82,12 @@ class Leave extends Model
     public function scopeRejected($query)
     {
         return $query->where('status', 'rejected');
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly(['status', 'start_date', 'end_date', 'total_days', 'approved_by'])
+        ->setDescriptionForEvent(fn(string $eventName) => "Leave request has been {$eventName}");
     }
 }

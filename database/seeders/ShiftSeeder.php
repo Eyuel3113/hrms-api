@@ -36,10 +36,13 @@ class ShiftSeeder extends Seeder
 
 
 
-but i want to make the 
-- present for the employee that come on time and leave ontime on both start time/ckeck-in ,breake time/check-in and also breake time/check-out, closure time /check-out 
-and all include the grace time allso the both check in and check out for both normal and break time  
--absent for the empployee totally doesnot check-in in the day and the man who check-in and check out at all and also the man whose worked hour less then half day minutes
--half day for the employee who check-in and check-out but the total worked hour is greater than the half day minutes defined in the shift but less than the full day minutes  and also 
--late for the employee who check-in after the grace time defined in the shift for both normal and breake time check-in but check-out on time 
--ealry leave for the employee who check-out before the grace time defined in the shift for both normal and breake time check-out
+
+
+
+// StatusConditionPresentEmployee does 4 check-ins/check-outs correctly:
+// 1. Morning check-in (on time or within grace)
+// 2. Morning check-out (break start time ± grace)
+// 3. Afternoon check-in (break end time ± grace)
+// 4. Afternoon check-out (shift end time or after)Absent1. No check-in at all
+// 2. Check-in but no check-out at all
+// 3. Worked minutes < half_day_minutes (even if some check-in)Half DayHas check-in and check-out, but total worked minutes ≥ half_day_minutes but < full day expectedLateMorning or afternoon check-in after grace period

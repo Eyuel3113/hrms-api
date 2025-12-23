@@ -258,14 +258,21 @@ public function all(Request $request)
      *  "data": { ... }
      * }
      */
-    public function show($id)
-    {
-        $employee = Employee::with(['personalInfo', 'professionalInfo.department', 'professionalInfo.designation'])->findOrFail($id);
-        return response()->json([
-            'message' => 'Employee retrieved successfully',
-            'data' => $employee
-        ]);
-    }
+
+public function show($id)
+{
+    $employee = Employee::with([
+        'personalInfo',
+        'professionalInfo.department',
+        'professionalInfo.designation',
+        'shift'  
+    ])->findOrFail($id);
+
+    return response()->json([
+        'message' => 'Employee retrieved successfully',
+        'data' => $employee
+    ]);
+}
 
     // UPDATE
     /**

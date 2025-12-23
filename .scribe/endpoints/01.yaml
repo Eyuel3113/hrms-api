@@ -1,96 +1,19 @@
-name: Departments
+name: 'User Notifications'
 description: ''
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: api/v1/departments
+    uri: api/v1/notifications
     metadata:
       custom: []
-      groupName: Departments
+      groupName: 'User Notifications'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'List Departments'
-      description: 'Get a paginated list of departments.'
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters:
-      search:
-        custom: []
-        name: search
-        description: 'Search by name, code, or description.'
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: 'Filter by status (active/inactive).'
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      limit:
-        custom: []
-        name: limit
-        description: 'Items per page. Default 10.'
-        required: false
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanQueryParameters:
-      search: architecto
-      status: architecto
-      limit: 16
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-           "data": [ ... ],
-           "pagination": { ... }
-          }
-        headers: []
-        description: ''
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: api/v1/departments
-    metadata:
-      custom: []
-      groupName: Departments
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Create Department'
-      description: 'Create a new department.'
+      title: 'Get Notifications'
+      description: "Get the authenticated user's notifications."
       authenticated: false
       deprecated: false
     headers:
@@ -100,109 +23,6 @@ endpoints:
     cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters:
-      name:
-        custom: []
-        name: name
-        description: 'Name of the department.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      code:
-        custom: []
-        name: code
-        description: 'Unique code.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      description:
-        custom: []
-        name: description
-        description: ''
-        required: false
-        example: 'Eius et animi quos velit et.'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: ''
-        required: false
-        example: inactive
-        type: string
-        enumValues:
-          - active
-          - inactive
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-    cleanBodyParameters:
-      name: architecto
-      code: architecto
-      description: 'Eius et animi quos velit et.'
-      status: inactive
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 201
-        content: |-
-          {
-           "message": "Department created successfully",
-           "data": { ... }
-          }
-        headers: []
-        description: ''
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: api/v1/departments/all
-    metadata:
-      custom: []
-      groupName: Departments
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'All Active Departments'
-      description: 'Get a list of all active departments (no pagination).'
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters:
-      search:
-        custom: []
-        name: search
-        description: 'Search by name, code, or description.'
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanQueryParameters:
-      search: architecto
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -212,6 +32,7 @@ endpoints:
         status: 200
         content: |-
           {
+           "message": "Notifications fetched successfully",
            "data": [ ... ]
           }
         headers: []
@@ -224,16 +45,47 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - GET
-    uri: 'api/v1/departments/{id}'
+      - POST
+    uri: api/v1/notifications/read-all
     metadata:
       custom: []
-      groupName: Departments
+      groupName: 'User Notifications'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Get Department'
-      description: 'Get department details by ID.'
+      title: 'Mark All as Read'
+      description: 'Mark all notifications for the user as read.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/notifications/{id}/read'
+    metadata:
+      custom: []
+      groupName: 'User Notifications'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Mark as Read'
+      description: 'Mark a specific notification as read.'
       authenticated: false
       deprecated: false
     headers:
@@ -243,7 +95,7 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'The ID of the department.'
+        description: 'The UUID of the notification.'
         required: true
         example: architecto
         type: string
@@ -258,175 +110,7 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-           "id": "...",
-           "name": "...",
-           "designations_count": 5,
-           "employees": [ ... ]
-          }
-        headers: []
-        description: ''
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - PATCH
-    uri: 'api/v1/departments/{id}'
-    metadata:
-      custom: []
-      groupName: Departments
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Update Department'
-      description: 'Update department details.'
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        custom: []
-        name: id
-        description: 'The ID of the department.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      id: architecto
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      name:
-        custom: []
-        name: name
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      code:
-        custom: []
-        name: code
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      description:
-        custom: []
-        name: description
-        description: ''
-        required: false
-        example: 'Eius et animi quos velit et.'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: ''
-        required: false
-        example: inactive
-        type: string
-        enumValues:
-          - active
-          - inactive
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-    cleanBodyParameters:
-      name: architecto
-      code: architecto
-      description: 'Eius et animi quos velit et.'
-      status: inactive
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-           "message": "Department updated successfully",
-           "data": { ... }
-          }
-        headers: []
-        description: ''
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - PATCH
-    uri: 'api/v1/departments/{id}/status'
-    metadata:
-      custom: []
-      groupName: Departments
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Toggle Status'
-      description: 'Toggle department status (active/inactive).'
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        custom: []
-        name: id
-        description: 'The ID of the department.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      id: architecto
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-           "message": "Department status updated successfully",
-           "status": "inactive"
-          }
-        headers: []
-        description: ''
+    responses: []
     responseFields: []
     auth: []
     controller: null

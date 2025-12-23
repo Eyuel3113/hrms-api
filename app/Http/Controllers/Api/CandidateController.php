@@ -215,9 +215,10 @@ public function show($id)
         ]);
 
         $candidate->update([
-            'hired_at' => now(),
             'hired_as_employee_id' => $employee->id,
         ]);
+
+        $candidate->notify(new \App\Notifications\CandidateHiredNotification($candidate->full_name, $candidate->job->job_title));
 
         return response()->json([
             'message' => 'Candidate hired and converted to employee!',

@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 /**
  * Class Candidate
@@ -25,6 +28,7 @@ use Illuminate\Support\Str;
  */
 class Candidate extends Model
 {
+    use Notifiable, LogsActivity;
     protected $keyType = 'string';
     public $incrementing = false;
 
@@ -45,4 +49,11 @@ class Candidate extends Model
 
     public function job() { return $this->belongsTo(Job::class); }
     public function employee() { return $this->belongsTo(Employee::class, 'hired_as_employee_id'); }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly(['status', 'hired_at', 'hired_as_employee_id'])
+        ->setDescriptionForEvent(fn(string $eventName) => "Candidate has been {$eventName}");
+    }
 }

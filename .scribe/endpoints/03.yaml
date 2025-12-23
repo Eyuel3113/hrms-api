@@ -1,19 +1,19 @@
-name: Employees
+name: Departments
 description: ''
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: api/v1/employees
+    uri: api/v1/departments
     metadata:
       custom: []
-      groupName: Employees
+      groupName: Departments
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'List Employees'
-      description: 'Get a paginated list of employees.'
+      title: 'List Departments'
+      description: 'Get a paginated list of departments.'
       authenticated: false
       deprecated: false
     headers:
@@ -25,7 +25,7 @@ endpoints:
       search:
         custom: []
         name: search
-        description: 'Search by name, email, phone, or employee code.'
+        description: 'Search by name, code, or description.'
         required: false
         example: architecto
         type: string
@@ -37,50 +37,6 @@ endpoints:
         custom: []
         name: status
         description: 'Filter by status (active/inactive).'
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      department_id:
-        custom: []
-        name: department_id
-        description: 'uuid Filter by department.'
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      designation_id:
-        custom: []
-        name: designation_id
-        description: 'uuid Filter by designation.'
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      sort:
-        custom: []
-        name: sort
-        description: 'Sort field (e.g., created_at, first_name).'
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      order:
-        custom: []
-        name: order
-        description: 'Sort order (asc/desc).'
         required: false
         example: architecto
         type: string
@@ -102,10 +58,6 @@ endpoints:
     cleanQueryParameters:
       search: architecto
       status: architecto
-      department_id: architecto
-      designation_id: architecto
-      sort: architecto
-      order: architecto
       limit: 16
     bodyParameters: []
     cleanBodyParameters: []
@@ -130,29 +82,29 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/v1/employees
+    uri: api/v1/departments
     metadata:
       custom: []
-      groupName: Employees
+      groupName: Departments
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Create Employee'
-      description: 'Create a new employee with personal and professional info.'
+      title: 'Create Department'
+      description: 'Create a new department.'
       authenticated: false
       deprecated: false
     headers:
-      Content-Type: multipart/form-data
+      Content-Type: application/json
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      first_name:
+      name:
         custom: []
-        name: first_name
-        description: 'First name.'
+        name: name
+        description: 'Name of the department.'
         required: true
         example: architecto
         type: string
@@ -160,10 +112,10 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      last_name:
+      code:
         custom: []
-        name: last_name
-        description: 'Last name.'
+        name: code
+        description: 'Unique code.'
         required: true
         example: architecto
         type: string
@@ -171,288 +123,43 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      email:
+      description:
         custom: []
-        name: email
-        description: 'Email address.'
-        required: true
-        example: gbailey@example.net
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      phone:
-        custom: []
-        name: phone
-        description: 'Phone number.'
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      photo:
-        custom: []
-        name: photo
-        description: 'Profile photo (image).'
-        required: false
-        example: null
-        type: file
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      date_of_birth:
-        custom: []
-        name: date_of_birth
-        description: 'Date of birth (YYYY-MM-DD).'
-        required: true
-        example: architecto
-        type: date
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      gender:
-        custom: []
-        name: gender
-        description: 'Gender (male/female).'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      marital_status:
-        custom: []
-        name: marital_status
+        name: description
         description: ''
         required: false
-        example: married
+        example: 'Eius et animi quos velit et.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: ''
+        required: false
+        example: active
         type: string
         enumValues:
-          - single
-          - married
-          - divorced
-          - widowed
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      nationality:
-        custom: []
-        name: nationality
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      address:
-        custom: []
-        name: address
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      city:
-        custom: []
-        name: city
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      state:
-        custom: []
-        name: state
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      zip_code:
-        custom: []
-        name: zip_code
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      department_id:
-        custom: []
-        name: department_id
-        description: 'Department ID.'
-        required: true
-        example: architecto
-        type: uuid
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      designation_id:
-        custom: []
-        name: designation_id
-        description: 'Designation ID.'
-        required: true
-        example: architecto
-        type: uuid
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      joining_date:
-        custom: []
-        name: joining_date
-        description: 'Joining date.'
-        required: true
-        example: architecto
-        type: date
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      ending_date:
-        custom: []
-        name: ending_date
-        description: 'Must be a valid date. Must be a date after <code>joining_date</code>.'
-        required: false
-        example: '2052-01-13'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      employment_type:
-        custom: []
-        name: employment_type
-        description: ''
-        required: true
-        example: internship
-        type: string
-        enumValues:
-          - full-time
-          - part-time
-          - contract
-          - internship
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      0:
-        custom: []
-        name: '0'
-        description: ''
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      basic_salary:
-        custom: []
-        name: basic_salary
-        description: 'Basic salary.'
-        required: true
-        example: 4326.41688
-        type: number
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      salary_currency:
-        custom: []
-        name: salary_currency
-        description: 'Must be 3 characters.'
-        required: true
-        example: gzm
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      bank_name:
-        custom: []
-        name: bank_name
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      bank_account_number:
-        custom: []
-        name: bank_account_number
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      tax_id:
-        custom: []
-        name: tax_id
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
+          - active
+          - inactive
         exampleWasSpecified: false
         nullable: true
         deprecated: false
     cleanBodyParameters:
-      first_name: architecto
-      last_name: architecto
-      email: gbailey@example.net
-      phone: architecto
-      date_of_birth: architecto
-      gender: architecto
-      marital_status: married
-      nationality: architecto
-      address: architecto
-      city: architecto
-      state: architecto
-      zip_code: architecto
-      department_id: architecto
-      designation_id: architecto
-      joining_date: architecto
-      ending_date: '2052-01-13'
-      employment_type: internship
-      basic_salary: 4326.41688
-      salary_currency: gzm
-      bank_name: architecto
-      bank_account_number: architecto
-      tax_id: architecto
-    fileParameters:
-      photo: null
+      name: architecto
+      code: architecto
+      description: 'Eius et animi quos velit et.'
+      status: active
+    fileParameters: []
     responses:
       -
         custom: []
         status: 201
         content: |-
           {
-           "message": "Employee created successfully",
+           "message": "Department created successfully",
            "data": { ... }
           }
         headers: []
@@ -466,17 +173,15 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: api/v1/employees/all
+    uri: api/v1/departments/all
     metadata:
       custom: []
-      groupName: Employees
+      groupName: Departments
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Get All Employees (No Pagination)'
-      description: |-
-        Returns all employees with full filtering and search.
-        Used for dropdowns, reports, ZKTeco sync, etc.
+      title: 'All Active Departments'
+      description: 'Get a list of all active departments (no pagination).'
       authenticated: false
       deprecated: false
     headers:
@@ -488,62 +193,7 @@ endpoints:
       search:
         custom: []
         name: search
-        description: 'Search by name, email, phone, employee code'
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      status:
-        custom: []
-        name: status
-        description: active/inactive
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      department_id:
-        custom: []
-        name: department_id
-        description: 'uuid Filter by department'
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      designation_id:
-        custom: []
-        name: designation_id
-        description: 'uuid Filter by designation'
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      sort:
-        custom: []
-        name: sort
-        description: 'e.g., first_name, created_at'
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      order:
-        custom: []
-        name: order
-        description: asc/desc
+        description: 'Search by name, code, or description.'
         required: false
         example: architecto
         type: string
@@ -553,24 +203,19 @@ endpoints:
         deprecated: false
     cleanQueryParameters:
       search: architecto
-      status: architecto
-      department_id: architecto
-      designation_id: architecto
-      sort: architecto
-      order: architecto
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
     responses:
       -
         custom: []
-        status: 401
-        content: '{"message":"Unauthenticated."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          vary: Origin
-        description: null
+        status: 200
+        content: |-
+          {
+           "data": [ ... ]
+          }
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -580,15 +225,15 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/employees/{id}'
+    uri: 'api/v1/departments/{id}'
     metadata:
       custom: []
-      groupName: Employees
+      groupName: Departments
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Get Employee'
-      description: 'Get employee details by ID.'
+      title: 'Get Department'
+      description: 'Get department details by ID.'
       authenticated: false
       deprecated: false
     headers:
@@ -598,7 +243,7 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'The ID of the employee.'
+        description: 'The ID of the department.'
         required: true
         example: architecto
         type: string
@@ -619,8 +264,10 @@ endpoints:
         status: 200
         content: |-
           {
-           "message": "Employee retrieved successfully",
-           "data": { ... }
+           "id": "...",
+           "name": "...",
+           "designations_count": 5,
+           "employees": [ ... ]
           }
         headers: []
         description: ''
@@ -633,25 +280,25 @@ endpoints:
     custom: []
     httpMethods:
       - PATCH
-    uri: 'api/v1/employees/{id}'
+    uri: 'api/v1/departments/{id}'
     metadata:
       custom: []
-      groupName: Employees
+      groupName: Departments
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Update Employee'
-      description: 'Update employee details.'
+      title: 'Update Department'
+      description: 'Update department details.'
       authenticated: false
       deprecated: false
     headers:
-      Content-Type: multipart/form-data
+      Content-Type: application/json
       Accept: application/json
     urlParameters:
       id:
         custom: []
         name: id
-        description: 'The ID of the employee.'
+        description: 'The ID of the department.'
         required: true
         example: architecto
         type: string
@@ -664,310 +311,65 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      first_name:
+      name:
         custom: []
-        name: first_name
-        description: 'First name.'
+        name: name
+        description: ''
         required: false
         example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      last_name:
-        custom: []
-        name: last_name
-        description: 'Must not be greater than 255 characters.'
-        required: false
-        example: 'n'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      email:
-        custom: []
-        name: email
-        description: 'Email address.'
-        required: false
-        example: gbailey@example.net
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      phone:
-        custom: []
-        name: phone
-        description: 'Must not be greater than 20 characters.'
-        required: false
-        example: vdljnikhwaykcmyu
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
         nullable: true
         deprecated: false
-      photo:
+      code:
         custom: []
-        name: photo
-        description: 'Must be an image. Must not be greater than 5120 kilobytes.'
-        required: false
-        example: null
-        type: file
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      date_of_birth:
-        custom: []
-        name: date_of_birth
-        description: 'Must be a valid date.'
-        required: false
-        example: '2025-12-20T11:23:18'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      gender:
-        custom: []
-        name: gender
+        name: code
         description: ''
         required: false
-        example: male
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      description:
+        custom: []
+        name: description
+        description: ''
+        required: false
+        example: 'Eius et animi quos velit et.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: ''
+        required: false
+        example: active
         type: string
         enumValues:
-          - male
-          - female
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      marital_status:
-        custom: []
-        name: marital_status
-        description: ''
-        required: false
-        example: single
-        type: string
-        enumValues:
-          - single
-          - married
-          - divorced
-          - widowed
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      nationality:
-        custom: []
-        name: nationality
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      address:
-        custom: []
-        name: address
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      city:
-        custom: []
-        name: city
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      state:
-        custom: []
-        name: state
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      zip_code:
-        custom: []
-        name: zip_code
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      department_id:
-        custom: []
-        name: department_id
-        description: 'The <code>id</code> of an existing record in the departments table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      designation_id:
-        custom: []
-        name: designation_id
-        description: 'The <code>id</code> of an existing record in the designations table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      joining_date:
-        custom: []
-        name: joining_date
-        description: 'Must be a valid date.'
-        required: false
-        example: '2025-12-20T11:23:18'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      ending_date:
-        custom: []
-        name: ending_date
-        description: 'Must be a valid date. Must be a date after <code>joining_date</code>.'
-        required: false
-        example: '2052-01-13'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      employment_type:
-        custom: []
-        name: employment_type
-        description: ''
-        required: false
-        example: contract
-        type: string
-        enumValues:
-          - full_time
-          - part_time
-          - contract
-          - internship
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      basic_salary:
-        custom: []
-        name: basic_salary
-        description: 'Must be at least 1.'
-        required: false
-        example: 22
-        type: number
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      salary_currency:
-        custom: []
-        name: salary_currency
-        description: 'Must be 3 characters.'
-        required: false
-        example: gzm
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      bank_name:
-        custom: []
-        name: bank_name
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      bank_account_number:
-        custom: []
-        name: bank_account_number
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      tax_id:
-        custom: []
-        name: tax_id
-        description: ''
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      shift_id:
-        custom: []
-        name: shift_id
-        description: 'The <code>id</code> of an existing record in the shifts table.'
-        required: false
-        example: null
-        type: string
-        enumValues: []
+          - active
+          - inactive
         exampleWasSpecified: false
         nullable: true
         deprecated: false
     cleanBodyParameters:
-      first_name: architecto
-      last_name: 'n'
-      email: gbailey@example.net
-      phone: vdljnikhwaykcmyu
-      date_of_birth: '2025-12-20T11:23:18'
-      gender: male
-      marital_status: single
-      nationality: architecto
-      address: architecto
-      city: architecto
-      state: architecto
-      zip_code: architecto
-      joining_date: '2025-12-20T11:23:18'
-      ending_date: '2052-01-13'
-      employment_type: contract
-      basic_salary: 22
-      salary_currency: gzm
-      bank_name: architecto
-      bank_account_number: architecto
-      tax_id: architecto
-    fileParameters:
-      photo: null
+      name: architecto
+      code: architecto
+      description: 'Eius et animi quos velit et.'
+      status: active
+    fileParameters: []
     responses:
       -
         custom: []
         status: 200
         content: |-
           {
-           "message": "Employee updated successfully",
+           "message": "Department updated successfully",
            "data": { ... }
           }
         headers: []
@@ -980,185 +382,16 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - DELETE
-    uri: 'api/v1/employees/{id}'
-    metadata:
-      custom: []
-      groupName: Employees
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Delete Employee'
-      description: 'Delete an employee record.'
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        custom: []
-        name: id
-        description: 'The ID of the employee.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      id: architecto
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-           "message": "Employee deleted successfully"
-          }
-        headers: []
-        description: ''
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: 'api/v1/employees/{id}/photo'
-    metadata:
-      custom: []
-      groupName: Employees
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Upload Photo'
-      description: 'Upload or update employee profile photo.'
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: multipart/form-data
-      Accept: application/json
-    urlParameters:
-      id:
-        custom: []
-        name: id
-        description: 'The ID of the employee.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      id: architecto
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      photo:
-        custom: []
-        name: photo
-        description: 'Image file (jpeg, png, jpg, max 5MB).'
-        required: true
-        example: null
-        type: file
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanBodyParameters: []
-    fileParameters:
-      photo: null
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-           "message": "Photo uploaded successfully",
-           "photo_url": "http://..."
-          }
-        headers: []
-        description: ''
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - DELETE
-    uri: 'api/v1/employees/{id}/photo'
-    metadata:
-      custom: []
-      groupName: Employees
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Delete Photo'
-      description: 'Remove employee profile photo.'
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        custom: []
-        name: id
-        description: 'The ID of the employee.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      id: architecto
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-           "message": "Photo removed"
-          }
-        headers: []
-        description: ''
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
       - PATCH
-    uri: 'api/v1/employees/{id}/status'
+    uri: 'api/v1/departments/{id}/status'
     metadata:
       custom: []
-      groupName: Employees
+      groupName: Departments
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
       title: 'Toggle Status'
-      description: 'Toggle employee status (active/inactive).'
+      description: 'Toggle department status (active/inactive).'
       authenticated: false
       deprecated: false
     headers:
@@ -1168,7 +401,7 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'The ID of the employee.'
+        description: 'The ID of the department.'
         required: true
         example: architecto
         type: string
@@ -1189,7 +422,7 @@ endpoints:
         status: 200
         content: |-
           {
-           "message": "Status updated",
+           "message": "Department status updated successfully",
            "status": "inactive"
           }
         headers: []

@@ -16,6 +16,8 @@ use App\Http\Controllers\Api\CandidateController;
 use App\Http\Controllers\Api\TrainingController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\PayrollController;
+use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\Api\ActivityLogController;
 
 
 Route::prefix('v1')->group(function () {
@@ -25,6 +27,7 @@ Route::prefix('v1')->group(function () {
     Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword']);
     Route::post('/auth/reset-password', [AuthController::class, 'resetPassword']);
     Route::post('/auth/refresh', [AuthController::class, 'refresh']);
+    Route::get('/jobs', [JobController::class, 'index']);
     // AUTHENTICATED ROUTES
     Route::middleware('auth:sanctum')->group(function () {
 
@@ -34,6 +37,18 @@ Route::prefix('v1')->group(function () {
             Route::get('/me', [AuthController::class, 'me']);
             Route::post('/change-password', [AuthController::class, 'changePassword']);
 
+        });
+
+        // NOTIFICATIONS & 
+        Route::prefix('notifications')->group(function () {
+           Route::get('/', [NotificationController::class, 'index']);
+           Route::post('/read-all', [NotificationController::class, 'markAllAsRead']);
+           Route::post('/{id}/read', [NotificationController::class, 'markAsRead']);
+        });
+       
+        //ACTIVITY LOGS
+        Route::prefix('activity-logs')->group(function () {
+            Route::get('/', [ActivityLogController::class, 'index']);
         });
 
         // DEPARTMENTS
@@ -185,8 +200,8 @@ Route::prefix('payroll')->group(function () {
     Route::patch('/{id}/paid', [PayrollController::class, 'markPaid']); 
 });
 
-
     
-});
+
+    }); 
 
 });

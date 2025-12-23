@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Employee extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, LogsActivity;
 
     protected $keyType = 'string';
     public $incrementing = false;
@@ -59,4 +61,12 @@ public function projects()
                 ->withTimestamps();
 }
 
+
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly(['employee_code', 'status', 'shift_id'])
+        ->setDescriptionForEvent(fn(string $eventName) => "Employee has been {$eventName}");
+    }
 }
