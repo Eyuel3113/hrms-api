@@ -778,7 +778,7 @@ endpoints:
         name: start_date
         description: 'Must be a valid date.'
         required: false
-        example: '2025-12-23T15:05:00'
+        example: '2025-12-25T11:48:24'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -789,7 +789,7 @@ endpoints:
         name: end_date
         description: 'Must be a valid date. Must be a date after or equal to <code>start_date</code>.'
         required: false
-        example: '2052-01-16'
+        example: '2052-01-18'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -844,7 +844,7 @@ endpoints:
         name: type
         description: ''
         required: false
-        example: certification
+        example: external
         type: string
         enumValues:
           - internal
@@ -878,13 +878,13 @@ endpoints:
     cleanBodyParameters:
       title: b
       description: 'Eius et animi quos velit et.'
-      start_date: '2025-12-23T15:05:00'
-      end_date: '2052-01-16'
+      start_date: '2025-12-25T11:48:24'
+      end_date: '2052-01-18'
       trainer_name: 'n'
       location: g
       incentive_amount: 12
       has_incentive: true
-      type: certification
+      type: external
       is_mandatory: true
       is_active: false
     fileParameters: []

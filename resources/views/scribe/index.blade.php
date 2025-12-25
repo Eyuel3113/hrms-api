@@ -76,6 +76,25 @@
                             </li>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-analytics" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="analytics">
+                    <a href="#analytics">Analytics</a>
+                </li>
+                                    <ul id="tocify-subheader-analytics" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="analytics-GETapi-v1-analytics-daily-attendance">
+                                <a href="#analytics-GETapi-v1-analytics-daily-attendance">Daily Attendance Summary</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="analytics-GETapi-v1-analytics-employees-by-department">
+                                <a href="#analytics-GETapi-v1-analytics-employees-by-department">Employees by Department</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="analytics-GETapi-v1-analytics-kpi">
+                                <a href="#analytics-GETapi-v1-analytics-kpi">Key Performance Indicators</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="analytics-GETapi-v1-analytics-payroll-outstanding">
+                                <a href="#analytics-GETapi-v1-analytics-payroll-outstanding">Payroll Outstanding — Last 8 Months</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
                     <ul id="tocify-header-attendance" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="attendance">
                     <a href="#attendance">Attendance</a>
@@ -128,7 +147,10 @@
                     <a href="#candidate-management">Candidate Management</a>
                 </li>
                                     <ul id="tocify-subheader-candidate-management" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="candidate-management-POSTapi-v1-recruitment-candidates">
+                                                    <li class="tocify-item level-2" data-unique="candidate-management-POSTapi-v1-candidates">
+                                <a href="#candidate-management-POSTapi-v1-candidates">Submit Application</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="candidate-management-POSTapi-v1-recruitment-candidates">
                                 <a href="#candidate-management-POSTapi-v1-recruitment-candidates">Submit Application</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="candidate-management-GETapi-v1-recruitment-candidates">
@@ -259,7 +281,10 @@
                     <a href="#job-management">Job Management</a>
                 </li>
                                     <ul id="tocify-subheader-job-management" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="job-management-GETapi-v1-recruitment-jobs">
+                                                    <li class="tocify-item level-2" data-unique="job-management-GETapi-v1-jobs">
+                                <a href="#job-management-GETapi-v1-jobs">List Active Jobs</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="job-management-GETapi-v1-recruitment-jobs">
                                 <a href="#job-management-GETapi-v1-recruitment-jobs">List Jobs</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="job-management-GETapi-v1-recruitment-jobs-active">
@@ -506,7 +531,7 @@ APIs for managing leave types (Annual, Sick, etc.)</a>
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: December 23, 2025</li>
+        <li>Last updated: December 25, 2025</li>
     </ul>
 </div>
 
@@ -693,6 +718,514 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Filter by event type (created, updated, deleted). Example: <code>architecto</code></p>
             </div>
                 </form>
+
+                <h1 id="analytics">Analytics</h1>
+
+    
+
+                                <h2 id="analytics-GETapi-v1-analytics-daily-attendance">Daily Attendance Summary</h2>
+
+<p>
+</p>
+
+<p>Present, Half Day, Absent percentages for today.</p>
+
+<span id="example-requests-GETapi-v1-analytics-daily-attendance">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/v1/analytics/daily-attendance" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/analytics/daily-attendance"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-analytics-daily-attendance">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+vary: Origin
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-analytics-daily-attendance" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-analytics-daily-attendance"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-analytics-daily-attendance"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-analytics-daily-attendance" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-analytics-daily-attendance">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-analytics-daily-attendance" data-method="GET"
+      data-path="api/v1/analytics/daily-attendance"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-analytics-daily-attendance', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-analytics-daily-attendance"
+                    onclick="tryItOut('GETapi-v1-analytics-daily-attendance');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-analytics-daily-attendance"
+                    onclick="cancelTryOut('GETapi-v1-analytics-daily-attendance');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-analytics-daily-attendance"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/analytics/daily-attendance</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-analytics-daily-attendance"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-analytics-daily-attendance"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="analytics-GETapi-v1-analytics-employees-by-department">Employees by Department</h2>
+
+<p>
+</p>
+
+<p>Percentage of employees in each department.</p>
+
+<span id="example-requests-GETapi-v1-analytics-employees-by-department">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/v1/analytics/employees-by-department" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/analytics/employees-by-department"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-analytics-employees-by-department">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+vary: Origin
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-analytics-employees-by-department" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-analytics-employees-by-department"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-analytics-employees-by-department"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-analytics-employees-by-department" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-analytics-employees-by-department">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-analytics-employees-by-department" data-method="GET"
+      data-path="api/v1/analytics/employees-by-department"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-analytics-employees-by-department', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-analytics-employees-by-department"
+                    onclick="tryItOut('GETapi-v1-analytics-employees-by-department');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-analytics-employees-by-department"
+                    onclick="cancelTryOut('GETapi-v1-analytics-employees-by-department');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-analytics-employees-by-department"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/analytics/employees-by-department</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-analytics-employees-by-department"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-analytics-employees-by-department"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="analytics-GETapi-v1-analytics-kpi">Key Performance Indicators</h2>
+
+<p>
+</p>
+
+<p>Total employees, candidates, projects, today's present.</p>
+
+<span id="example-requests-GETapi-v1-analytics-kpi">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/v1/analytics/kpi" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/analytics/kpi"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-analytics-kpi">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+vary: Origin
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-analytics-kpi" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-analytics-kpi"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-analytics-kpi"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-analytics-kpi" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-analytics-kpi">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-analytics-kpi" data-method="GET"
+      data-path="api/v1/analytics/kpi"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-analytics-kpi', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-analytics-kpi"
+                    onclick="tryItOut('GETapi-v1-analytics-kpi');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-analytics-kpi"
+                    onclick="cancelTryOut('GETapi-v1-analytics-kpi');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-analytics-kpi"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/analytics/kpi</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-analytics-kpi"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-analytics-kpi"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="analytics-GETapi-v1-analytics-payroll-outstanding">Payroll Outstanding — Last 8 Months</h2>
+
+<p>
+</p>
+
+<p>Total net salary per month for last 8 months.</p>
+
+<span id="example-requests-GETapi-v1-analytics-payroll-outstanding">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/v1/analytics/payroll-outstanding" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/analytics/payroll-outstanding"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-analytics-payroll-outstanding">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+vary: Origin
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-analytics-payroll-outstanding" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-analytics-payroll-outstanding"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-analytics-payroll-outstanding"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-analytics-payroll-outstanding" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-analytics-payroll-outstanding">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-analytics-payroll-outstanding" data-method="GET"
+      data-path="api/v1/analytics/payroll-outstanding"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-analytics-payroll-outstanding', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-analytics-payroll-outstanding"
+                    onclick="tryItOut('GETapi-v1-analytics-payroll-outstanding');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-analytics-payroll-outstanding"
+                    onclick="cancelTryOut('GETapi-v1-analytics-payroll-outstanding');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-analytics-payroll-outstanding"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/analytics/payroll-outstanding</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-analytics-payroll-outstanding"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-analytics-payroll-outstanding"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
 
                 <h1 id="attendance">Attendance</h1>
 
@@ -2369,7 +2902,205 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
     <p>APIs for managing candidates, applications, and hiring.</p>
 
-                                <h2 id="candidate-management-POSTapi-v1-recruitment-candidates">Submit Application</h2>
+                                <h2 id="candidate-management-POSTapi-v1-candidates">Submit Application</h2>
+
+<p>
+</p>
+
+<p>Store a newly created candidate application.</p>
+
+<span id="example-requests-POSTapi-v1-candidates">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost/api/v1/candidates" \
+    --header "Content-Type: multipart/form-data" \
+    --header "Accept: application/json" \
+    --form "job_id=architecto"\
+    --form "full_name=architecto"\
+    --form "email=gbailey@example.net"\
+    --form "phone=architecto"\
+    --form "cover_letter=architecto"\
+    --form "cv=@C:\Users\user\AppData\Local\Temp\php4601.tmp" </code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/candidates"
+);
+
+const headers = {
+    "Content-Type": "multipart/form-data",
+    "Accept": "application/json",
+};
+
+const body = new FormData();
+body.append('job_id', 'architecto');
+body.append('full_name', 'architecto');
+body.append('email', 'gbailey@example.net');
+body.append('phone', 'architecto');
+body.append('cover_letter', 'architecto');
+body.append('cv', document.querySelector('input[name="cv"]').files[0]);
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-candidates">
+</span>
+<span id="execution-results-POSTapi-v1-candidates" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-candidates"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-candidates"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-candidates" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-candidates">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-candidates" data-method="POST"
+      data-path="api/v1/candidates"
+      data-authed="0"
+      data-hasfiles="1"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-candidates', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-v1-candidates"
+                    onclick="tryItOut('POSTapi-v1-candidates');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-v1-candidates"
+                    onclick="cancelTryOut('POSTapi-v1-candidates');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-v1-candidates"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/candidates</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-candidates"
+               value="multipart/form-data"
+               data-component="header">
+    <br>
+<p>Example: <code>multipart/form-data</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-candidates"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>job_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="job_id"                data-endpoint="POSTapi-v1-candidates"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>The UUID of the job. Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>full_name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="full_name"                data-endpoint="POSTapi-v1-candidates"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Candidate's full name. Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="email"                data-endpoint="POSTapi-v1-candidates"
+               value="gbailey@example.net"
+               data-component="body">
+    <br>
+<p>Candidate's email address. Example: <code>gbailey@example.net</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>phone</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="phone"                data-endpoint="POSTapi-v1-candidates"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Candidate's phone number. Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>cv</code></b>&nbsp;&nbsp;
+<small>file</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="file" style="display: none"
+                              name="cv"                data-endpoint="POSTapi-v1-candidates"
+               value=""
+               data-component="body">
+    <br>
+<p>The CV/Resume file (pdf, doc, docx). Max 2MB. Example: <code>C:\Users\user\AppData\Local\Temp\php4601.tmp</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>cover_letter</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="cover_letter"                data-endpoint="POSTapi-v1-candidates"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>optional Cover letter text. Example: <code>architecto</code></p>
+        </div>
+        </form>
+
+                    <h2 id="candidate-management-POSTapi-v1-recruitment-candidates">Submit Application</h2>
 
 <p>
 </p>
@@ -2390,7 +3121,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "email=gbailey@example.net"\
     --form "phone=architecto"\
     --form "cover_letter=architecto"\
-    --form "cv=@C:\Users\user\AppData\Local\Temp\php8FE0.tmp" </code></pre></div>
+    --form "cv=@C:\Users\user\AppData\Local\Temp\php4A00.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2551,7 +3282,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>The CV/Resume file (pdf, doc, docx). Max 2MB. Example: <code>C:\Users\user\AppData\Local\Temp\php8FE0.tmp</code></p>
+<p>The CV/Resume file (pdf, doc, docx). Max 2MB. Example: <code>C:\Users\user\AppData\Local\Temp\php4A00.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>cover_letter</code></b>&nbsp;&nbsp;
@@ -3347,7 +4078,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"name\": \"architecto\",
     \"code\": \"architecto\",
     \"description\": \"Eius et animi quos velit et.\",
-    \"status\": \"active\"
+    \"status\": \"inactive\"
 }"
 </code></pre></div>
 
@@ -3366,7 +4097,7 @@ let body = {
     "name": "architecto",
     "code": "architecto",
     "description": "Eius et animi quos velit et.",
-    "status": "active"
+    "status": "inactive"
 };
 
 fetch(url, {
@@ -3504,10 +4235,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="POSTapi-v1-departments"
-               value="active"
+               value="inactive"
                data-component="body">
     <br>
-<p>Example: <code>active</code></p>
+<p>Example: <code>inactive</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>active</code></li> <li><code>inactive</code></li></ul>
         </div>
@@ -5302,7 +6033,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "phone=architecto"\
     --form "date_of_birth=architecto"\
     --form "gender=architecto"\
-    --form "marital_status=divorced"\
+    --form "marital_status=married"\
     --form "nationality=architecto"\
     --form "address=architecto"\
     --form "city=architecto"\
@@ -5311,14 +6042,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "department_id=architecto"\
     --form "designation_id=architecto"\
     --form "joining_date=architecto"\
-    --form "ending_date=2052-01-16"\
+    --form "ending_date=2052-01-18"\
     --form "employment_type=contract"\
     --form "basic_salary=4326.41688"\
     --form "salary_currency=gzm"\
     --form "bank_name=architecto"\
     --form "bank_account_number=architecto"\
     --form "tax_id=architecto"\
-    --form "photo=@C:\Users\user\AppData\Local\Temp\php8376.tmp" </code></pre></div>
+    --form "photo=@C:\Users\user\AppData\Local\Temp\php46BE.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -5338,7 +6069,7 @@ body.append('email', 'gbailey@example.net');
 body.append('phone', 'architecto');
 body.append('date_of_birth', 'architecto');
 body.append('gender', 'architecto');
-body.append('marital_status', 'divorced');
+body.append('marital_status', 'married');
 body.append('nationality', 'architecto');
 body.append('address', 'architecto');
 body.append('city', 'architecto');
@@ -5347,7 +6078,7 @@ body.append('zip_code', 'architecto');
 body.append('department_id', 'architecto');
 body.append('designation_id', 'architecto');
 body.append('joining_date', 'architecto');
-body.append('ending_date', '2052-01-16');
+body.append('ending_date', '2052-01-18');
 body.append('employment_type', 'contract');
 body.append('basic_salary', '4326.41688');
 body.append('salary_currency', 'gzm');
@@ -5506,7 +6237,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Profile photo (image). Example: <code>C:\Users\user\AppData\Local\Temp\php8376.tmp</code></p>
+<p>Profile photo (image). Example: <code>C:\Users\user\AppData\Local\Temp\php46BE.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>date_of_birth</code></b>&nbsp;&nbsp;
@@ -5539,10 +6270,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="marital_status"                data-endpoint="POSTapi-v1-employees"
-               value="divorced"
+               value="married"
                data-component="body">
     <br>
-<p>Example: <code>divorced</code></p>
+<p>Example: <code>married</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>single</code></li> <li><code>married</code></li> <li><code>divorced</code></li> <li><code>widowed</code></li></ul>
         </div>
@@ -5649,10 +6380,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="ending_date"                data-endpoint="POSTapi-v1-employees"
-               value="2052-01-16"
+               value="2052-01-18"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after <code>joining_date</code>. Example: <code>2052-01-16</code></p>
+<p>Must be a valid date. Must be a date after <code>joining_date</code>. Example: <code>2052-01-18</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>employment_type</code></b>&nbsp;&nbsp;
@@ -6094,23 +6825,23 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "last_name=n"\
     --form "email=gbailey@example.net"\
     --form "phone=vdljnikhwaykcmyu"\
-    --form "date_of_birth=2025-12-23T15:04:59"\
-    --form "gender=female"\
-    --form "marital_status=divorced"\
+    --form "date_of_birth=2025-12-25T11:48:23"\
+    --form "gender=male"\
+    --form "marital_status=single"\
     --form "nationality=architecto"\
     --form "address=architecto"\
     --form "city=architecto"\
     --form "state=architecto"\
     --form "zip_code=architecto"\
-    --form "joining_date=2025-12-23T15:04:59"\
-    --form "ending_date=2052-01-16"\
-    --form "employment_type=remote"\
+    --form "joining_date=2025-12-25T11:48:23"\
+    --form "ending_date=2052-01-18"\
+    --form "employment_type=full-time"\
     --form "basic_salary=22"\
     --form "salary_currency=gzm"\
     --form "bank_name=architecto"\
     --form "bank_account_number=architecto"\
     --form "tax_id=architecto"\
-    --form "photo=@C:\Users\user\AppData\Local\Temp\php8D0C.tmp" </code></pre></div>
+    --form "photo=@C:\Users\user\AppData\Local\Temp\php46DF.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -6128,17 +6859,17 @@ body.append('first_name', 'architecto');
 body.append('last_name', 'n');
 body.append('email', 'gbailey@example.net');
 body.append('phone', 'vdljnikhwaykcmyu');
-body.append('date_of_birth', '2025-12-23T15:04:59');
-body.append('gender', 'female');
-body.append('marital_status', 'divorced');
+body.append('date_of_birth', '2025-12-25T11:48:23');
+body.append('gender', 'male');
+body.append('marital_status', 'single');
 body.append('nationality', 'architecto');
 body.append('address', 'architecto');
 body.append('city', 'architecto');
 body.append('state', 'architecto');
 body.append('zip_code', 'architecto');
-body.append('joining_date', '2025-12-23T15:04:59');
-body.append('ending_date', '2052-01-16');
-body.append('employment_type', 'remote');
+body.append('joining_date', '2025-12-25T11:48:23');
+body.append('ending_date', '2052-01-18');
+body.append('employment_type', 'full-time');
 body.append('basic_salary', '22');
 body.append('salary_currency', 'gzm');
 body.append('bank_name', 'architecto');
@@ -6309,7 +7040,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 5120 kilobytes. Example: <code>C:\Users\user\AppData\Local\Temp\php8D0C.tmp</code></p>
+<p>Must be an image. Must not be greater than 5120 kilobytes. Example: <code>C:\Users\user\AppData\Local\Temp\php46DF.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>date_of_birth</code></b>&nbsp;&nbsp;
@@ -6318,10 +7049,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date_of_birth"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="2025-12-23T15:04:59"
+               value="2025-12-25T11:48:23"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2025-12-23T15:04:59</code></p>
+<p>Must be a valid date. Example: <code>2025-12-25T11:48:23</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -6330,10 +7061,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="gender"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="female"
+               value="male"
                data-component="body">
     <br>
-<p>Example: <code>female</code></p>
+<p>Example: <code>male</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>male</code></li> <li><code>female</code></li></ul>
         </div>
@@ -6344,10 +7075,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="marital_status"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="divorced"
+               value="single"
                data-component="body">
     <br>
-<p>Example: <code>divorced</code></p>
+<p>Example: <code>single</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>single</code></li> <li><code>married</code></li> <li><code>divorced</code></li> <li><code>widowed</code></li></ul>
         </div>
@@ -6442,10 +7173,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="joining_date"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="2025-12-23T15:04:59"
+               value="2025-12-25T11:48:23"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2025-12-23T15:04:59</code></p>
+<p>Must be a valid date. Example: <code>2025-12-25T11:48:23</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>ending_date</code></b>&nbsp;&nbsp;
@@ -6454,10 +7185,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="ending_date"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="2052-01-16"
+               value="2052-01-18"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after <code>joining_date</code>. Example: <code>2052-01-16</code></p>
+<p>Must be a valid date. Must be a date after <code>joining_date</code>. Example: <code>2052-01-18</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>employment_type</code></b>&nbsp;&nbsp;
@@ -6466,10 +7197,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="employment_type"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="remote"
+               value="full-time"
                data-component="body">
     <br>
-<p>Example: <code>remote</code></p>
+<p>Example: <code>full-time</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>full-time</code></li> <li><code>part-time</code></li> <li><code>contract</code></li> <li><code>internship</code></li> <li><code>remote</code></li></ul>
         </div>
@@ -6695,7 +7426,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     "http://localhost/api/v1/employees/architecto/photo" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "photo=@C:\Users\user\AppData\Local\Temp\php8D0E.tmp" </code></pre></div>
+    --form "photo=@C:\Users\user\AppData\Local\Temp\php46F0.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -6826,7 +7557,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Image file (jpeg, png, jpg, max 5MB). Example: <code>C:\Users\user\AppData\Local\Temp\php8D0E.tmp</code></p>
+<p>Image file (jpeg, png, jpg, max 5MB). Example: <code>C:\Users\user\AppData\Local\Temp\php46F0.tmp</code></p>
         </div>
         </form>
 
@@ -8144,7 +8875,211 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
     <p>APIs for managing job postings, including creation, updates, and retrieval.</p>
 
-                                <h2 id="job-management-GETapi-v1-recruitment-jobs">List Jobs</h2>
+                                <h2 id="job-management-GETapi-v1-jobs">List Active Jobs</h2>
+
+<p>
+</p>
+
+<p>Display a listing of active jobs (for public view) with optional filtering.</p>
+
+<span id="example-requests-GETapi-v1-jobs">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/v1/jobs?search=Developer&amp;department_id=a1b2c3d4-e5f6-7890-g1h2-i3j4k5l6m7n8&amp;designation_id=b2c3d4e5-f6g7-8901-h2i3-j4k5l6m7n8o9&amp;limit=10&amp;page=2" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/jobs"
+);
+
+const params = {
+    "search": "Developer",
+    "department_id": "a1b2c3d4-e5f6-7890-g1h2-i3j4k5l6m7n8",
+    "designation_id": "b2c3d4e5-f6g7-8901-h2i3-j4k5l6m7n8o9",
+    "limit": "10",
+    "page": "2",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-jobs">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+vary: Origin
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Active jobs fetched successfully&quot;,
+    &quot;data&quot;: [],
+    &quot;pagination&quot;: {
+        &quot;total&quot;: 0,
+        &quot;per_page&quot;: 10,
+        &quot;current_page&quot;: 2,
+        &quot;last_page&quot;: 1
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-jobs" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-jobs"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-jobs"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-jobs" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-jobs">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-jobs" data-method="GET"
+      data-path="api/v1/jobs"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-jobs', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-jobs"
+                    onclick="tryItOut('GETapi-v1-jobs');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-jobs"
+                    onclick="cancelTryOut('GETapi-v1-jobs');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-jobs"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/jobs</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-jobs"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-jobs"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="search"                data-endpoint="GETapi-v1-jobs"
+               value="Developer"
+               data-component="query">
+    <br>
+<p>Filter active jobs by title or description. Example: <code>Developer</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>department_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="department_id"                data-endpoint="GETapi-v1-jobs"
+               value="a1b2c3d4-e5f6-7890-g1h2-i3j4k5l6m7n8"
+               data-component="query">
+    <br>
+<p>Filter active jobs by department UUID. Example: <code>a1b2c3d4-e5f6-7890-g1h2-i3j4k5l6m7n8</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>designation_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="designation_id"                data-endpoint="GETapi-v1-jobs"
+               value="b2c3d4e5-f6g7-8901-h2i3-j4k5l6m7n8o9"
+               data-component="query">
+    <br>
+<p>Filter active jobs by designation UUID. Example: <code>b2c3d4e5-f6g7-8901-h2i3-j4k5l6m7n8o9</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-v1-jobs"
+               value="10"
+               data-component="query">
+    <br>
+<p>Items per page. Default 10. Example: <code>10</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="page"                data-endpoint="GETapi-v1-jobs"
+               value="2"
+               data-component="query">
+    <br>
+<p>Page number for pagination. Example: <code>2</code></p>
+            </div>
+                </form>
+
+                    <h2 id="job-management-GETapi-v1-recruitment-jobs">List Jobs</h2>
 
 <p>
 </p>
@@ -8760,9 +9695,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"deadline\": \"2025-12-31\",
     \"min_salary\": 39,
     \"max_salary\": 84,
-    \"salary_currency\": \"ETB\",
-    \"salary_negotiable\": true,
-    \"show_salary\": false
+    \"salary_currency\": \"USD\",
+    \"salary_negotiable\": false,
+    \"show_salary\": true
 }"
 </code></pre></div>
 
@@ -8786,9 +9721,9 @@ let body = {
     "deadline": "2025-12-31",
     "min_salary": 39,
     "max_salary": 84,
-    "salary_currency": "ETB",
-    "salary_negotiable": true,
-    "show_salary": false
+    "salary_currency": "USD",
+    "salary_negotiable": false,
+    "show_salary": true
 };
 
 fetch(url, {
@@ -8976,10 +9911,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="salary_currency"                data-endpoint="POSTapi-v1-recruitment-jobs"
-               value="ETB"
+               value="USD"
                data-component="body">
     <br>
-<p>Example: <code>ETB</code></p>
+<p>Example: <code>USD</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>ETB</code></li> <li><code>USD</code></li> <li><code>EUR</code></li></ul>
         </div>
@@ -9003,7 +9938,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>show_salary</code></b>&nbsp;&nbsp;
@@ -9025,7 +9960,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
         </form>
 
@@ -9194,8 +10129,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"min_salary\": 39,
     \"max_salary\": 84,
     \"salary_currency\": \"USD\",
-    \"salary_negotiable\": false,
-    \"show_salary\": false
+    \"salary_negotiable\": true,
+    \"show_salary\": true
 }"
 </code></pre></div>
 
@@ -9220,8 +10155,8 @@ let body = {
     "min_salary": 39,
     "max_salary": 84,
     "salary_currency": "USD",
-    "salary_negotiable": false,
-    "show_salary": false
+    "salary_negotiable": true,
+    "show_salary": true
 };
 
 fetch(url, {
@@ -9461,7 +10396,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>show_salary</code></b>&nbsp;&nbsp;
@@ -9483,7 +10418,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
         </form>
 
@@ -11308,7 +12243,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"name\": \"Casual Leave v2\",
     \"default_days\": 27,
-    \"is_paid\": false,
+    \"is_paid\": true,
     \"requires_approval\": false
 }"
 </code></pre></div>
@@ -11327,7 +12262,7 @@ const headers = {
 let body = {
     "name": "Casual Leave v2",
     "default_days": 27,
-    "is_paid": false,
+    "is_paid": true,
     "requires_approval": false
 };
 
@@ -11470,7 +12405,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>requires_approval</code></b>&nbsp;&nbsp;
@@ -17135,13 +18070,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"title\": \"b\",
     \"description\": \"Eius et animi quos velit et.\",
-    \"start_date\": \"2025-12-23T15:05:00\",
-    \"end_date\": \"2052-01-16\",
+    \"start_date\": \"2025-12-25T11:48:24\",
+    \"end_date\": \"2052-01-18\",
     \"trainer_name\": \"n\",
     \"location\": \"g\",
     \"incentive_amount\": 12,
     \"has_incentive\": true,
-    \"type\": \"certification\",
+    \"type\": \"external\",
     \"is_mandatory\": true,
     \"is_active\": false
 }"
@@ -17161,13 +18096,13 @@ const headers = {
 let body = {
     "title": "b",
     "description": "Eius et animi quos velit et.",
-    "start_date": "2025-12-23T15:05:00",
-    "end_date": "2052-01-16",
+    "start_date": "2025-12-25T11:48:24",
+    "end_date": "2052-01-18",
     "trainer_name": "n",
     "location": "g",
     "incentive_amount": 12,
     "has_incentive": true,
-    "type": "certification",
+    "type": "external",
     "is_mandatory": true,
     "is_active": false
 };
@@ -17298,10 +18233,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="start_date"                data-endpoint="PATCHapi-v1-trainings--id-"
-               value="2025-12-23T15:05:00"
+               value="2025-12-25T11:48:24"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2025-12-23T15:05:00</code></p>
+<p>Must be a valid date. Example: <code>2025-12-25T11:48:24</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>end_date</code></b>&nbsp;&nbsp;
@@ -17310,10 +18245,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="end_date"                data-endpoint="PATCHapi-v1-trainings--id-"
-               value="2052-01-16"
+               value="2052-01-18"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>start_date</code>. Example: <code>2052-01-16</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>start_date</code>. Example: <code>2052-01-18</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>trainer_name</code></b>&nbsp;&nbsp;
@@ -17380,10 +18315,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="type"                data-endpoint="PATCHapi-v1-trainings--id-"
-               value="certification"
+               value="external"
                data-component="body">
     <br>
-<p>Example: <code>certification</code></p>
+<p>Example: <code>external</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>internal</code></li> <li><code>external</code></li> <li><code>certification</code></li></ul>
         </div>
@@ -18018,7 +18953,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/v1/notifications" \
+    --get "http://localhost/api/v1/notifications?page=16" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -18027,6 +18962,12 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <pre><code class="language-javascript">const url = new URL(
     "http://localhost/api/v1/notifications"
 );
+
+const params = {
+    "page": "16",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
 
 const headers = {
     "Content-Type": "application/json",
@@ -18047,8 +18988,11 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
- &quot;message&quot;: &quot;Notifications fetched successfully&quot;,
- &quot;data&quot;: [ ... ]
+  &quot;message&quot;: &quot;Notifications fetched successfully&quot;,
+  &quot;total&quot;: 5,
+  &quot;unread_count&quot;: 2,
+  &quot;data&quot;: [ ... ],
+  &quot;pagination&quot;: { ... }
 }</code>
  </pre>
     </span>
@@ -18123,14 +19067,27 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>Example: <code>application/json</code></p>
             </div>
-                        </form>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="page"                data-endpoint="GETapi-v1-notifications"
+               value="16"
+               data-component="query">
+    <br>
+<p>optional Page number. Default 1. Example: <code>16</code></p>
+            </div>
+                </form>
 
                     <h2 id="user-notifications-POSTapi-v1-notifications-read-all">Mark All as Read</h2>
 
 <p>
 </p>
 
-<p>Mark all notifications for the user as read.</p>
+<p>Mark all unread notifications as read.</p>
 
 <span id="example-requests-POSTapi-v1-notifications-read-all">
 <blockquote>Example request:</blockquote>

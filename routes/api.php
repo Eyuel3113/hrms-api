@@ -29,6 +29,8 @@ Route::prefix('v1')->group(function () {
     Route::post('/auth/reset-password', [AuthController::class, 'resetPassword']);
     Route::post('/auth/refresh', [AuthController::class, 'refresh']);
     Route::get('/jobs', [JobController::class, 'active']);
+    Route::post('/candidates', [CandidateController::class, 'store']);
+
     // AUTHENTICATED ROUTES
     Route::middleware('auth:sanctum')->group(function () {
 
