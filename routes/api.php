@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\PayrollController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\ActivityLogController;
+use App\Http\Controllers\Api\AnalyticsController;
 
 
 Route::prefix('v1')->group(function () {
@@ -200,6 +201,14 @@ Route::prefix('payroll')->group(function () {
     Route::get('/{id}', [PayrollController::class, 'show']); 
     Route::patch('/{id}/lock', [PayrollController::class, 'lock']); 
     Route::patch('/{id}/paid', [PayrollController::class, 'markPaid']); 
+});
+
+//Analaytics 
+Route::prefix('analytics')->group(function () {
+    Route::get('/daily-attendance', [AnalyticsController::class, 'dailyAttendance']);
+    Route::get('/employees-by-department', [AnalyticsController::class, 'employeesByDepartment']);
+    Route::get('/kpi', [AnalyticsController::class, 'kpi']);
+    Route::get('/payroll-outstanding', [AnalyticsController::class, 'payrollOutstanding']);
 });
 
     
