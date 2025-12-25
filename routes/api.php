@@ -27,7 +27,7 @@ Route::prefix('v1')->group(function () {
     Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword']);
     Route::post('/auth/reset-password', [AuthController::class, 'resetPassword']);
     Route::post('/auth/refresh', [AuthController::class, 'refresh']);
-    Route::get('/jobs', [JobController::class, 'index']);
+    Route::get('/jobs', [JobController::class, 'active']);
     // AUTHENTICATED ROUTES
     Route::middleware('auth:sanctum')->group(function () {
 
@@ -191,6 +191,8 @@ Route::prefix('projects')->group(function () {
     Route::get('/employees/{employeeId}', [ProjectController::class, 'employeeProjectHistory']);
 
 });
+
+//payrolls
 
 Route::prefix('payroll')->group(function () {
     Route::post('/generate', [PayrollController::class, 'generate']); 
