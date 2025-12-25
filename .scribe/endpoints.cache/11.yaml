@@ -734,7 +734,7 @@ endpoints:
         name: is_paid
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -754,7 +754,7 @@ endpoints:
     cleanBodyParameters:
       name: 'Casual Leave v2'
       default_days: 27
-      is_paid: true
+      is_paid: false
       requires_approval: false
     fileParameters: []
     responses: []

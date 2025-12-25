@@ -11,6 +11,8 @@ use App\Models\TrainingAttendee;
 use App\Models\ProjectMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Models\User;
+use App\Notifications\SystemNotification;
 
 use Carbon\Carbon;
 
@@ -155,6 +157,14 @@ public function generate(Request $request)
         ]);
 
         $generated++;
+
+        // Notify Employee
+        $employee->notify(new SystemNotification(
+            'Payroll Generated',
+            "Your payroll for " . Carbon::create(null, $month)->format('F') . " {$year} has been generated as a draft.",
+            'info',
+            "/payroll/history"
+        ));
     }
 
     return response()->json([
@@ -252,6 +262,14 @@ public function generate(Request $request)
         $payroll->status = 'paid';
         $payroll->paid_at = now();
         $payroll->save();
+
+        // Notify Employee
+        $payroll->employee->notify(new SystemNotification(
+            'Payroll Paid',
+            "Your payroll for " . Carbon::create(null, $payroll->month)->format('F') . " {$payroll->year} has been marked as paid.",
+            'success',
+            "/payroll/history"
+        ));
 
         return response()->json(['message' => 'Payroll marked as paid']);
     }

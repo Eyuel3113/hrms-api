@@ -38,11 +38,11 @@ Route::prefix('v1')->group(function () {
         Route::prefix('auth')->group(function () {
             Route::post('/logout', [AuthController::class, 'logout']);
             Route::get('/me', [AuthController::class, 'me']);
-            Route::post('/change-password', [AuthController::class, 'changePassword']);
+
 
         });
 
-        // NOTIFICATIONS & 
+        // NOTIFICATIONS 
         Route::prefix('notifications')->group(function () {
            Route::get('/', [NotificationController::class, 'index']);
            Route::post('/read-all', [NotificationController::class, 'markAllAsRead']);
@@ -76,46 +76,50 @@ Route::prefix('v1')->group(function () {
             Route::patch('/{id}/status', [DesignationController::class, 'toggleStatus']);
         });
 
-        // EMPLOYEES
-        Route::prefix('employees')->group(function () {
-            Route::get('/', [EmployeeController::class, 'index']);
-            Route::post('/', [EmployeeController::class, 'store']);
-            Route::get('/all', [EmployeeController::class, 'all']);
-            Route::get('/{id}', [EmployeeController::class, 'show']);
-            Route::patch('/{id}', [EmployeeController::class, 'update']);
-            Route::delete('/{id}', [EmployeeController::class, 'destroy']);
-            Route::post('/{id}/photo', [EmployeeController::class, 'uploadPhoto']);
-            Route::delete('/{id}/photo', [EmployeeController::class, 'deletePhoto']);
-            Route::patch('/{id}/status', [EmployeeController::class, 'toggleStatus']);
-        });
+// EMPLOYEES
+Route::prefix('employees')->group(function () {
+    Route::get('/', [EmployeeController::class, 'index']);
+    Route::post('/', [EmployeeController::class, 'store']);
+    Route::get('/all', [EmployeeController::class, 'all']);
+    Route::get('/{id}', [EmployeeController::class, 'show']);
+    Route::patch('/{id}', [EmployeeController::class, 'update']);
+    Route::delete('/{id}', [EmployeeController::class, 'destroy']);
+    Route::post('/{id}/photo', [EmployeeController::class, 'uploadPhoto']);
+    Route::delete('/{id}/photo', [EmployeeController::class, 'deletePhoto']);
+    Route::patch('/{id}/status', [EmployeeController::class, 'toggleStatus']);
+    
+});
     
 
-         //ATTENDANCE
-    
-    Route::prefix('attendance')->name('attendance.')->group(function () {
-         Route::get('/today', [AttendanceController::class, 'today'])->name('today');
-         Route::post('/check-in', [AttendanceController::class, 'checkIn'])->name('checkin');
-         Route::post('/check-out', [AttendanceController::class, 'checkOut'])->name('checkout');
-         Route::get('/{employeeId}/attendance', [AttendanceController::class, 'employeeAttendanceHistory']);
-    });
-          // HOLIDAYS
-    Route::prefix('holidays')->group(function () {
+//ATTENDANCE
+Route::prefix('attendance')->name('attendance.')->group(function () {
+    Route::get('/today', [AttendanceController::class, 'today'])->name('today');
+    Route::post('/check-in', [AttendanceController::class, 'checkIn'])->name('checkin');
+    Route::post('/check-out', [AttendanceController::class, 'checkOut'])->name('checkout');
+    Route::get('/{employeeId}/attendance', [AttendanceController::class, 'employeeAttendanceHistory']);
+
+});
+
+// HOLIDAYS
+Route::prefix('holidays')->group(function () {
     Route::get('/', [HolidayController::class, 'index']);
     Route::get('/active', [HolidayController::class, 'active']);
     Route::post('/', [HolidayController::class, 'store']);
     Route::patch('/{id}', [HolidayController::class, 'update']);
     Route::patch('/{id}/status', [HolidayController::class, 'toggleStatus']);
     Route::delete('/{id}', [HolidayController::class, 'destroy']); 
-    });
     
-    // SHIFTS
-    Route::prefix('shifts')->group(function () {
+});
+    
+// SHIFTS
+Route::prefix('shifts')->group(function () {
     Route::get('/', [ShiftController::class, 'index']);           
     Route::get('/active', [ShiftController::class, 'active']);          
     Route::post('/', [ShiftController::class, 'store']);
     Route::patch('/{id}', [ShiftController::class, 'update']);
     Route::patch('/{id}/status', [ShiftController::class, 'toggleStatus']);
     Route::delete('/{id}', [ShiftController::class, 'destroy']);
+
 });
 
 //LEAVES
@@ -140,7 +144,6 @@ Route::prefix('leave-types')->group(function () {
 });
 
 // RECRUITMENT
-
 Route::prefix('recruitment')->group(function () {
     Route::get('/jobs', [JobController::class, 'index']);
     Route::get('/jobs/active', [JobController::class, 'active']);
@@ -159,7 +162,6 @@ Route::prefix('recruitment')->group(function () {
 });
 
 // TRAININGS
-
 Route::prefix('trainings')->group(function () {
     Route::get('/', [TrainingController::class, 'index']);
     Route::post('/', [TrainingController::class, 'store']);
@@ -177,7 +179,6 @@ Route::prefix('trainings')->group(function () {
 });
 
 // PROJECTS
-
 Route::prefix('projects')->group(function () {
     Route::get('/', [ProjectController::class, 'index']);
     Route::get('/active', [ProjectController::class, 'active']);
@@ -195,8 +196,7 @@ Route::prefix('projects')->group(function () {
 
 });
 
-//payrolls
-
+//Payrolls
 Route::prefix('payroll')->group(function () {
     Route::post('/generate', [PayrollController::class, 'generate']); 
     Route::get('/', [PayrollController::class, 'index']); 
@@ -213,8 +213,15 @@ Route::prefix('analytics')->group(function () {
     Route::get('/payroll-outstanding', [AnalyticsController::class, 'payrollOutstanding']);
 });
 
+//Settings
+Route::prefix('settings')->group(function () {
+    Route::post('/change-password', [AuthController::class, 'changePassword']);
+});
+
     
 
     }); 
 
 });
+
+

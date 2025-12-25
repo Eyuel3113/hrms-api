@@ -332,7 +332,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/v1/auth/change-password
+    uri: api/v1/settings/change-password
     metadata:
       custom: []
       groupName: Authentication

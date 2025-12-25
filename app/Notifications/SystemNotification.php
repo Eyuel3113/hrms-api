@@ -39,7 +39,31 @@ class SystemNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', 'mail'];
+    }
+
+    /**
+     * Get the mail representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return \Illuminate\Notifications\Messages\MailMessage
+     */
+    public function toMail($notifiable)
+    {
+        $mail = (new MailMessage)
+            ->subject($this->title)
+            ->greeting('Hello!')
+            ->line($this->message);
+
+        if ($this->link) {
+            // If the link is relative, we might want to prepend the APP_URL
+            // For now, assuming it's a relative path for the frontend
+            $url = config('app.url') . $this->link;
+            $mail->action('View Details', $url);
+        }
+
+        return $mail->line('Thank you for using our application!')
+                    ->salutation('Regards, HRMS Team');
     }
 
     /**

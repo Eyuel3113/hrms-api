@@ -154,10 +154,10 @@ class AnalyticsController extends Controller
                     'value' => number_format($item->total, 2)
                 ];
             })
-            ->reverse() // oldest first
+            ->reverse() 
             ->values();
 
-        // If less than 8 — fill with 0
+
         while ($months->count() < 8) {
             $lastDate = $months->isEmpty() 
                 ? Carbon::now()->subMonth()->format('Y-m')

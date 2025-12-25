@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Department;
 use App\Http\Requests\Department\DepartmentStoreRequest;
 use App\Http\Requests\Department\DepartmentUpdateRequest;
+use App\Models\User;
+use App\Notifications\SystemNotification;
 
 class DepartmentController extends Controller
 {
@@ -119,6 +121,18 @@ class DepartmentController extends Controller
     public function store(DepartmentStoreRequest $request)
     {
         $department = Department::create($request->validated());
+
+        // Notify HR (Placeholder: first user)
+        $admin = User::first();
+        if ($admin) {
+            $admin->notify(new SystemNotification(
+                'New Department Created',
+                "A new department {$department->name} created.",
+                'info',
+                "/departments/{$department->id}"
+            ));
+        }
+
 
         return response()->json([
             'message' => 'Department created successfully',

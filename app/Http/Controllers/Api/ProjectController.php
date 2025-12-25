@@ -9,6 +9,8 @@ use App\Http\Requests\Project\ProjectStoreRequest;
 use App\Http\Requests\Project\ProjectUpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Employee;
+use App\Models\User;
+use App\Notifications\SystemNotification;
 
 
 
@@ -283,10 +285,21 @@ class ProjectController extends Controller
         ]);
 
         foreach ($request->employee_ids as $employeeId) {
-            ProjectMember::firstOrCreate(
+            $created = ProjectMember::firstOrCreate(
                 ['project_id' => $project->id, 'employee_id' => $employeeId],
                 ['id' => (string) \Illuminate\Support\Str::uuid()]
             );
+
+            if ($created->wasRecentlyCreated) {
+                // Notify Employee
+                $employee = Employee::find($employeeId);
+                $employee->notify(new SystemNotification(
+                    'Project Assignment',
+                    "You have been assigned to the project: {$project->title}",
+                    'info',
+                    "/projects/{$project->id}"
+                ));
+            }
         }
 
         return response()->json(['message' => 'Employees assigned to project']);
@@ -322,6 +335,14 @@ public function assignAllEmployees($id)
 
         if ($created->wasRecentlyCreated) {
             $assignedCount++;
+            
+            // Notify Employee
+            $employee->notify(new SystemNotification(
+                'Project Assignment',
+                "You have been assigned to the project: {$project->title}",
+                'info',
+                "/projects/{$project->id}"
+            ));
         }
     }
 
@@ -365,6 +386,16 @@ public function assignAllEmployees($id)
             'feedback'  => $request->feedback,
             'rated_at'  => now(),
         ]);
+
+        // Notify Employee
+        $employee = Employee::find($employeeId);
+        $project = Project::find($projectId);
+        $employee->notify(new SystemNotification(
+            'Project Rated',
+            "You have been rated {$request->rating}/5 for project: {$project->title}",
+            'success',
+            "/projects/{$projectId}"
+        ));
 
         return response()->json([
             'message' => 'Employee rated successfully',

@@ -12,6 +12,8 @@ use App\Http\Requests\Candidate\CandidateStoreRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
+use App\Notifications\SystemNotification;
 
 /**
  * Controller for managing Candidate applications.
@@ -137,6 +139,22 @@ public function show($id)
             'status'        => 'new',
         ]);
 
+        $admin = User::first();
+        if ($admin) {
+            $admin->notify(new SystemNotification(
+                'Candidate Apply',
+                "Candidate {$candidate->full_name} has been applied for Job.",
+                'success',
+                "/recruitment/candidates/{$candidate->id}"
+            ));
+        }
+
+
+
+
+
+
+
         return response()->json([
             'message' => 'Application submitted successfully',
             'data'    => $candidate->load('job'),
@@ -219,6 +237,20 @@ public function show($id)
         ]);
 
         $candidate->notify(new \App\Notifications\CandidateHiredNotification($candidate->full_name, $candidate->job->job_title));
+
+        // Internal Notification to HR (first user as placeholder)
+        $admin = User::first();
+        if ($admin) {
+            $admin->notify(new SystemNotification(
+                'Candidate Hired',
+                "Candidate {$candidate->full_name} has been hired and converted to an employee.",
+                'success',
+                "/employees/{$employee->id}"
+            ));
+        }
+
+
+
 
         return response()->json([
             'message' => 'Candidate hired and converted to employee!',

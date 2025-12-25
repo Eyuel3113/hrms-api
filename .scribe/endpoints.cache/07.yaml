@@ -233,7 +233,7 @@ endpoints:
         name: marital_status
         description: ''
         required: false
-        example: married
+        example: single
         type: string
         enumValues:
           - single
@@ -347,7 +347,7 @@ endpoints:
         name: employment_type
         description: ''
         required: true
-        example: contract
+        example: full-time
         type: string
         enumValues:
           - full-time
@@ -420,7 +420,7 @@ endpoints:
       phone: architecto
       date_of_birth: architecto
       gender: architecto
-      marital_status: married
+      marital_status: single
       nationality: architecto
       address: architecto
       city: architecto
@@ -430,7 +430,7 @@ endpoints:
       designation_id: architecto
       joining_date: architecto
       ending_date: '2052-01-18'
-      employment_type: contract
+      employment_type: full-time
       basic_salary: 4326.41688
       salary_currency: gzm
       bank_name: architecto
@@ -716,7 +716,7 @@ endpoints:
         name: date_of_birth
         description: 'Must be a valid date.'
         required: false
-        example: '2025-12-25T11:48:23'
+        example: '2025-12-25T17:10:00'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -832,7 +832,7 @@ endpoints:
         name: joining_date
         description: 'Must be a valid date.'
         required: false
-        example: '2025-12-25T11:48:23'
+        example: '2025-12-25T17:10:00'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -936,7 +936,7 @@ endpoints:
       last_name: 'n'
       email: gbailey@example.net
       phone: vdljnikhwaykcmyu
-      date_of_birth: '2025-12-25T11:48:23'
+      date_of_birth: '2025-12-25T17:10:00'
       gender: male
       marital_status: single
       nationality: architecto
@@ -944,7 +944,7 @@ endpoints:
       city: architecto
       state: architecto
       zip_code: architecto
-      joining_date: '2025-12-25T11:48:23'
+      joining_date: '2025-12-25T17:10:00'
       ending_date: '2052-01-18'
       employment_type: full-time
       basic_salary: 22

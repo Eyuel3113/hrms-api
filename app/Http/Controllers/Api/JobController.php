@@ -7,6 +7,8 @@ use App\Models\Job;
 use App\Http\Requests\Job\JobStoreRequest;
 use App\Http\Requests\Job\JobUpdateRequest;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Notifications\SystemNotification;
 
 /**
  * Controller for managing Job postings.
@@ -212,6 +214,17 @@ public function inactive(Request $request)
             'id' => (string) \Illuminate\Support\Str::uuid(),
             'is_active' => true,
         ]);
+
+        // Notify HR (Placeholder: first user)
+        $admin = User::first();
+        if ($admin) {
+            $admin->notify(new SystemNotification(
+                'New Job Posted',
+                "A new job {$job->title} posted.",
+                'info',
+                "/recruitment/jobs/{$job->id}"
+            ));
+        }
 
         return response()->json([
             'message' => 'Job posted successfully',

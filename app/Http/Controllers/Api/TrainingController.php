@@ -9,6 +9,8 @@ use App\Http\Requests\Training\TrainingStoreRequest;
 use App\Http\Requests\Training\TrainingUpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Employee;
+use App\Models\User;
+use App\Notifications\SystemNotification;
 
 class TrainingController extends Controller
 {
@@ -288,10 +290,21 @@ public function inactive(Request $request)
         ]);
 
         foreach ($request->employee_ids as $employeeId) {
-            TrainingAttendee::firstOrCreate(
+            $created = TrainingAttendee::firstOrCreate(
                 ['training_id' => $training->id, 'employee_id' => $employeeId],
                 ['id' => (string) \Illuminate\Support\Str::uuid(), 'status' => 'registered']
             );
+
+            if ($created->wasRecentlyCreated) {
+                // Notify Employee
+                $employee = Employee::find($employeeId);
+                $employee->notify(new SystemNotification(
+                    'New Training Assignment',
+                    "You have been assigned to the training: {$training->title}",
+                    'info',
+                    "/trainings/{$training->id}"
+                ));
+            }
         }
 
         return response()->json(['message' => 'Employees assigned to training successfully']);
@@ -326,6 +339,14 @@ public function assignAllEmployees($id)
 
         if ($created->wasRecentlyCreated) {
             $assignedCount++;
+
+            // Notify Employee
+            $employee->notify(new SystemNotification(
+                'New Training Assignment',
+                "You have been assigned to the training: {$training->title}",
+                'info',
+                "/trainings/{$training->id}"
+            ));
         }
     }
 

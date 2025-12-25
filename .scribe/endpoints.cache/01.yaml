@@ -92,7 +92,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"message":"Active jobs fetched successfully","data":[],"pagination":{"total":0,"per_page":10,"current_page":2,"last_page":1}}'
+        content: '{"message":"Active jobs fetched successfully","data":[],"pagination":{"total":1,"per_page":10,"current_page":2,"last_page":1}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -519,7 +519,7 @@ endpoints:
         name: salary_currency
         description: ''
         required: false
-        example: USD
+        example: ETB
         type: string
         enumValues:
           - ETB
@@ -544,7 +544,7 @@ endpoints:
         name: show_salary
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -559,9 +559,9 @@ endpoints:
       deadline: '2025-12-31'
       min_salary: 39
       max_salary: 84
-      salary_currency: USD
+      salary_currency: ETB
       salary_negotiable: false
-      show_salary: true
+      show_salary: false
     fileParameters: []
     responses: []
     responseFields: []
@@ -645,14 +645,14 @@ endpoints:
         name: id
         description: 'The ID of the job.'
         required: true
-        example: architecto
+        example: 86ebc2e1-0deb-4c36-999e-b98618ceaf0c
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      id: architecto
+      id: 86ebc2e1-0deb-4c36-999e-b98618ceaf0c
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -774,7 +774,7 @@ endpoints:
         name: salary_negotiable
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -785,7 +785,7 @@ endpoints:
         name: show_salary
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -801,8 +801,8 @@ endpoints:
       min_salary: 39
       max_salary: 84
       salary_currency: USD
-      salary_negotiable: true
-      show_salary: true
+      salary_negotiable: false
+      show_salary: false
     fileParameters: []
     responses: []
     responseFields: []
@@ -877,14 +877,14 @@ endpoints:
         name: id
         description: 'The ID of the job.'
         required: true
-        example: architecto
+        example: 86ebc2e1-0deb-4c36-999e-b98618ceaf0c
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      id: architecto
+      id: 86ebc2e1-0deb-4c36-999e-b98618ceaf0c
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

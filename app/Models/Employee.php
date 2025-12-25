@@ -8,9 +8,11 @@ use Illuminate\Support\Str;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 
+use Illuminate\Notifications\Notifiable;
+
 class Employee extends Model
 {
-    use SoftDeletes, LogsActivity;
+    use SoftDeletes, LogsActivity, Notifiable;
 
     protected $keyType = 'string';
     public $incrementing = false;
@@ -61,6 +63,15 @@ public function projects()
                 ->withTimestamps();
 }
 
+    /**
+     * Route notifications for the mail channel.
+     *
+     * @return string
+     */
+    public function routeNotificationForMail()
+    {
+        return $this->personalInfo->email;
+    }
 
 
     public function getActivitylogOptions(): LogOptions

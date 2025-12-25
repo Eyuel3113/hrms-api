@@ -7,6 +7,8 @@ use App\Models\Leave;
 use App\Models\LeaveType;
 use Illuminate\Http\Request;
 use App\Models\Employee;
+use App\Models\User;
+use App\Notifications\SystemNotification;
 
 /**
  * @group Leave Management
@@ -119,6 +121,17 @@ class LeaveController extends Controller
             'status'        => 'pending',
         ]);
 
+        // Notify HR (Placeholder: first user)
+        $admin = User::first();
+        if ($admin) {
+            $admin->notify(new SystemNotification(
+                'New Leave Request',
+                "A new leave request from {$leave->employee->personalInfo->first_name} is pending approval.",
+                'info',
+                "/leaves/{$leave->id}"
+            ));
+        }
+
         return response()->json([
             'message' => 'Leave request created by HR',
             'data'    => $leave->load(['employee.personalInfo', 'leaveType'])
@@ -145,6 +158,35 @@ class LeaveController extends Controller
             'approved_at' => now(),
         ]);
 
+            // Notify HR (Placeholder: first user)
+        $admin = User::first();
+        if ($admin) {
+            $admin->notify(new SystemNotification(
+                'Leave Approved',
+                "A leave request from {$leave->employee->personalInfo->first_name} has been approved.",
+                'success',
+                "/leaves/{$leave->id}"
+            ));
+        }
+
+        // Notify Employee
+        $leave->employee->notify(new SystemNotification(
+            'Leave Approved',
+            "Your leave request from {$leave->start_date} has been approved.",
+            'success'
+        ));
+
+        // Notify HR (Placeholder: first user)
+        $admin = User::first();
+        if ($admin) {
+            $admin->notify(new SystemNotification(
+                'Leave Approved',
+                "A leave request from {$leave->employee->personalInfo->first_name} has been approved.",
+                'success',
+                "/leaves/{$leave->id}"
+            ));
+        }
+
         return response()->json(['message' => 'Leave approved']);
     }
 
@@ -159,6 +201,23 @@ class LeaveController extends Controller
     {
         $leave = Leave::findOrFail($id);
         $leave->update(['status' => 'rejected']);
+
+        // Notify HR (Placeholder: first user)
+        $admin = User::first();
+        if ($admin) {
+            $admin->notify(new SystemNotification(
+                'Leave Rejected',
+                "A leave request from {$leave->employee->personalInfo->first_name} has been rejected.",
+                'error',
+                "/leaves/{$leave->id}"
+            ));
+        }
+        // Notify Employee
+        $leave->employee->notify(new SystemNotification(
+            'Leave Rejected',
+            "Your leave request from {$leave->start_date} has been rejected.",
+            'error'
+        ));
 
         return response()->json(['message' => 'Leave rejected']);
     }
