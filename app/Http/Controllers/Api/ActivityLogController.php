@@ -14,8 +14,7 @@ class ActivityLogController extends Controller
      * Get a list of system activity logs.
      * 
      * @group Activity Logs
-     * @queryParam subject_type string Filter by subject type (e.g., App\Models\Employee).
-     * @queryParam causer_id string Filter by causer ID (user ID).
+     * @queryParam subject_type string Filter by subject type (e.g., Employee).
      * @queryParam event string Filter by event type (created, updated, deleted).
      * @response 200 {
      *  "message": "Activity logs fetched successfully",

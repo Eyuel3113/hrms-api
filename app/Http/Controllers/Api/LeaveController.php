@@ -121,16 +121,24 @@ class LeaveController extends Controller
             'status'        => 'pending',
         ]);
 
-        // Notify HR (Placeholder: first user)
-        $admin = User::first();
-        if ($admin) {
-            $admin->notify(new SystemNotification(
-                'New Leave Request',
-                "A new leave request from {$leave->employee->personalInfo->first_name} is pending approval.",
-                'info',
-                "/leaves/{$leave->id}"
-            ));
-        }
+        // // Notify HR (Placeholder: first user)
+        // $admin = User::first();
+        // if ($admin) {
+        //     $admin->notify(new SystemNotification(
+        //         'New Leave Request',
+        //         "A new leave request from {$leave->employee->personalInfo->first_name} is pending approval.",
+        //         'info',
+        //         "/leaves/{$leave->id}"
+        //     ));
+        // }
+
+                // Notify Employee
+        $leave->employee->notify(new SystemNotification(
+            'New Leave Request',
+            "A new leave request from {$leave->employee->personalInfo->first_name} is pending approval.",
+            'info',
+            "/leaves/{$leave->id}"
+        ));
 
         return response()->json([
             'message' => 'Leave request created by HR',
@@ -149,25 +157,25 @@ class LeaveController extends Controller
     {
         $leave = Leave::findOrFail($id);
 
-        // Get the logged in HR Admin's Employee UUID
-        $adminEmployee = auth()->user()->employee;  // assuming User has employee relationship
+
+        $adminEmployee = auth()->user()->employee;  
 
         $leave->update([
             'status'      => 'approved',
-            'approved_by' => $adminEmployee?->id,  // ← UUID, not integer
+            'approved_by' => $adminEmployee?->id,  
             'approved_at' => now(),
         ]);
 
-            // Notify HR (Placeholder: first user)
-        $admin = User::first();
-        if ($admin) {
-            $admin->notify(new SystemNotification(
-                'Leave Approved',
-                "A leave request from {$leave->employee->personalInfo->first_name} has been approved.",
-                'success',
-                "/leaves/{$leave->id}"
-            ));
-        }
+        //     // Notify HR (Placeholder: first user)
+        // $admin = User::first();
+        // if ($admin) {
+        //     $admin->notify(new SystemNotification(
+        //         'Leave Approved',
+        //         "A leave request from {$leave->employee->personalInfo->first_name} has been approved.",
+        //         'success',
+        //         "/leaves/{$leave->id}"
+        //     ));
+        // }
 
         // Notify Employee
         $leave->employee->notify(new SystemNotification(
@@ -176,16 +184,7 @@ class LeaveController extends Controller
             'success'
         ));
 
-        // Notify HR (Placeholder: first user)
-        $admin = User::first();
-        if ($admin) {
-            $admin->notify(new SystemNotification(
-                'Leave Approved',
-                "A leave request from {$leave->employee->personalInfo->first_name} has been approved.",
-                'success',
-                "/leaves/{$leave->id}"
-            ));
-        }
+ 
 
         return response()->json(['message' => 'Leave approved']);
     }
@@ -202,16 +201,16 @@ class LeaveController extends Controller
         $leave = Leave::findOrFail($id);
         $leave->update(['status' => 'rejected']);
 
-        // Notify HR (Placeholder: first user)
-        $admin = User::first();
-        if ($admin) {
-            $admin->notify(new SystemNotification(
-                'Leave Rejected',
-                "A leave request from {$leave->employee->personalInfo->first_name} has been rejected.",
-                'error',
-                "/leaves/{$leave->id}"
-            ));
-        }
+        // // Notify HR (Placeholder: first user)
+        // $admin = User::first();
+        // if ($admin) {
+        //     $admin->notify(new SystemNotification(
+        //         'Leave Rejected',
+        //         "A leave request from {$leave->employee->personalInfo->first_name} has been rejected.",
+        //         'error',
+        //         "/leaves/{$leave->id}"
+        //     ));
+        // }
         // Notify Employee
         $leave->employee->notify(new SystemNotification(
             'Leave Rejected',

@@ -289,6 +289,8 @@ public function inactive(Request $request)
             'employee_ids.*' => 'exists:employees,id',
         ]);
 
+        $assignedEmployees = [];
+
         foreach ($request->employee_ids as $employeeId) {
             $created = TrainingAttendee::firstOrCreate(
                 ['training_id' => $training->id, 'employee_id' => $employeeId],
@@ -296,6 +298,8 @@ public function inactive(Request $request)
             );
 
             if ($created->wasRecentlyCreated) {
+                $assignedEmployees[] = $employeeId;
+                
                 // Notify Employee
                 $employee = Employee::find($employeeId);
                 $employee->notify(new SystemNotification(
@@ -305,6 +309,19 @@ public function inactive(Request $request)
                     "/trainings/{$training->id}"
                 ));
             }
+        }
+
+        // Log activity for employee assignments
+        if (!empty($assignedEmployees)) {
+            activity('training')
+                ->performedOn($training)
+                ->causedBy(auth()->user())
+                ->withProperties([
+                    'employee_ids' => $assignedEmployees,
+                    'employee_count' => count($assignedEmployees),
+                    'training_title' => $training->title,
+                ])
+                ->log(count($assignedEmployees) . ' employee(s) assigned to training');
         }
 
         return response()->json(['message' => 'Employees assigned to training successfully']);
@@ -350,6 +367,20 @@ public function assignAllEmployees($id)
         }
     }
 
+    // Log bulk assignment activity
+    if ($assignedCount > 0) {
+        activity('training')
+            ->performedOn($training)
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'assigned_count' => $assignedCount,
+                'total_employees' => $employees->count(),
+                'training_title' => $training->title,
+                'bulk_assignment' => true,
+            ])
+            ->log("All active employees ({$assignedCount}) assigned to training");
+    }
+
     return response()->json([
         'message' => "All active employees assigned to training",
         'assigned_count' => $assignedCount,
@@ -375,11 +406,30 @@ public function assignAllEmployees($id)
              'feedback' => 'nullable|string',
         ]);
 
+        $oldStatus = $attendee->status;
+
         $attendee->update([
             'status' => $request->status,
             'attended_at' => in_array($request->status, ['attended', 'certified']) ? now() : null,
             'feedback' => $request->feedback,
         ]);
+
+        // Log attendance status change
+        $training = Training::find($trainingId);
+        $employee = Employee::find($employeeId);
+        
+        activity('training')
+            ->performedOn($attendee)
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'training_id' => $trainingId,
+                'training_title' => $training->title,
+                'employee_id' => $employeeId,
+                'old_status' => $oldStatus,
+                'new_status' => $request->status,
+                'feedback' => $request->feedback,
+            ])
+            ->log("Training attendance status changed from {$oldStatus} to {$request->status}");
 
         return response()->json(['message' => 'Attendance marked successfully']);
     }
@@ -398,8 +448,20 @@ public function assignAllEmployees($id)
 public function toggleStatus($id)
 {
     $training = Training::findOrFail($id);
+    $oldStatus = $training->is_active;
     $training->is_active = !$training->is_active;
     $training->save();
+
+    // Log status toggle
+    activity('training')
+        ->performedOn($training)
+        ->causedBy(auth()->user())
+        ->withProperties([
+            'training_title' => $training->title,
+            'old_status' => $oldStatus ? 'active' : 'inactive',
+            'new_status' => $training->is_active ? 'active' : 'inactive',
+        ])
+        ->log("Training status changed to " . ($training->is_active ? 'active' : 'inactive'));
 
     return response()->json([
         'message'   => 'Training status updated successfully',

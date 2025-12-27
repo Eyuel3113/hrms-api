@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Password;
 use Laravel\Sanctum\PersonalAccessToken;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\SystemNotification;
 
 class AuthController extends Controller
 {
@@ -206,7 +207,7 @@ public function resetPassword(Request $request)
  *
  * Allow authenticated admin to change their password.
  *
- * @group Authentication
+ * @group Settings
  * @authenticated
  * @bodyParam current_password string required Current password.
  * @bodyParam new_password string required New password (min 4 characters).
@@ -233,8 +234,74 @@ public function changePassword(Request $request)
     $user->password = Hash::make($request->new_password);
     $user->save();
 
+           // Notify HR (Placeholder: first user)
+        $admin = User::first();
+        if ($admin) {
+            $admin->notify(new SystemNotification(
+                'Password Changed',
+                "You Changed Your Password Successfully.",
+                'info',
+                "/settings"
+            ));
+        }
+
     return response()->json([
         'message' => 'Password changed successfully'
+    ]);
+}
+
+/**
+ * Change Email
+ *
+ * Allow authenticated user to change their email address.
+ * Requires current password for security.
+ *
+ * @group Settings
+ * @authenticated
+ * @bodyParam current_password string required Current password for verification.
+ * @bodyParam new_email string required New email address.
+ * @bodyParam new_email_confirmation string required Must match new_email.
+ *
+ * @param Request $request
+ * @return \Illuminate\Http\JsonResponse
+ */
+public function changeEmail(Request $request)
+{
+    $user = Auth::user();
+
+    $request->validate([
+        'current_password' => 'required',
+        'new_email' => 'required|email|unique:users,email,' . $user->id,
+        'new_email_confirmation' => 'required|same:new_email',
+    ]);
+
+    // Verify current password
+    if (!Hash::check($request->current_password, $user->password)) {
+        return response()->json([
+            'message' => 'Current password is incorrect'
+        ], 400);
+    }
+
+    // Update email
+    $oldEmail = $user->email;
+    $user->email = $request->new_email;
+    $user->save();
+
+       // Notify HR (Placeholder: first user)
+        $admin = User::first();
+        if ($admin) {
+            $admin->notify(new SystemNotification(
+                'Email Address Changed',
+                "You Changed Your Email Adress to {$user->email}.",
+                'info',
+                "/settings"
+            ));
+        }
+    // $user->notify(new EmailChangedNotification($oldEmail, $request->new_email));
+
+    return response()->json([
+        'message' => 'Email changed successfully',
+        'new_email' => $user->email
     ]);
 }
 

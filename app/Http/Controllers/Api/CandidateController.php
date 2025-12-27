@@ -83,6 +83,7 @@ class CandidateController extends Controller
  * @param string $id
  * @return \Illuminate\Http\JsonResponse
  */
+
 public function show($id)
 {
     $candidate = Candidate::with(['job.department', 'job.designation'])
@@ -117,6 +118,7 @@ public function show($id)
      * @param \App\Http\Requests\Candidate\CandidateStoreRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
+    
     public function store(CandidateStoreRequest $request)
     {
         $cvPath = null;

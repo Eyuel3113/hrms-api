@@ -25,18 +25,7 @@ endpoints:
       subject_type:
         custom: []
         name: subject_type
-        description: 'Filter by subject type (e.g., App\Models\Employee).'
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      causer_id:
-        custom: []
-        name: causer_id
-        description: 'Filter by causer ID (user ID).'
+        description: 'Filter by subject type (e.g., Employee).'
         required: false
         example: architecto
         type: string
@@ -57,7 +46,6 @@ endpoints:
         deprecated: false
     cleanQueryParameters:
       subject_type: architecto
-      causer_id: architecto
       event: architecto
     bodyParameters: []
     cleanBodyParameters: []

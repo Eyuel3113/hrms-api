@@ -4,9 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class TrainingAttendee extends Model
 {
+    use LogsActivity;
+    
     protected $keyType = 'string';
     public $incrementing = false;
 
@@ -26,4 +30,19 @@ class TrainingAttendee extends Model
 
     public function training() { return $this->belongsTo(Training::class); }
     public function employee() { return $this->belongsTo(Employee::class); }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['training_id', 'employee_id', 'status', 'attended_at', 'feedback'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs()
+            ->setDescriptionForEvent(fn(string $eventName) => match($eventName) {
+                'created' => 'Employee assigned to training',
+                'updated' => 'Training attendance updated',
+                'deleted' => 'Employee removed from training',
+                default => "Training attendee {$eventName}"
+            })
+            ->useLogName('training');
+    }
 }

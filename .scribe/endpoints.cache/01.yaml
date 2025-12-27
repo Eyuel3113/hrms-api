@@ -519,7 +519,7 @@ endpoints:
         name: salary_currency
         description: ''
         required: false
-        example: ETB
+        example: USD
         type: string
         enumValues:
           - ETB
@@ -533,7 +533,7 @@ endpoints:
         name: salary_negotiable
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -559,8 +559,8 @@ endpoints:
       deadline: '2025-12-31'
       min_salary: 39
       max_salary: 84
-      salary_currency: ETB
-      salary_negotiable: false
+      salary_currency: USD
+      salary_negotiable: true
       show_salary: false
     fileParameters: []
     responses: []
@@ -760,7 +760,7 @@ endpoints:
         name: salary_currency
         description: ''
         required: false
-        example: USD
+        example: ETB
         type: string
         enumValues:
           - ETB
@@ -800,7 +800,7 @@ endpoints:
       status: open
       min_salary: 39
       max_salary: 84
-      salary_currency: USD
+      salary_currency: ETB
       salary_negotiable: false
       show_salary: false
     fileParameters: []

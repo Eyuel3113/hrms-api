@@ -4,9 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Training extends Model
 {
+    use LogsActivity;
+    
     protected $keyType = 'string';
     public $incrementing = false;
 
@@ -46,5 +50,24 @@ class Training extends Model
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly([
+                'title', 'description', 'start_date', 'end_date', 
+                'trainer_name', 'location', 'incentive_amount', 
+                'has_incentive', 'type', 'is_mandatory', 'is_active'
+            ])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs()
+            ->setDescriptionForEvent(fn(string $eventName) => match($eventName) {
+                'created' => 'Training created',
+                'updated' => 'Training updated',
+                'deleted' => 'Training deleted',
+                default => "Training {$eventName}"
+            })
+            ->useLogName('training');
     }
 }

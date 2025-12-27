@@ -216,6 +216,7 @@ Route::prefix('analytics')->group(function () {
 //Settings
 Route::prefix('settings')->group(function () {
     Route::post('/change-password', [AuthController::class, 'changePassword']);
+    Route::post('/change-email', [AuthController::class, 'changeEmail']);
 });
 
     
