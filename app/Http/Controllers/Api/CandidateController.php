@@ -147,7 +147,8 @@ public function show($id)
                 'Candidate Apply',
                 "Candidate {$candidate->full_name} has been applied for Job.",
                 'success',
-                "/recruitment/candidates/{$candidate->id}"
+                'Candidate',
+                $candidate->id
             ));
         }
 
@@ -247,7 +248,8 @@ public function show($id)
                 'Candidate Hired',
                 "Candidate {$candidate->full_name} has been hired and converted to an employee.",
                 'success',
-                "/employees/{$employee->id}"
+                'Employee',
+                $employee->id
             ));
         }
 

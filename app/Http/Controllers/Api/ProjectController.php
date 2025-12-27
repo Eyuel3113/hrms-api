@@ -297,7 +297,8 @@ class ProjectController extends Controller
                     'Project Assignment',
                     "You have been assigned to the project: {$project->title}",
                     'info',
-                    "/projects/{$project->id}"
+                    'Project',
+                    $project->id
                 ));
             }
         }
@@ -341,7 +342,8 @@ public function assignAllEmployees($id)
                 'Project Assignment',
                 "You have been assigned to the project: {$project->title}",
                 'info',
-                "/projects/{$project->id}"
+                'Project',
+                $project->id
             ));
         }
     }
@@ -394,7 +396,8 @@ public function assignAllEmployees($id)
             'Project Rated',
             "You have been rated {$request->rating}/5 for project: {$project->title}",
             'success',
-            "/projects/{$projectId}"
+            'Project',
+            $projectId
         ));
 
         return response()->json([

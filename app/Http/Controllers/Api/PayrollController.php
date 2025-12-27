@@ -163,7 +163,8 @@ public function generate(Request $request)
             'Payroll Generated',
             "Your payroll for " . Carbon::create(null, $month)->format('F') . " {$year} has been generated as a draft.",
             'info',
-            "/payroll/history"
+            'Payroll',
+            null
         ));
     }
 
@@ -268,7 +269,8 @@ public function generate(Request $request)
             'Payroll Paid',
             "Your payroll for " . Carbon::create(null, $payroll->month)->format('F') . " {$payroll->year} has been marked as paid.",
             'success',
-            "/payroll/history"
+            'Payroll',
+            $payroll->id
         ));
 
         return response()->json(['message' => 'Payroll marked as paid']);

@@ -137,7 +137,8 @@ class LeaveController extends Controller
             'New Leave Request',
             "A new leave request from {$leave->employee->personalInfo->first_name} is pending approval.",
             'info',
-            "/leaves/{$leave->id}"
+            'Leave',
+            $leave->id
         ));
 
         return response()->json([
@@ -181,7 +182,9 @@ class LeaveController extends Controller
         $leave->employee->notify(new SystemNotification(
             'Leave Approved',
             "Your leave request from {$leave->start_date} has been approved.",
-            'success'
+            'success',
+            'Leave',
+            $leave->id
         ));
 
  
@@ -215,7 +218,9 @@ class LeaveController extends Controller
         $leave->employee->notify(new SystemNotification(
             'Leave Rejected',
             "Your leave request from {$leave->start_date} has been rejected.",
-            'error'
+            'error',
+            'Leave',
+            $leave->id
         ));
 
         return response()->json(['message' => 'Leave rejected']);

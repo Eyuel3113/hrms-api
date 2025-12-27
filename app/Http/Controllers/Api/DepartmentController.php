@@ -129,7 +129,8 @@ class DepartmentController extends Controller
                 'New Department Created',
                 "A new department {$department->name} created.",
                 'info',
-                "/departments/{$department->id}"
+                'Department',
+                $department->id
             ));
         }
 

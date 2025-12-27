@@ -198,7 +198,7 @@ public function all(Request $request)
             'last_name'       => $validated['last_name'],
             'email'           => $validated['email'],
             'phone'           => $validated['phone'] ?? null,
-            'photo'           => $photoPath, // ← CORRECT PATH OR NULL
+            'photo'           => $photoPath, 
             'date_of_birth'   => $validated['date_of_birth'],
             'gender'          => $validated['gender'],
             'marital_status'  => $validated['marital_status'] ?? null,

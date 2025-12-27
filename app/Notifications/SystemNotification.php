@@ -14,7 +14,8 @@ class SystemNotification extends Notification
     public $title;
     public $message;
     public $type; // e.g., 'info', 'success', 'warning', 'error'
-    public $link;
+    public $subjectType;
+    public $subjectId;
 
     /**
      * Create a new notification instance.
@@ -22,14 +23,16 @@ class SystemNotification extends Notification
      * @param string $title
      * @param string $message
      * @param string $type
-     * @param string|null $link
+     * @param string|null $subjectType
+     * @param string|null $subjectId
      */
-    public function __construct($title, $message, $type = 'info', $link = null)
+    public function __construct($title, $message, $type = 'info', $subjectType = null, $subjectId = null)
     {
         $this->title = $title;
         $this->message = $message;
         $this->type = $type;
-        $this->link = $link;
+        $this->subjectType = $subjectType;
+        $this->subjectId = $subjectId;
     }
 
     /**
@@ -50,20 +53,12 @@ class SystemNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        $mail = (new MailMessage)
+        return (new MailMessage)
             ->subject($this->title)
             ->greeting('Hello!')
-            ->line($this->message);
-
-        if ($this->link) {
-            // If the link is relative, we might want to prepend the APP_URL
-            // For now, assuming it's a relative path for the frontend
-            $url = config('app.url') . $this->link;
-            $mail->action('View Details', $url);
-        }
-
-        return $mail->line('Thank you for using our application!')
-                    ->salutation('Regards, HRMS Team');
+            ->line($this->message)
+            ->line('Thank you for using our application!')
+            ->salutation('Regards, HRMS Team');
     }
 
     /**
@@ -77,7 +72,8 @@ class SystemNotification extends Notification
             'title' => $this->title,
             'message' => $this->message,
             'type' => $this->type,
-            'link' => $this->link,
+            'subject_type' => $this->subjectType,
+            'subject_id' => $this->subjectId,
         ];
     }
 }

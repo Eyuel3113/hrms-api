@@ -241,7 +241,7 @@ public function changePassword(Request $request)
                 'Password Changed',
                 "You Changed Your Password Successfully.",
                 'info',
-                "/settings"
+                "settings"
             ));
         }
 
@@ -294,7 +294,7 @@ public function changeEmail(Request $request)
                 'Email Address Changed',
                 "You Changed Your Email Adress to {$user->email}.",
                 'info',
-                "/settings"
+                "settings"
             ));
         }
     // $user->notify(new EmailChangedNotification($oldEmail, $request->new_email));

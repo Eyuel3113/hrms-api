@@ -306,7 +306,8 @@ public function inactive(Request $request)
                     'New Training Assignment',
                     "You have been assigned to the training: {$training->title}",
                     'info',
-                    "/trainings/{$training->id}"
+                    'Training',
+                    $training->id
                 ));
             }
         }
@@ -362,7 +363,8 @@ public function assignAllEmployees($id)
                 'New Training Assignment',
                 "You have been assigned to the training: {$training->title}",
                 'info',
-                "/trainings/{$training->id}"
+                'Training',
+                $training->id
             ));
         }
     }

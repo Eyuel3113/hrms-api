@@ -222,7 +222,8 @@ public function inactive(Request $request)
                 'New Job Posted',
                 "A new job {$job->title} posted.",
                 'info',
-                "/recruitment/jobs/{$job->id}"
+                'Job',
+                $job->id
             ));
         }
 
