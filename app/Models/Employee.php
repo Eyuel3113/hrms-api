@@ -63,6 +63,11 @@ public function projects()
                 ->withTimestamps();
 }
 
+public function socialLinks()
+{
+    return $this->hasMany(EmployeeSocialLink::class);
+}
+
     /**
      * Route notifications for the mail channel.
      *
@@ -77,7 +82,15 @@ public function projects()
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->logOnly(['employee_code', 'status', 'shift_id'])
-        ->setDescriptionForEvent(fn(string $eventName) => "Employee has been {$eventName}");
+            ->logOnly(['employee_code', 'status', 'shift_id'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs()
+            ->setDescriptionForEvent(fn(string $eventName) => match($eventName) {
+                'created' => 'Employee created',
+                'updated' => 'Employee updated',
+                'deleted' => 'Employee deleted',
+                default => "Employee {$eventName}"
+            })
+            ->useLogName('employee');
     }
 }

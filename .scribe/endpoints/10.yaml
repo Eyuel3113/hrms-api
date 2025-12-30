@@ -1,19 +1,19 @@
-name: Shifts
+name: Holidays
 description: ''
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: api/v1/shifts
+    uri: api/v1/holidays
     metadata:
       custom: []
-      groupName: Shifts
+      groupName: Holidays
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'List Shifts (Paginated + Search)'
-      description: 'Get a paginated list of shifts with optional search.'
+      title: 'List Holidays (Paginated + Search)'
+      description: 'Get a paginated list of holidays with optional search.'
       authenticated: false
       deprecated: false
     headers:
@@ -25,7 +25,7 @@ endpoints:
       search:
         custom: []
         name: search
-        description: 'Search by shift name.'
+        description: 'Search by name, Ethiopian date, description, or type.'
         required: false
         example: architecto
         type: string
@@ -47,7 +47,7 @@ endpoints:
       sort:
         custom: []
         name: sort
-        description: "Sort field (e.g., name, created_at). Default 'created_at'."
+        description: "Sort field (e.g., date, name). Default 'date'."
         required: false
         example: architecto
         type: string
@@ -80,7 +80,7 @@ endpoints:
         status: 200
         content: |-
           {
-            "message": "Shifts fetched successfully",
+            "message": "Holidays fetched successfully",
             "data": [ ... ],
             "pagination": { ... }
           }
@@ -95,15 +95,15 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: api/v1/shifts/active
+    uri: api/v1/holidays/active
     metadata:
       custom: []
-      groupName: Shifts
+      groupName: Holidays
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'All Active Shifts (No Pagination)'
-      description: 'Get all active shifts — perfect for dropdowns and attendance logic.'
+      title: 'All Active Holidays (No Pagination)'
+      description: 'Get all active holidays — perfect for dropdowns, attendance logic, etc.'
       authenticated: false
       deprecated: false
     headers:
@@ -115,7 +115,7 @@ endpoints:
       search:
         custom: []
         name: search
-        description: 'Optional search by name.'
+        description: 'Optional search by name or Ethiopian date.'
         required: false
         example: architecto
         type: string
@@ -134,7 +134,7 @@ endpoints:
         status: 200
         content: |-
           {
-            "message": "Active shifts fetched successfully",
+            "message": "Active holidays fetched successfully",
             "data": [ ... ]
           }
         headers: []
@@ -148,15 +148,15 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/v1/shifts
+    uri: api/v1/holidays
     metadata:
       custom: []
-      groupName: Shifts
+      groupName: Holidays
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Create Shift'
-      description: 'Create a new shift. Only one shift can be default.'
+      title: 'Create Holiday'
+      description: 'Create a new holiday.'
       authenticated: false
       deprecated: false
     headers:
@@ -170,7 +170,7 @@ endpoints:
       name:
         custom: []
         name: name
-        description: 'Shift name (e.g., "Morning Shift").'
+        description: 'Holiday name (e.g., "Meskel").'
         required: true
         example: architecto
         type: string
@@ -178,10 +178,21 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      start_time:
+      date:
         custom: []
-        name: start_time
-        description: 'Start time (e.g., "09:00:00").'
+        name: date
+        description: 'Gregorian date (e.g., "2025-09-27").'
+        required: true
+        example: architecto
+        type: date
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      ethiopian_date:
+        custom: []
+        name: ethiopian_date
+        description: 'Ethiopian date (e.g., "መስከረም 17, 2018 ዓ.ም").'
         required: true
         example: architecto
         type: string
@@ -189,12 +200,10 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      end_time:
+      type:
         custom: []
-        name: end_time
-        description: |-
-          End time (e.g., "17:30:00").
-          bodyParam  break_start_time
+        name: type
+        description: 'Type: national, religious, or company.'
         required: true
         example: architecto
         type: string
@@ -202,65 +211,10 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      break_start_time:
+      is_recurring:
         custom: []
-        name: break_start_time
-        description: ''
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      break_end_time:
-        custom: []
-        name: break_end_time
-        description: ''
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      late_threshold_minutes:
-        custom: []
-        name: late_threshold_minutes
-        description: 'Grace period in minutes.'
-        required: true
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      half_day_minutes:
-        custom: []
-        name: half_day_minutes
-        description: 'Minimum minutes for full day.'
-        required: true
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      overtime_rate:
-        custom: []
-        name: overtime_rate
-        description: 'Overtime multiplier (e.g., 1.5).'
-        required: true
-        example: architecto
-        type: numeric
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      is_default:
-        custom: []
-        name: is_default
-        description: 'Set as default shift.'
+        name: is_recurring
+        description: 'Recurring every year. Default true.'
         required: false
         example: false
         type: boolean
@@ -268,14 +222,24 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      description:
+        custom: []
+        name: description
+        description: 'nullable Optional description.'
+        required: false
+        example: 'Eius et animi quos velit et.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       name: architecto
-      start_time: architecto
-      end_time: architecto
-      late_threshold_minutes: 16
-      half_day_minutes: 16
-      overtime_rate: architecto
-      is_default: false
+      date: architecto
+      ethiopian_date: architecto
+      type: architecto
+      is_recurring: false
+      description: 'Eius et animi quos velit et.'
     fileParameters: []
     responses:
       -
@@ -283,7 +247,7 @@ endpoints:
         status: 201
         content: |-
           {
-            "message": "Shift created successfully",
+            "message": "Holiday created successfully",
             "data": { ... }
           }
         headers: []
@@ -297,15 +261,15 @@ endpoints:
     custom: []
     httpMethods:
       - PATCH
-    uri: 'api/v1/shifts/{id}'
+    uri: 'api/v1/holidays/{id}'
     metadata:
       custom: []
-      groupName: Shifts
+      groupName: Holidays
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Update Shift'
-      description: 'Update shift details. Only one can be default.'
+      title: 'Update Holiday'
+      description: 'Update holiday details.'
       authenticated: false
       deprecated: false
     headers:
@@ -315,7 +279,7 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'Shift UUID.'
+        description: 'Holiday UUID.'
         required: true
         example: architecto
         type: string
@@ -339,9 +303,20 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      start_time:
+      date:
         custom: []
-        name: start_time
+        name: date
+        description: optional
+        required: false
+        example: architecto
+        type: date
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      ethiopian_date:
+        custom: []
+        name: ethiopian_date
         description: optional
         required: false
         example: architecto
@@ -350,9 +325,9 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      end_time:
+      type:
         custom: []
-        name: end_time
+        name: type
         description: optional
         required: false
         example: architecto
@@ -361,64 +336,9 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      break_start_time:
+      is_recurring:
         custom: []
-        name: break_start_time
-        description: ''
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      break_end_time:
-        custom: []
-        name: break_end_time
-        description: ''
-        required: false
-        example: null
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
-        deprecated: false
-      late_threshold_minutes:
-        custom: []
-        name: late_threshold_minutes
-        description: optional
-        required: false
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      half_day_minutes:
-        custom: []
-        name: half_day_minutes
-        description: optional
-        required: false
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      overtime_rate:
-        custom: []
-        name: overtime_rate
-        description: optional
-        required: false
-        example: architecto
-        type: numeric
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      is_default:
-        custom: []
-        name: is_default
+        name: is_recurring
         description: optional
         required: false
         example: false
@@ -427,14 +347,24 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      description:
+        custom: []
+        name: description
+        description: optional
+        required: false
+        example: 'Eius et animi quos velit et.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
       name: architecto
-      start_time: architecto
-      end_time: architecto
-      late_threshold_minutes: 16
-      half_day_minutes: 16
-      overtime_rate: architecto
-      is_default: false
+      date: architecto
+      ethiopian_date: architecto
+      type: architecto
+      is_recurring: false
+      description: 'Eius et animi quos velit et.'
     fileParameters: []
     responses:
       -
@@ -442,7 +372,7 @@ endpoints:
         status: 200
         content: |-
           {
-            "message": "Shift updated successfully",
+            "message": "Holiday updated successfully",
             "data": { ... }
           }
         headers: []
@@ -456,15 +386,15 @@ endpoints:
     custom: []
     httpMethods:
       - PATCH
-    uri: 'api/v1/shifts/{id}/status'
+    uri: 'api/v1/holidays/{id}/status'
     metadata:
       custom: []
-      groupName: Shifts
+      groupName: Holidays
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Toggle Shift Status'
-      description: 'Toggle between active/inactive. Default shift cannot be deactivated.'
+      title: 'Toggle Holiday Status'
+      description: 'Toggle between active/inactive.'
       authenticated: false
       deprecated: false
     headers:
@@ -474,7 +404,7 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'Shift UUID.'
+        description: 'Holiday UUID.'
         required: true
         example: architecto
         type: string
@@ -495,8 +425,9 @@ endpoints:
         status: 200
         content: |-
           {
-            "message": "Shift status updated",
-            "is_active": false
+            "message": "Holiday status updated successfully",
+            "is_active": true,
+            "data": { ... }
           }
         headers: []
         description: ''
@@ -509,15 +440,15 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'api/v1/shifts/{id}'
+    uri: 'api/v1/holidays/{id}'
     metadata:
       custom: []
-      groupName: Shifts
+      groupName: Holidays
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Delete Shift'
-      description: 'Permanently delete a shift. Default shift cannot be deleted.'
+      title: 'Delete Holiday'
+      description: 'Permanently delete a holiday.'
       authenticated: false
       deprecated: false
     headers:
@@ -527,7 +458,7 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'Shift UUID.'
+        description: 'Holiday UUID.'
         required: true
         example: architecto
         type: string
@@ -548,7 +479,7 @@ endpoints:
         status: 200
         content: |-
           {
-            "message": "Shift deleted successfully"
+            "message": "Holiday deleted successfully"
           }
         headers: []
         description: ''

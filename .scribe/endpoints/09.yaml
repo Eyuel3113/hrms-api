@@ -1,19 +1,19 @@
-name: Holidays
+name: Attendance
 description: ''
 endpoints:
   -
     custom: []
     httpMethods:
       - GET
-    uri: api/v1/holidays
+    uri: api/v1/attendance/today
     metadata:
       custom: []
-      groupName: Holidays
+      groupName: Attendance
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'List Holidays (Paginated + Search)'
-      description: 'Get a paginated list of holidays with optional search.'
+      title: "Today's Attendance"
+      description: 'Get attendance overview for the current day.'
       authenticated: false
       deprecated: false
     headers:
@@ -21,56 +21,8 @@ endpoints:
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters:
-      search:
-        custom: []
-        name: search
-        description: 'Search by name, Ethiopian date, description, or type.'
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      limit:
-        custom: []
-        name: limit
-        description: 'Items per page. Default 10.'
-        required: false
-        example: 16
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      sort:
-        custom: []
-        name: sort
-        description: "Sort field (e.g., date, name). Default 'date'."
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      order:
-        custom: []
-        name: order
-        description: "Sort order (asc/desc). Default 'desc'."
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanQueryParameters:
-      search: architecto
-      limit: 16
-      sort: architecto
-      order: architecto
+    queryParameters: []
+    cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -80,62 +32,14 @@ endpoints:
         status: 200
         content: |-
           {
-            "message": "Holidays fetched successfully",
-            "data": [ ... ],
-            "pagination": { ... }
-          }
-        headers: []
-        description: ''
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: api/v1/holidays/active
-    metadata:
-      custom: []
-      groupName: Holidays
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'All Active Holidays (No Pagination)'
-      description: 'Get all active holidays — perfect for dropdowns, attendance logic, etc.'
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters:
-      search:
-        custom: []
-        name: search
-        description: 'Optional search by name or Ethiopian date.'
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanQueryParameters:
-      search: architecto
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-            "message": "Active holidays fetched successfully",
-            "data": [ ... ]
+           "success": true,
+           "date": "2023-10-27",
+           "ethiopian_date": "Tikimt 16, 2016",
+           "total": 10,
+           "present": 8,
+           "late": 2,
+           "absent": 5,
+           "data": [ ... ]
           }
         headers: []
         description: ''
@@ -148,15 +52,15 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/v1/holidays
+    uri: api/v1/attendance/check-in
     metadata:
       custom: []
-      groupName: Holidays
+      groupName: Attendance
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Create Holiday'
-      description: 'Create a new holiday.'
+      title: 'Check In'
+      description: 'Record employee check-in.'
       authenticated: false
       deprecated: false
     headers:
@@ -167,88 +71,53 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      name:
+      employee_id:
         custom: []
-        name: name
-        description: 'Holiday name (e.g., "Meskel").'
+        name: employee_id
+        description: "The employee's ID."
         required: true
         example: architecto
-        type: string
+        type: uuid
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      date:
+      lat:
         custom: []
-        name: date
-        description: 'Gregorian date (e.g., "2025-09-27").'
+        name: lat
+        description: Latitude.
         required: true
-        example: architecto
-        type: date
+        example: 4326.41688
+        type: number
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      ethiopian_date:
+      lng:
         custom: []
-        name: ethiopian_date
-        description: 'Ethiopian date (e.g., "መስከረም 17, 2018 ዓ.ም").'
+        name: lng
+        description: Longitude.
         required: true
-        example: architecto
-        type: string
+        example: 4326.41688
+        type: number
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        deprecated: false
-      type:
-        custom: []
-        name: type
-        description: 'Type: national, religious, or company.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      is_recurring:
-        custom: []
-        name: is_recurring
-        description: 'Recurring every year. Default true.'
-        required: false
-        example: false
-        type: boolean
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      description:
-        custom: []
-        name: description
-        description: 'nullable Optional description.'
-        required: false
-        example: 'Eius et animi quos velit et.'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
         deprecated: false
     cleanBodyParameters:
-      name: architecto
-      date: architecto
-      ethiopian_date: architecto
-      type: architecto
-      is_recurring: false
-      description: 'Eius et animi quos velit et.'
+      employee_id: architecto
+      lat: 4326.41688
+      lng: 4326.41688
     fileParameters: []
     responses:
       -
         custom: []
-        status: 201
+        status: 200
         content: |-
           {
-            "message": "Holiday created successfully",
-            "data": { ... }
+           "success": true,
+           "message": "John checked in at 08:30",
+           ...
           }
         headers: []
         description: ''
@@ -260,111 +129,63 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - PATCH
-    uri: 'api/v1/holidays/{id}'
+      - POST
+    uri: api/v1/attendance/check-out
     metadata:
       custom: []
-      groupName: Holidays
+      groupName: Attendance
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Update Holiday'
-      description: 'Update holiday details.'
+      title: 'Check Out'
+      description: 'Record employee check-out.'
       authenticated: false
       deprecated: false
     headers:
       Content-Type: application/json
       Accept: application/json
-    urlParameters:
-      id:
-        custom: []
-        name: id
-        description: 'Holiday UUID.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      id: architecto
+    urlParameters: []
+    cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      name:
+      employee_id:
         custom: []
-        name: name
-        description: optional
-        required: false
+        name: employee_id
+        description: "The employee's ID."
+        required: true
         example: architecto
-        type: string
+        type: uuid
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      date:
+      lat:
         custom: []
-        name: date
-        description: optional
-        required: false
-        example: architecto
-        type: date
+        name: lat
+        description: Latitude.
+        required: true
+        example: 4326.41688
+        type: number
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      ethiopian_date:
+      lng:
         custom: []
-        name: ethiopian_date
-        description: optional
-        required: false
-        example: architecto
-        type: string
+        name: lng
+        description: Longitude.
+        required: true
+        example: 4326.41688
+        type: number
         enumValues: []
         exampleWasSpecified: false
         nullable: false
-        deprecated: false
-      type:
-        custom: []
-        name: type
-        description: optional
-        required: false
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      is_recurring:
-        custom: []
-        name: is_recurring
-        description: optional
-        required: false
-        example: false
-        type: boolean
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      description:
-        custom: []
-        name: description
-        description: optional
-        required: false
-        example: 'Eius et animi quos velit et.'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: true
         deprecated: false
     cleanBodyParameters:
-      name: architecto
-      date: architecto
-      ethiopian_date: architecto
-      type: architecto
-      is_recurring: false
-      description: 'Eius et animi quos velit et.'
+      employee_id: architecto
+      lat: 4326.41688
+      lng: 4326.41688
     fileParameters: []
     responses:
       -
@@ -372,8 +193,9 @@ endpoints:
         status: 200
         content: |-
           {
-            "message": "Holiday updated successfully",
-            "data": { ... }
+           "success": true,
+           "message": "John checked out at 17:30",
+           ...
           }
         headers: []
         description: ''
@@ -385,26 +207,26 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - PATCH
-    uri: 'api/v1/holidays/{id}/status'
+      - GET
+    uri: 'api/v1/attendance/{employeeId}/attendance'
     metadata:
       custom: []
-      groupName: Holidays
+      groupName: Attendance
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Toggle Holiday Status'
-      description: 'Toggle between active/inactive.'
+      title: 'Employee Attendance History by ID'
+      description: 'Get all attendance records for a specific employee with pagination, search by date, and status filter.'
       authenticated: false
       deprecated: false
     headers:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      id:
+      employeeId:
         custom: []
-        name: id
-        description: 'Holiday UUID.'
+        name: employeeId
+        description: 'The UUID of the employee.'
         required: true
         example: architecto
         type: string
@@ -413,76 +235,70 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      id: architecto
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
+      employeeId: architecto
+    queryParameters:
+      start_date:
         custom: []
-        status: 200
-        content: |-
-          {
-            "message": "Holiday status updated successfully",
-            "is_active": true,
-            "data": { ... }
-          }
-        headers: []
-        description: ''
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - DELETE
-    uri: 'api/v1/holidays/{id}'
-    metadata:
-      custom: []
-      groupName: Holidays
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Delete Holiday'
-      description: 'Permanently delete a holiday.'
-      authenticated: false
-      deprecated: false
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      id:
-        custom: []
-        name: id
-        description: 'Holiday UUID.'
-        required: true
-        example: architecto
+        name: start_date
+        description: 'optional Filter from date (YYYY-MM-DD).'
+        required: false
+        example: '2025-12-01'
         type: string
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
         nullable: false
         deprecated: false
-    cleanUrlParameters:
-      id: architecto
-    queryParameters: []
-    cleanQueryParameters: []
+      end_date:
+        custom: []
+        name: end_date
+        description: 'optional Filter to date (YYYY-MM-DD).'
+        required: false
+        example: '2025-12-31'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      status:
+        custom: []
+        name: status
+        description: 'optional Filter by status (present, late, absent, half_day).'
+        required: false
+        example: late
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      limit:
+        custom: []
+        name: limit
+        description: 'optional Items per page. Default 10.'
+        required: false
+        example: 30
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      start_date: '2025-12-01'
+      end_date: '2025-12-31'
+      status: late
+      limit: 30
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
     responses:
       -
         custom: []
-        status: 200
-        content: |-
-          {
-            "message": "Holiday deleted successfully"
-          }
-        headers: []
-        description: ''
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          vary: Origin
+        description: null
     responseFields: []
     auth: []
     controller: null

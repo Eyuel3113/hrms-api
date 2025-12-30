@@ -92,7 +92,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: '{"message":"Active jobs fetched successfully","data":[],"pagination":{"total":1,"per_page":10,"current_page":2,"last_page":1}}'
+        content: '{"message":"Active jobs fetched successfully","data":[],"pagination":{"total":2,"per_page":10,"current_page":2,"last_page":1}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -519,7 +519,7 @@ endpoints:
         name: salary_currency
         description: ''
         required: false
-        example: USD
+        example: ETB
         type: string
         enumValues:
           - ETB
@@ -533,7 +533,7 @@ endpoints:
         name: salary_negotiable
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -559,8 +559,8 @@ endpoints:
       deadline: '2025-12-31'
       min_salary: 39
       max_salary: 84
-      salary_currency: USD
-      salary_negotiable: true
+      salary_currency: ETB
+      salary_negotiable: false
       show_salary: false
     fileParameters: []
     responses: []
@@ -760,7 +760,7 @@ endpoints:
         name: salary_currency
         description: ''
         required: false
-        example: ETB
+        example: EUR
         type: string
         enumValues:
           - ETB
@@ -785,7 +785,7 @@ endpoints:
         name: show_salary
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -800,9 +800,9 @@ endpoints:
       status: open
       min_salary: 39
       max_salary: 84
-      salary_currency: ETB
+      salary_currency: EUR
       salary_negotiable: false
-      show_salary: false
+      show_salary: true
     fileParameters: []
     responses: []
     responseFields: []

@@ -231,7 +231,7 @@ endpoints:
         name: marital_status
         description: ''
         required: false
-        example: divorced
+        example: married
         type: string
         enumValues:
           - single
@@ -334,7 +334,7 @@ endpoints:
         name: ending_date
         description: 'Must be a valid date. Must be a date after <code>joining_date</code>.'
         required: false
-        example: '2052-01-20'
+        example: '2052-01-23'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -345,14 +345,14 @@ endpoints:
         name: employment_type
         description: ''
         required: true
-        example: internship
+        example: part-time
         type: string
         enumValues:
           - full-time
           - part-time
           - contract
-          - internship
-          - remote
+          - freelance
+          - intern
         exampleWasSpecified: false
         nullable: false
         deprecated: false
@@ -418,7 +418,7 @@ endpoints:
       phone: architecto
       date_of_birth: architecto
       gender: architecto
-      marital_status: divorced
+      marital_status: married
       nationality: architecto
       address: architecto
       city: architecto
@@ -427,8 +427,8 @@ endpoints:
       department_id: architecto
       designation_id: architecto
       joining_date: architecto
-      ending_date: '2052-01-20'
-      employment_type: internship
+      ending_date: '2052-01-23'
+      employment_type: part-time
       basic_salary: 4326.41688
       salary_currency: gzm
       bank_name: architecto
@@ -714,7 +714,7 @@ endpoints:
         name: date_of_birth
         description: 'Must be a valid date.'
         required: false
-        example: '2025-12-27T10:18:50'
+        example: '2025-12-30T11:24:32'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -725,7 +725,7 @@ endpoints:
         name: gender
         description: ''
         required: false
-        example: male
+        example: female
         type: string
         enumValues:
           - male
@@ -738,7 +738,7 @@ endpoints:
         name: marital_status
         description: ''
         required: false
-        example: single
+        example: married
         type: string
         enumValues:
           - single
@@ -830,7 +830,7 @@ endpoints:
         name: joining_date
         description: 'Must be a valid date.'
         required: false
-        example: '2025-12-27T10:18:50'
+        example: '2025-12-30T11:24:32'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -841,7 +841,7 @@ endpoints:
         name: ending_date
         description: 'Must be a valid date. Must be a date after <code>joining_date</code>.'
         required: false
-        example: '2052-01-20'
+        example: '2052-01-23'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -852,14 +852,14 @@ endpoints:
         name: employment_type
         description: ''
         required: false
-        example: contract
+        example: part-time
         type: string
         enumValues:
           - full-time
           - part-time
           - contract
-          - internship
-          - remote
+          - freelance
+          - intern
         exampleWasSpecified: false
         nullable: false
         deprecated: false
@@ -934,17 +934,17 @@ endpoints:
       last_name: 'n'
       email: gbailey@example.net
       phone: vdljnikhwaykcmyu
-      date_of_birth: '2025-12-27T10:18:50'
-      gender: male
-      marital_status: single
+      date_of_birth: '2025-12-30T11:24:32'
+      gender: female
+      marital_status: married
       nationality: architecto
       address: architecto
       city: architecto
       state: architecto
       zip_code: architecto
-      joining_date: '2025-12-27T10:18:50'
-      ending_date: '2052-01-20'
-      employment_type: contract
+      joining_date: '2025-12-30T11:24:32'
+      ending_date: '2052-01-23'
+      employment_type: part-time
       basic_salary: 22
       salary_currency: gzm
       bank_name: architecto
@@ -1185,6 +1185,156 @@ endpoints:
           }
         headers: []
         description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/employees/{id}/document'
+    metadata:
+      custom: []
+      groupName: Employees
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Upload Document'
+      description: 'Upload or replace employee document (PDF only, max 2MB).'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: multipart/form-data
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the employee.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      document:
+        custom: []
+        name: document
+        description: 'PDF file (max 2MB).'
+        required: true
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters: []
+    fileParameters:
+      document: null
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/v1/employees/{id}/document/download'
+    metadata:
+      custom: []
+      groupName: Employees
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Download Document'
+      description: 'Download employee document.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the employee.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          vary: Origin
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/employees/{id}/document'
+    metadata:
+      custom: []
+      groupName: Employees
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete Document'
+      description: 'Delete employee document.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the employee.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
     responseFields: []
     auth: []
     controller: null

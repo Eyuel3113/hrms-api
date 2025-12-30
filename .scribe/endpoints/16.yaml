@@ -1,20 +1,20 @@
-name: Settings
+name: Analytics
 description: ''
 endpoints:
   -
     custom: []
     httpMethods:
-      - POST
-    uri: api/v1/settings/change-password
+      - GET
+    uri: api/v1/analytics/daily-attendance
     metadata:
       custom: []
-      groupName: Settings
+      groupName: Analytics
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Change Password'
-      description: 'Allow authenticated admin to change their password.'
-      authenticated: true
+      title: 'Daily Attendance Summary'
+      description: 'Present, Half Day, Absent percentages for today.'
+      authenticated: false
       deprecated: false
     headers:
       Content-Type: application/json
@@ -23,46 +23,19 @@ endpoints:
     cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters:
-      current_password:
-        custom: []
-        name: current_password
-        description: 'Current password.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      new_password:
-        custom: []
-        name: new_password
-        description: 'New password (min 4 characters).'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      new_password_confirmation:
-        custom: []
-        name: new_password_confirmation
-        description: 'Must match new_password.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      current_password: architecto
-      new_password: architecto
-      new_password_confirmation: architecto
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          vary: Origin
+        description: null
     responseFields: []
     auth: []
     controller: null
@@ -71,19 +44,17 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - POST
-    uri: api/v1/settings/change-email
+      - GET
+    uri: api/v1/analytics/employees-by-department
     metadata:
       custom: []
-      groupName: Settings
+      groupName: Analytics
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Change Email'
-      description: |-
-        Allow authenticated user to change their email address.
-        Requires current password for security.
-      authenticated: true
+      title: 'Employees by Department'
+      description: 'Percentage of employees in each department.'
+      authenticated: false
       deprecated: false
     headers:
       Content-Type: application/json
@@ -92,46 +63,99 @@ endpoints:
     cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters:
-      current_password:
-        custom: []
-        name: current_password
-        description: 'Current password for verification.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      new_email:
-        custom: []
-        name: new_email
-        description: 'New email address.'
-        required: true
-        example: gbailey@example.net
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      new_email_confirmation:
-        custom: []
-        name: new_email_confirmation
-        description: 'Must match new_email.'
-        required: true
-        example: architecto
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      current_password: architecto
-      new_email: gbailey@example.net
-      new_email_confirmation: architecto
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          vary: Origin
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/analytics/kpi
+    metadata:
+      custom: []
+      groupName: Analytics
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Key Performance Indicators'
+      description: "Total employees, candidates, projects, today's present."
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          vary: Origin
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/analytics/payroll-outstanding
+    metadata:
+      custom: []
+      groupName: Analytics
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Payroll Outstanding — Last 8 Months'
+      description: 'Total net salary per month for last 8 months.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          vary: Origin
+        description: null
     responseFields: []
     auth: []
     controller: null

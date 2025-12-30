@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\PayrollController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\ActivityLogController;
 use App\Http\Controllers\Api\AnalyticsController;
+use App\Http\Controllers\Api\EmployeeSocialLinkController;
 
 
 Route::prefix('v1')->group(function () {
@@ -87,6 +88,17 @@ Route::prefix('employees')->group(function () {
     Route::post('/{id}/photo', [EmployeeController::class, 'uploadPhoto']);
     Route::delete('/{id}/photo', [EmployeeController::class, 'deletePhoto']);
     Route::patch('/{id}/status', [EmployeeController::class, 'toggleStatus']);
+    
+    // Document routes
+    Route::post('/{id}/document', [EmployeeController::class, 'uploadDocument']);
+    Route::get('/{id}/document/download', [EmployeeController::class, 'downloadDocument']);
+    Route::delete('/{id}/document', [EmployeeController::class, 'deleteDocument']);
+    
+    // Social links routes
+    Route::get('/{id}/social-links', [\App\Http\Controllers\Api\EmployeeSocialLinkController::class, 'index']);
+    Route::post('/{id}/social-links', [\App\Http\Controllers\Api\EmployeeSocialLinkController::class, 'store']);
+    Route::patch('/{id}/social-links/{linkId}', [\App\Http\Controllers\Api\EmployeeSocialLinkController::class, 'update']);
+    Route::delete('/{id}/social-links/{linkId}', [\App\Http\Controllers\Api\EmployeeSocialLinkController::class, 'destroy']);
     
 });
     

@@ -10,6 +10,7 @@ use App\Http\Requests\Employee\EmployeeStoreRequest;
 use App\Http\Requests\Employee\EmployeeUpdateRequest;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use App\Notifications\SystemNotification;
 
 class EmployeeController extends Controller
 {
@@ -98,7 +99,7 @@ class EmployeeController extends Controller
  */
 public function all(Request $request)
 {
-    $query = Employee::with(['personalInfo', 'professionalInfo', 'professionalInfo.department', 'professionalInfo.designation']);
+    $query = Employee::with(['personalInfo', 'professionalInfo', 'professionalInfo.department', 'professionalInfo.designation', 'shift', 'socialLinks']);
 
     // SEARCH
     if ($request->filled('search')) {
@@ -265,7 +266,8 @@ public function show($id)
         'personalInfo',
         'professionalInfo.department',
         'professionalInfo.designation',
-        'shift'  
+        'shift',
+        'socialLinks'
     ])->findOrFail($id);
 
     return response()->json([
@@ -320,9 +322,67 @@ public function show($id)
             $employee->update($mainEmployeeData);
         }
 
+        // Log activity for employee update with detailed information
+        $changedFields = [];
+        if (!empty($personalInfoData)) {
+            $changedFields['personal_info'] = array_keys($personalInfoData);
+        }
+        if (!empty($professionalInfoData)) {
+            $changedFields['professional_info'] = array_keys($professionalInfoData);
+        }
+        if (!empty($mainEmployeeData)) {
+            $changedFields['main_data'] = array_keys($mainEmployeeData);
+        }
+
+        if (!empty($changedFields)) {
+            activity('employee')
+                ->performedOn($employee)
+                ->causedBy(auth()->user())
+                ->withProperties([
+                    'employee_code' => $employee->employee_code,
+                    'employee_name' => $employee->personalInfo->first_name . ' ' . $employee->personalInfo->last_name,
+                    'changed_fields' => $changedFields,
+                    'personal_info_updates' => $personalInfoData ?? [],
+                    'professional_info_updates' => $professionalInfoData ?? [],
+                    'main_data_updates' => $mainEmployeeData ?? [],
+                ])
+                ->log('Employee profile updated');
+        }
+
+        // Send email notification to employee about profile update with specific details
+        $notificationMessage = "Your employee profile has been updated.";
+        
+        if (!empty($personalInfoData) && !empty($professionalInfoData)) {
+            $notificationMessage = "Your personal and professional information has been updated.";
+        } elseif (!empty($personalInfoData)) {
+            $notificationMessage = "Your personal information has been updated.";
+        } elseif (!empty($professionalInfoData)) {
+            $notificationMessage = "Your professional information has been updated.";
+        } elseif (!empty($mainEmployeeData)) {
+            if (isset($mainEmployeeData['status'])) {
+                $notificationMessage = "Your employment status has been changed to {$mainEmployeeData['status']}.";
+            } elseif (isset($mainEmployeeData['shift_id'])) {
+                $notificationMessage = "Your work shift has been updated.";
+            }
+        }
+        
+        $employee->notify(new SystemNotification(
+            'Profile Updated',
+            $notificationMessage,
+            'info',
+            'Employee',
+            $employee->id
+        ));
+
         return response()->json([
             'message' => 'Employee updated successfully',
-            'data' => $employee->fresh()->load(['personalInfo','professionalInfo'])
+            'data' => $employee->fresh()->load([
+                'personalInfo',
+                'professionalInfo.department',
+                'professionalInfo.designation',
+                'shift',
+                'socialLinks'
+            ])
         ]);
     }
 
@@ -432,12 +492,117 @@ public function show($id)
     public function toggleStatus($id)
     {
         $employee = Employee::findOrFail($id);
+        $oldStatus = $employee->status;
         $employee->status = $employee->status === 'active' ? 'inactive' : 'active';
         $employee->save();
+
+        // Send email notification to employee about status change
+        $statusMessage = $employee->status === 'active' 
+            ? 'Your employee account has been activated. You can now access all system features.' 
+            : 'Your employee account has been deactivated. Please contact HR if you have any questions.';
+        
+        $employee->notify(new SystemNotification(
+            'Account Status Changed',
+            $statusMessage,
+            $employee->status === 'active' ? 'success' : 'warning',
+            'Employee',
+            $employee->id
+        ));
 
         return response()->json([
             'message' => 'Status updated',
             'status' => $employee->status
         ]);
+    }
+
+    // DOCUMENT MANAGEMENT
+    /**
+     * Upload Document
+     * 
+     * Upload or replace employee document (PDF only, max 2MB).
+     * 
+     * @group Employees
+     * @bodyParam document file required PDF file (max 2MB).
+     */
+    public function uploadDocument(Request $request, $id)
+    {
+        $request->validate([
+            'document' => 'required|file|mimes:pdf|max:2048'
+        ]);
+
+        $employee = Employee::findOrFail($id);
+
+        // Delete old document if exists
+        if ($employee->professionalInfo?->document_path) {
+            Storage::disk('public')->delete($employee->professionalInfo->document_path);
+        }
+
+        // Store new document
+        $file = $request->file('document');
+        $filename = $employee->id . '.pdf';
+        $path = $file->storeAs('employees/documents', $filename, 'public');
+
+        // Update professional info
+        $employee->professionalInfo()->update([
+            'document_path' => $path,
+            'document_uploaded_at' => now()
+        ]);
+
+        return response()->json([
+            'message' => 'Document uploaded successfully',
+            'document_url' => asset('storage/' . $path),
+            'uploaded_at' => now()
+        ]);
+    }
+
+    /**
+     * Download Document
+     * 
+     * Download employee document.
+     * 
+     * @group Employees
+     */
+    public function downloadDocument($id)
+    {
+        $employee = Employee::findOrFail($id);
+
+        if (!$employee->professionalInfo?->document_path) {
+            return response()->json(['message' => 'No document found'], 404);
+        }
+
+        $path = storage_path('app/public/' . $employee->professionalInfo->document_path);
+
+        if (!file_exists($path)) {
+            return response()->json(['message' => 'Document file not found'], 404);
+        }
+
+        return response()->download($path, $employee->employee_code . '_document.pdf');
+    }
+
+    /**
+     * Delete Document
+     * 
+     * Delete employee document.
+     * 
+     * @group Employees
+     */
+    public function deleteDocument($id)
+    {
+        $employee = Employee::findOrFail($id);
+
+        if (!$employee->professionalInfo?->document_path) {
+            return response()->json(['message' => 'No document to delete'], 404);
+        }
+
+        // Delete file
+        Storage::disk('public')->delete($employee->professionalInfo->document_path);
+
+        // Update database
+        $employee->professionalInfo()->update([
+            'document_path' => null,
+            'document_uploaded_at' => null
+        ]);
+
+        return response()->json(['message' => 'Document deleted successfully']);
     }
 }

@@ -34,7 +34,7 @@ class EmployeeStoreRequest extends FormRequest
             'designation_id' => 'required|exists:designations,id',
             'joining_date' => 'required|date',
             'ending_date' => 'nullable|date|after:joining_date',
-            'employment_type' => 'required|in:full-time,part-time,contract,internship,remote',
+            'employment_type' => 'required|in:full-time,part-time,contract,freelance,intern',
             'basic_salary' => 'required|numeric|min:1',
             'salary_currency' => 'required|string|size:3',
             'bank_name' => 'nullable|string',
