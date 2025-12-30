@@ -244,7 +244,7 @@ endpoints:
         type: integer
         enumValues: []
         exampleWasSpecified: false
-        nullable: false
+        nullable: true
         deprecated: false
       overtime_rate:
         custom: []

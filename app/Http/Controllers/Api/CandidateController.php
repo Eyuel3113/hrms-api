@@ -103,6 +103,23 @@ public function show($id)
     ]);
 }
 
+/**
+ * Download Candidate CV
+ *
+ * @urlParam id string required The UUID of the candidate.
+ * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+ */
+public function downloadCv($id)
+{
+    $candidate = Candidate::findOrFail($id);
+
+    if (!$candidate->cv_path || !Storage::disk('public')->exists($candidate->cv_path)) {
+        return response()->json(['message' => 'CV not found'], 404);
+    }
+
+    return Storage::disk('public')->download($candidate->cv_path);
+}
+
     /**
      * Submit Application
      *

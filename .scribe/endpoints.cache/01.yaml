@@ -533,7 +533,7 @@ endpoints:
         name: salary_negotiable
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -560,7 +560,7 @@ endpoints:
       min_salary: 39
       max_salary: 84
       salary_currency: ETB
-      salary_negotiable: false
+      salary_negotiable: true
       show_salary: false
     fileParameters: []
     responses: []
@@ -760,7 +760,7 @@ endpoints:
         name: salary_currency
         description: ''
         required: false
-        example: EUR
+        example: ETB
         type: string
         enumValues:
           - ETB
@@ -785,7 +785,7 @@ endpoints:
         name: show_salary
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -800,9 +800,9 @@ endpoints:
       status: open
       min_salary: 39
       max_salary: 84
-      salary_currency: EUR
+      salary_currency: ETB
       salary_negotiable: false
-      show_salary: true
+      show_salary: false
     fileParameters: []
     responses: []
     responseFields: []

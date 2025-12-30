@@ -143,13 +143,13 @@ class AttendanceController extends Controller
             return response()->json(['message' => 'Today is a holiday. Attendance not allowed.'], 400);
         }
 
-        // Only check if there's an OPEN session (not checked out yet)
-        $activeSession = Attendance::where('employee_id', $employeeid)
-            ->whereNull('check_out')
+        // Check if ANY record exists for today (One check-in per day restriction)
+        $existingRecord = Attendance::where('employee_id', $employeeid)
+            ->whereDate('date', $today)
             ->first();
 
-        if ($activeSession) {
-            return response()->json(['message' => 'Already checked in. Please check out first.'], 400);
+        if ($existingRecord) {
+            return response()->json(['message' => 'Attendance already recorded for today.'], 400);
         }
 
         // GEOFENCING 
@@ -497,116 +497,58 @@ private function calculateWorkedHours($checkIn, $checkOut)
             $shiftEnd->addDay();
         }
 
-        $status = 'present';
+        $status = 'absent'; // Default strict status
         $lateMinutes = 0;
         $earlyLeaveMinutes = 0;
         $workedMinutes = 0;
         $overtimeMinutes = 0;
 
-        // --- SPLIT SHIFT LOGIC ---
-        if (isset($shift->type) && $shift->type === 'split') {
-            $breakStart = \Carbon\Carbon::parse($shift->break_start_time)->setDateFrom($checkIn);
-            $breakEnd   = \Carbon\Carbon::parse($shift->break_end_time)->setDateFrom($checkIn);
+        // --- STRICT REGULAR SHIFT LOGIC (User Request) ---
+        // 1. Late Calculation
+        // Grace period applies to Late calculation
+        $inGrace = $shift->grace_period_minutes ?? 15;
+        $lateThreshold = $shiftStart->copy()->addMinutes($inGrace);
 
-            // Determine Session
-            // Morning: Before Break Start
-            // Afternoon: After Break End
-            $isMorning   = $checkIn->lessThan($breakStart); 
-            $isAfternoon = $checkIn->greaterThanOrEqualTo($breakEnd);
+        $isLate = false;
+        if ($checkIn->greaterThan($lateThreshold)) {
+            $lateMinutes = abs($checkIn->diffInMinutes($shiftStart));
+            $isLate = true;
+        }
+
+        // 2. Check Out Logic
+        $isEarly = false;
+        if ($checkOut) {
+            if ($checkOut->lessThan($checkIn)) $checkOut->addDay();
             
-            // Note: If checked in BETWEEN break_start and break_end, it's ambiguous. 
-            // We treat it as Late Afternoon usually, or Late Morning return? 
-            // Let's assume Afternoon if closest to Break End.
-            if (!$isMorning && !$isAfternoon) {
-                 $isAfternoon = true; // Late return case
+            $workedMinutes = abs($checkIn->diffInMinutes($checkOut));
+
+            // Early Leave
+            // User requested grace time for clock out too. 
+            // If they leave BEFORE (EndTime - Grace), it is early leave.
+            $outGrace = $shift->grace_period_minutes ?? 15;
+            $earlyLeaveThreshold = $shiftEnd->copy()->subMinutes($outGrace);
+
+            if ($checkOut->lessThan($earlyLeaveThreshold)) {
+                $earlyLeaveMinutes = abs($shiftEnd->diffInMinutes($checkOut));
+                $isEarly = true;
             }
 
-            if ($isMorning) {
-                // Expected: Shift Start -> Break Start
-                $sessionStart = $shiftStart;
-                $sessionEnd   = $breakStart;
-            } else { // Afternoon
-                // Expected: Break End -> Shift End
-                $sessionStart = $breakEnd;
-                $sessionEnd   = $shiftEnd;
+            // Overtime
+            if ($checkOut->greaterThan($shiftEnd)) {
+                $overtimeMinutes = abs($checkOut->diffInMinutes($shiftEnd));
+            }
+        
+            // STATUS DETERMINATION
+            // "if man come on his shift clock in time and go clock out tome perfectly with grace time... is present otherwise he is absent"
+            if (!$isLate && !$isEarly) {
+                $status = 'present';
+            } else {
+                $status = 'absent';
             }
 
-            // 1. Late Calculation
-            // Use grace_period_minutes if available, else late_threshold
-            $grace = $shift->grace_period_minutes ?? $shift->late_threshold_minutes;
-            $lateThreshold = $sessionStart->copy()->addMinutes($grace);
-
-            if ($checkIn->greaterThan($lateThreshold)) {
-                $lateMinutes = abs($checkIn->diffInMinutes($sessionStart));
-                $status = 'late';
-            }
-
-            // 2. Worked & Early Leave & Overtime (Requires CheckOut)
-            if ($checkOut) {
-                 if ($checkOut->lessThan($checkIn)) $checkOut->addDay();
-                 
-                 $workedMinutes = abs($checkIn->diffInMinutes($checkOut));
-
-                 // Early Leave
-                 if ($checkOut->lessThan($sessionEnd)) {
-                     // Check if flexible? No, strict for now.
-                     // Allow small buffer? using grace period for early leave too?
-                     // Let's stay strict: checkOut < sessionEnd IS early leave.
-                     $earlyLeaveMinutes = abs($sessionEnd->diffInMinutes($checkOut));
-                 }
-
-                 // Overtime (Only for Afternoon session usually? Or both?)
-                 // Usually overtime is only after day end.
-                 if ($isAfternoon && $checkOut->greaterThan($sessionEnd)) {
-                     // Only count if > min_overtime_minutes (if field existed, else 0)
-                     $overtimeMinutes = abs($checkOut->diffInMinutes($sessionEnd));
-                 }
-
-                 // Half Day Check per session? 
-                 // If worked < 50% of THIS session duration?
-                 $sessionDuration = $sessionStart->diffInMinutes($sessionEnd);
-                 if ($workedMinutes < ($sessionDuration / 2)) {
-                     $status = 'half_day';
-                 }
-            }
-
-        } 
-        // --- REGULAR SHIFT LOGIC ---
-        else {
-             // 1. Late
-             $grace = $shift->grace_period_minutes ?? $shift->late_threshold_minutes;
-             $lateThreshold = $shiftStart->copy()->addMinutes($grace);
-
-             if ($checkIn->greaterThan($lateThreshold)) {
-                 $lateMinutes = abs($checkIn->diffInMinutes($shiftStart));
-                 $status = 'late';
-             }
-
-             // 2. Out Logic
-             if ($checkOut) {
-                 if ($checkOut->lessThan($checkIn)) $checkOut->addDay();
-
-                 $workedMinutes = abs($checkIn->diffInMinutes($checkOut));
-
-                 // Deduct Break? 
-                 // If break times are defined for regular shift, we can deduct them if worked through them?
-                 // Simple logic for now: Gross worked minutes.
-                 
-                 // Early Leave
-                 if ($checkOut->lessThan($shiftEnd)) {
-                     $earlyLeaveMinutes = abs($shiftEnd->diffInMinutes($checkOut));
-                 }
-
-                 // Overtime
-                 if ($checkOut->greaterThan($shiftEnd)) {
-                     $overtimeMinutes = abs($checkOut->diffInMinutes($shiftEnd));
-                 }
-
-                 // Half Day
-                 if ($workedMinutes < $shift->half_day_minutes) {
-                     $status = 'half_day'; 
-                 }
-             }
+        } else {
+            // No check out -> Absent
+            $status = 'absent';
         }
 
         $attendance->update([

@@ -137,7 +137,7 @@ Route::prefix('shifts')->group(function () {
 //LEAVES
 Route::prefix('leaves')->group(function () {
     Route::get('/', [LeaveController::class, 'index']);
-    Route::get('/{id}', [LeaveController::class, 'show']); // Added
+    Route::get('/{id}', [LeaveController::class, 'show']); 
     Route::post('/', [LeaveController::class, 'store']);
     Route::patch('/{id}/approve', [LeaveController::class, 'approve']);
     Route::patch('/{id}/reject', [LeaveController::class, 'reject']);
@@ -148,7 +148,7 @@ Route::prefix('leaves')->group(function () {
 Route::prefix('leave-types')->group(function () {
     Route::get('/', [LeaveTypeController::class, 'index']);
     Route::get('/active', [LeaveTypeController::class, 'active']);
-    Route::get('/{id}', [LeaveTypeController::class, 'show']); // Added
+    Route::get('/{id}', [LeaveTypeController::class, 'show']); 
     Route::post('/', [LeaveTypeController::class, 'store']);
     Route::patch('/{id}', [LeaveTypeController::class, 'update']);
     Route::patch('/{id}/status', [LeaveTypeController::class, 'toggleStatus']);
@@ -170,6 +170,7 @@ Route::prefix('recruitment')->group(function () {
     Route::get('/candidates', [CandidateController::class, 'index']);
     Route::get('/candidates/{id}', [CandidateController::class, 'show']);
     Route::patch('/candidates/{id}/status', [CandidateController::class, 'updateStatus']);
+    Route::get('/candidates/{id}/download-cv', [CandidateController::class, 'downloadCv']);
     Route::post('/candidates/{id}/hire', [CandidateController::class, 'hire']); 
 });
 
@@ -212,6 +213,7 @@ Route::prefix('projects')->group(function () {
 Route::prefix('payroll')->group(function () {
     Route::post('/generate', [PayrollController::class, 'generate']); 
     Route::get('/', [PayrollController::class, 'index']); 
+    Route::get('/all', [PayrollController::class, 'listAll']);
     Route::get('/{id}', [PayrollController::class, 'show']); 
     Route::patch('/{id}/lock', [PayrollController::class, 'lock']); 
     Route::patch('/{id}/paid', [PayrollController::class, 'markPaid']); 

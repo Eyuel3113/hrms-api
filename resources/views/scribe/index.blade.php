@@ -159,6 +159,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="candidate-management-PATCHapi-v1-recruitment-candidates--id--status">
                                 <a href="#candidate-management-PATCHapi-v1-recruitment-candidates--id--status">Update Status</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="candidate-management-GETapi-v1-recruitment-candidates--id--download-cv">
+                                <a href="#candidate-management-GETapi-v1-recruitment-candidates--id--download-cv">Download Candidate CV</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="candidate-management-POSTapi-v1-recruitment-candidates--id--hire">
                                 <a href="#candidate-management-POSTapi-v1-recruitment-candidates--id--hire">Hire Candidate</a>
                             </li>
@@ -405,6 +408,9 @@ APIs for managing leave types (Annual, Sick, etc.)</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="payroll-management-GETapi-v1-payroll">
                                 <a href="#payroll-management-GETapi-v1-payroll">List Payrolls</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="payroll-management-GETapi-v1-payroll-all">
+                                <a href="#payroll-management-GETapi-v1-payroll-all">List All Payrolls (No Pagination)</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="payroll-management-GETapi-v1-payroll--id-">
                                 <a href="#payroll-management-GETapi-v1-payroll--id-">Get Payroll by ID</a>
@@ -2787,7 +2793,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "email=gbailey@example.net"\
     --form "phone=architecto"\
     --form "cover_letter=architecto"\
-    --form "cv=@C:\Users\user\AppData\Local\Temp\php3F79.tmp" </code></pre></div>
+    --form "cv=@C:\Users\user\AppData\Local\Temp\phpF1A6.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2948,7 +2954,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>The CV/Resume file (pdf, doc, docx). Max 2MB. Example: <code>C:\Users\user\AppData\Local\Temp\php3F79.tmp</code></p>
+<p>The CV/Resume file (pdf, doc, docx). Max 2MB. Example: <code>C:\Users\user\AppData\Local\Temp\phpF1A6.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>cover_letter</code></b>&nbsp;&nbsp;
@@ -2985,7 +2991,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "email=gbailey@example.net"\
     --form "phone=architecto"\
     --form "cover_letter=architecto"\
-    --form "cv=@C:\Users\user\AppData\Local\Temp\php4169.tmp" </code></pre></div>
+    --form "cv=@C:\Users\user\AppData\Local\Temp\phpF3A6.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -3146,7 +3152,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>The CV/Resume file (pdf, doc, docx). Max 2MB. Example: <code>C:\Users\user\AppData\Local\Temp\php4169.tmp</code></p>
+<p>The CV/Resume file (pdf, doc, docx). Max 2MB. Example: <code>C:\Users\user\AppData\Local\Temp\phpF3A6.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>cover_letter</code></b>&nbsp;&nbsp;
@@ -3629,6 +3635,145 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>The new status (new, reviewed, interview, shortlisted, rejected, hired). Example: <code>architecto</code></p>
         </div>
         </form>
+
+                    <h2 id="candidate-management-GETapi-v1-recruitment-candidates--id--download-cv">Download Candidate CV</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-recruitment-candidates--id--download-cv">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/v1/recruitment/candidates/architecto/download-cv" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/recruitment/candidates/architecto/download-cv"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-recruitment-candidates--id--download-cv">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+vary: Origin
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-recruitment-candidates--id--download-cv" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-recruitment-candidates--id--download-cv"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-recruitment-candidates--id--download-cv"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-recruitment-candidates--id--download-cv" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-recruitment-candidates--id--download-cv">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-recruitment-candidates--id--download-cv" data-method="GET"
+      data-path="api/v1/recruitment/candidates/{id}/download-cv"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-recruitment-candidates--id--download-cv', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-recruitment-candidates--id--download-cv"
+                    onclick="tryItOut('GETapi-v1-recruitment-candidates--id--download-cv');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-recruitment-candidates--id--download-cv"
+                    onclick="cancelTryOut('GETapi-v1-recruitment-candidates--id--download-cv');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-recruitment-candidates--id--download-cv"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/recruitment/candidates/{id}/download-cv</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-recruitment-candidates--id--download-cv"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-recruitment-candidates--id--download-cv"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="GETapi-v1-recruitment-candidates--id--download-cv"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The UUID of the candidate. Example: <code>architecto</code></p>
+            </div>
+                    </form>
 
                     <h2 id="candidate-management-POSTapi-v1-recruitment-candidates--id--hire">Hire Candidate</h2>
 
@@ -6563,13 +6708,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "designation_id=architecto"\
     --form "joining_date=architecto"\
     --form "ending_date=2052-01-23"\
-    --form "employment_type=part-time"\
+    --form "employment_type=freelance"\
     --form "basic_salary=4326.41688"\
     --form "salary_currency=gzm"\
     --form "bank_name=architecto"\
     --form "bank_account_number=architecto"\
     --form "tax_id=architecto"\
-    --form "photo=@C:\Users\user\AppData\Local\Temp\php4009.tmp" </code></pre></div>
+    --form "photo=@C:\Users\user\AppData\Local\Temp\phpF235.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -6599,7 +6744,7 @@ body.append('department_id', 'architecto');
 body.append('designation_id', 'architecto');
 body.append('joining_date', 'architecto');
 body.append('ending_date', '2052-01-23');
-body.append('employment_type', 'part-time');
+body.append('employment_type', 'freelance');
 body.append('basic_salary', '4326.41688');
 body.append('salary_currency', 'gzm');
 body.append('bank_name', 'architecto');
@@ -6757,7 +6902,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Profile photo (image). Example: <code>C:\Users\user\AppData\Local\Temp\php4009.tmp</code></p>
+<p>Profile photo (image). Example: <code>C:\Users\user\AppData\Local\Temp\phpF235.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>date_of_birth</code></b>&nbsp;&nbsp;
@@ -6912,10 +7057,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="employment_type"                data-endpoint="POSTapi-v1-employees"
-               value="part-time"
+               value="freelance"
                data-component="body">
     <br>
-<p>Example: <code>part-time</code></p>
+<p>Example: <code>freelance</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>full-time</code></li> <li><code>part-time</code></li> <li><code>contract</code></li> <li><code>freelance</code></li> <li><code>intern</code></li></ul>
         </div>
@@ -7345,23 +7490,23 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "last_name=n"\
     --form "email=gbailey@example.net"\
     --form "phone=vdljnikhwaykcmyu"\
-    --form "date_of_birth=2025-12-30T11:24:32"\
-    --form "gender=female"\
-    --form "marital_status=married"\
+    --form "date_of_birth=2025-12-30T15:54:00"\
+    --form "gender=male"\
+    --form "marital_status=single"\
     --form "nationality=architecto"\
     --form "address=architecto"\
     --form "city=architecto"\
     --form "state=architecto"\
     --form "zip_code=architecto"\
-    --form "joining_date=2025-12-30T11:24:32"\
+    --form "joining_date=2025-12-30T15:54:00"\
     --form "ending_date=2052-01-23"\
-    --form "employment_type=part-time"\
+    --form "employment_type=freelance"\
     --form "basic_salary=22"\
     --form "salary_currency=gzm"\
     --form "bank_name=architecto"\
     --form "bank_account_number=architecto"\
     --form "tax_id=architecto"\
-    --form "photo=@C:\Users\user\AppData\Local\Temp\php4019.tmp" </code></pre></div>
+    --form "photo=@C:\Users\user\AppData\Local\Temp\phpF256.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -7379,17 +7524,17 @@ body.append('first_name', 'architecto');
 body.append('last_name', 'n');
 body.append('email', 'gbailey@example.net');
 body.append('phone', 'vdljnikhwaykcmyu');
-body.append('date_of_birth', '2025-12-30T11:24:32');
-body.append('gender', 'female');
-body.append('marital_status', 'married');
+body.append('date_of_birth', '2025-12-30T15:54:00');
+body.append('gender', 'male');
+body.append('marital_status', 'single');
 body.append('nationality', 'architecto');
 body.append('address', 'architecto');
 body.append('city', 'architecto');
 body.append('state', 'architecto');
 body.append('zip_code', 'architecto');
-body.append('joining_date', '2025-12-30T11:24:32');
+body.append('joining_date', '2025-12-30T15:54:00');
 body.append('ending_date', '2052-01-23');
-body.append('employment_type', 'part-time');
+body.append('employment_type', 'freelance');
 body.append('basic_salary', '22');
 body.append('salary_currency', 'gzm');
 body.append('bank_name', 'architecto');
@@ -7560,7 +7705,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 5120 kilobytes. Example: <code>C:\Users\user\AppData\Local\Temp\php4019.tmp</code></p>
+<p>Must be an image. Must not be greater than 5120 kilobytes. Example: <code>C:\Users\user\AppData\Local\Temp\phpF256.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>date_of_birth</code></b>&nbsp;&nbsp;
@@ -7569,10 +7714,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date_of_birth"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="2025-12-30T11:24:32"
+               value="2025-12-30T15:54:00"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2025-12-30T11:24:32</code></p>
+<p>Must be a valid date. Example: <code>2025-12-30T15:54:00</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -7581,10 +7726,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="gender"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="female"
+               value="male"
                data-component="body">
     <br>
-<p>Example: <code>female</code></p>
+<p>Example: <code>male</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>male</code></li> <li><code>female</code></li></ul>
         </div>
@@ -7595,10 +7740,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="marital_status"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="married"
+               value="single"
                data-component="body">
     <br>
-<p>Example: <code>married</code></p>
+<p>Example: <code>single</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>single</code></li> <li><code>married</code></li> <li><code>divorced</code></li> <li><code>widowed</code></li></ul>
         </div>
@@ -7693,10 +7838,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="joining_date"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="2025-12-30T11:24:32"
+               value="2025-12-30T15:54:00"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2025-12-30T11:24:32</code></p>
+<p>Must be a valid date. Example: <code>2025-12-30T15:54:00</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>ending_date</code></b>&nbsp;&nbsp;
@@ -7717,10 +7862,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="employment_type"                data-endpoint="PATCHapi-v1-employees--id-"
-               value="part-time"
+               value="freelance"
                data-component="body">
     <br>
-<p>Example: <code>part-time</code></p>
+<p>Example: <code>freelance</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>full-time</code></li> <li><code>part-time</code></li> <li><code>contract</code></li> <li><code>freelance</code></li> <li><code>intern</code></li></ul>
         </div>
@@ -7946,7 +8091,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     "http://localhost/api/v1/employees/architecto/photo" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "photo=@C:\Users\user\AppData\Local\Temp\php402B.tmp" </code></pre></div>
+    --form "photo=@C:\Users\user\AppData\Local\Temp\phpF267.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -8077,7 +8222,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Image file (jpeg, png, jpg, max 5MB). Example: <code>C:\Users\user\AppData\Local\Temp\php402B.tmp</code></p>
+<p>Image file (jpeg, png, jpg, max 5MB). Example: <code>C:\Users\user\AppData\Local\Temp\phpF267.tmp</code></p>
         </div>
         </form>
 
@@ -8362,7 +8507,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     "http://localhost/api/v1/employees/architecto/document" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "document=@C:\Users\user\AppData\Local\Temp\php404D.tmp" </code></pre></div>
+    --form "document=@C:\Users\user\AppData\Local\Temp\phpF27A.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -8483,7 +8628,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>PDF file (max 2MB). Example: <code>C:\Users\user\AppData\Local\Temp\php404D.tmp</code></p>
+<p>PDF file (max 2MB). Example: <code>C:\Users\user\AppData\Local\Temp\phpF27A.tmp</code></p>
         </div>
         </form>
 
@@ -10619,7 +10764,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"min_salary\": 39,
     \"max_salary\": 84,
     \"salary_currency\": \"ETB\",
-    \"salary_negotiable\": false,
+    \"salary_negotiable\": true,
     \"show_salary\": false
 }"
 </code></pre></div>
@@ -10645,7 +10790,7 @@ let body = {
     "min_salary": 39,
     "max_salary": 84,
     "salary_currency": "ETB",
-    "salary_negotiable": false,
+    "salary_negotiable": true,
     "show_salary": false
 };
 
@@ -10861,7 +11006,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>show_salary</code></b>&nbsp;&nbsp;
@@ -11051,9 +11196,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"status\": \"open\",
     \"min_salary\": 39,
     \"max_salary\": 84,
-    \"salary_currency\": \"EUR\",
+    \"salary_currency\": \"ETB\",
     \"salary_negotiable\": false,
-    \"show_salary\": true
+    \"show_salary\": false
 }"
 </code></pre></div>
 
@@ -11077,9 +11222,9 @@ let body = {
     "status": "open",
     "min_salary": 39,
     "max_salary": 84,
-    "salary_currency": "EUR",
+    "salary_currency": "ETB",
     "salary_negotiable": false,
-    "show_salary": true
+    "show_salary": false
 };
 
 fetch(url, {
@@ -11292,10 +11437,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="salary_currency"                data-endpoint="PATCHapi-v1-recruitment-jobs--id-"
-               value="EUR"
+               value="ETB"
                data-component="body">
     <br>
-<p>Example: <code>EUR</code></p>
+<p>Example: <code>ETB</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>ETB</code></li> <li><code>USD</code></li> <li><code>EUR</code></li></ul>
         </div>
@@ -11341,7 +11486,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
         </form>
 
@@ -13944,6 +14089,190 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="query">
     <br>
 <p>optional Default 10 Example: <code>16</code></p>
+            </div>
+                </form>
+
+                    <h2 id="payroll-management-GETapi-v1-payroll-all">List All Payrolls (No Pagination)</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-payroll-all">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/v1/payroll/all?year=16&amp;month=16&amp;employee_id=architecto&amp;status=architecto" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/payroll/all"
+);
+
+const params = {
+    "year": "16",
+    "month": "16",
+    "employee_id": "architecto",
+    "status": "architecto",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-payroll-all">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+vary: Origin
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-payroll-all" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-payroll-all"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-payroll-all"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-payroll-all" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-payroll-all">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-payroll-all" data-method="GET"
+      data-path="api/v1/payroll/all"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-payroll-all', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-payroll-all"
+                    onclick="tryItOut('GETapi-v1-payroll-all');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-payroll-all"
+                    onclick="cancelTryOut('GETapi-v1-payroll-all');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-payroll-all"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/payroll/all</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-payroll-all"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-payroll-all"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>year</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="year"                data-endpoint="GETapi-v1-payroll-all"
+               value="16"
+               data-component="query">
+    <br>
+<p>optional Example: <code>16</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>month</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="month"                data-endpoint="GETapi-v1-payroll-all"
+               value="16"
+               data-component="query">
+    <br>
+<p>optional Example: <code>16</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>employee_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="employee_id"                data-endpoint="GETapi-v1-payroll-all"
+               value="architecto"
+               data-component="query">
+    <br>
+<p>optional Example: <code>architecto</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>status</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="status"                data-endpoint="GETapi-v1-payroll-all"
+               value="architecto"
+               data-component="query">
+    <br>
+<p>optional draft, locked, paid Example: <code>architecto</code></p>
             </div>
                 </form>
 
@@ -19320,15 +19649,15 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"title\": \"b\",
     \"description\": \"Eius et animi quos velit et.\",
-    \"start_date\": \"2025-12-30T11:24:33\",
+    \"start_date\": \"2025-12-30T15:54:00\",
     \"end_date\": \"2052-01-23\",
     \"trainer_name\": \"n\",
     \"location\": \"g\",
     \"incentive_amount\": 12,
-    \"has_incentive\": false,
-    \"type\": \"external\",
+    \"has_incentive\": true,
+    \"type\": \"internal\",
     \"is_mandatory\": true,
-    \"is_active\": true
+    \"is_active\": false
 }"
 </code></pre></div>
 
@@ -19346,15 +19675,15 @@ const headers = {
 let body = {
     "title": "b",
     "description": "Eius et animi quos velit et.",
-    "start_date": "2025-12-30T11:24:33",
+    "start_date": "2025-12-30T15:54:00",
     "end_date": "2052-01-23",
     "trainer_name": "n",
     "location": "g",
     "incentive_amount": 12,
-    "has_incentive": false,
-    "type": "external",
+    "has_incentive": true,
+    "type": "internal",
     "is_mandatory": true,
-    "is_active": true
+    "is_active": false
 };
 
 fetch(url, {
@@ -19483,10 +19812,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="start_date"                data-endpoint="PATCHapi-v1-trainings--id-"
-               value="2025-12-30T11:24:33"
+               value="2025-12-30T15:54:00"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2025-12-30T11:24:33</code></p>
+<p>Must be a valid date. Example: <code>2025-12-30T15:54:00</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>end_date</code></b>&nbsp;&nbsp;
@@ -19556,7 +19885,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>type</code></b>&nbsp;&nbsp;
@@ -19565,10 +19894,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="type"                data-endpoint="PATCHapi-v1-trainings--id-"
-               value="external"
+               value="internal"
                data-component="body">
     <br>
-<p>Example: <code>external</code></p>
+<p>Example: <code>internal</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>internal</code></li> <li><code>external</code></li> <li><code>certification</code></li></ul>
         </div>
@@ -19614,7 +19943,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
         </form>
 

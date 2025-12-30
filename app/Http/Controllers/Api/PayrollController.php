@@ -188,6 +188,33 @@ public function generate(Request $request)
     }
 
     /**
+     * List All Payrolls (No Pagination)
+     *
+     * @group Payroll Management
+     * @queryParam year integer optional
+     * @queryParam month integer optional
+     * @queryParam employee_id string optional
+     * @queryParam status string optional draft, locked, paid
+     */
+    public function listAll(Request $request)
+    {
+        $query = Payroll::with(['employee.personalInfo']);
+
+        if ($request->year) $query->where('year', $request->year);
+        if ($request->month) $query->where('month', $request->month);
+        if ($request->employee_id) $query->where('employee_id', $request->employee_id);
+        if ($request->status) $query->where('status', $request->status);
+
+        $payrolls = $query->orderByDesc('year')->orderByDesc('month')->get();
+
+        return response()->json([
+            'message' => 'All payrolls fetched successfully',
+            'data' => $payrolls,
+            'total' => $payrolls->count()
+        ]);
+    }
+
+    /**
      * List Payrolls
      *
      * @group Payroll Management
@@ -219,6 +246,8 @@ public function generate(Request $request)
             ]
         ]);
     }
+
+   
 
     /**
      * Get Payroll by ID
