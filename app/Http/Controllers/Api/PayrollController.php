@@ -58,42 +58,30 @@ public function generate(Request $request)
         $basicSalary = $employee->professionalInfo->basic_salary ?? 0;
         if ($basicSalary == 0) continue; // skip if no salary
 
-        // === COUNT WORKED DAYS ===
+        // Total working days in Ethiopia = 26 (Standard for calculation)
+        $totalWorkingDays = 26;
+        $dailyRate = $basicSalary / $totalWorkingDays;
+        $hourlyRate = $basicSalary / 173.33; // Standard 173.33 hours (40hr/week or similar standard)
+
+        // === ATTENDANCE DATA ===
         $attendanceRecords = Attendance::where('employee_id', $employee->id)
             ->whereBetween('date', [$startDate, $endDate])
             ->get();
 
-        // Present = 1 day, half_day = 0.5 day
-        $presentDays = $attendanceRecords->where('status', 'present')->count();
-        $halfDays = $attendanceRecords->where('status', 'half_day')->count();
-        $effectiveWorkedDays = $presentDays + ($halfDays * 0.5);
-
-        // Total working days in Ethiopia = 26
-        $totalWorkingDays = 26;
-        $dailyRate = $basicSalary / $totalWorkingDays;
-
-        // Prorated basic salary
-        $proratedBasicSalary = $effectiveWorkedDays * $dailyRate;
-
-        // === ATTENDANCE SUMMARY ===
-        $attendanceSummary = $attendanceRecords->groupBy('date')->map(function ($dayRecords) {
-            return [
-                'overtime_minutes' => $dayRecords->sum('overtime_minutes'),
-                'late_minutes' => $dayRecords->sum('late_minutes'),
-                'early_leave_minutes' => $dayRecords->sum('early_leave_minutes'),
-            ];
-        });
-
-        $overtimeMinutes = $attendanceSummary->sum('overtime_minutes');
-        $lateMinutes = $attendanceSummary->sum('late_minutes');
-
-        $hourlyRate = $basicSalary / 173.33;
+        // 1. Calculate Overtime (Paid for all 'present' records ideally, or all records with OT)
+        // We assume OT is valid if recorded.
+        $overtimeMinutes = $attendanceRecords->sum('overtime_minutes');
+        
+        // 2. Calculate Late Minutes Deduction
+        // CRITICAL: Only deduct late minutes if status is NOT 'absent'.
+        // If status is 'absent', we deduct the FULL DAY, so deducting late mins would be double penalty.
+        $lateMinutes = $attendanceRecords->where('status', '!=', 'absent')->sum('late_minutes');
+        $lateDeduction = ($lateMinutes / 60) * $hourlyRate; // Removed 0.5 factor unless policy dictates. Assuming 100% deduction of time lost? Or penalty? keeping 1.0 logic from Service.
 
         $overtimePay = ($overtimeMinutes / 60) * $hourlyRate * 1.5;
-        $lateDeduction = ($lateMinutes / 60) * $hourlyRate * 0.5;
 
-        // Holiday Pay (if worked on holiday)
-        $holidayPay = 0; // You can add logic later
+        // Holiday Pay calculation (placeholder if needed, seemingly 0 in previous code)
+        $holidayPay = 0; 
 
         // Training Incentive
         $trainingIncentive = TrainingAttendee::join('trainings', 'training_attendees.training_id', '=', 'trainings.id')
@@ -110,44 +98,58 @@ public function generate(Request $request)
 
         $performanceBonus = $performanceRating >= 4.0 ? $basicSalary * 0.10 : 0;
 
-        // Absent & Unpaid Leave Deduction
+        // 3. Absent Deduction
+        // Count Days explicitly marked Absent
         $absentDays = $attendanceRecords->where('status', 'absent')->count();
+        $absentDeduction = $absentDays * $dailyRate;
 
+        // 4. Half Day Deduction
+        // If someone attended half day, they get half pay. 
+        // Deduction = 0.5 * DailyRate
+        $halfDays = $attendanceRecords->where('status', 'half_day')->count();
+        $halfDayDeduction = $halfDays * ($dailyRate * 0.5);
+
+        // 5. Unpaid Leave Deduction
         $unpaidLeaveDays = Leave::where('employee_id', $employee->id)
             ->where('status', 'approved')
             ->whereHas('leaveType', fn($q) => $q->where('is_paid', false))
             ->whereBetween('start_date', [$startDate, $endDate])
             ->sum('total_days');
-
-        $absentDeduction = $absentDays * $dailyRate;
+        
         $unpaidLeaveDeduction = $unpaidLeaveDays * $dailyRate;
 
-        // Gross Salary
-        $grossSalary = $proratedBasicSalary + $overtimePay + $holidayPay + $trainingIncentive + $performanceBonus;
+        // GROSS EARNINGS (Full Basic + Allowances/OT)
+        // Note: We start with Full Basic, then subtract deductions in Taxable/Net Calculation
+        $grossSalary = $basicSalary + $overtimePay + $holidayPay + $trainingIncentive + $performanceBonus;
 
-        // Taxable Income
-        $taxableIncome = $grossSalary - $lateDeduction - $absentDeduction - $unpaidLeaveDeduction;
+        // TAXABLE INCOME
+        // Deduct defaults
+        $totalDeductions = $lateDeduction + $absentDeduction + $halfDayDeduction + $unpaidLeaveDeduction;
+        
+        // Ensure taxable income doesn't go below 0
+        $taxableIncome = max(0, $grossSalary - $totalDeductions);
 
         // Tax & Pension
         $incomeTax = $this->calculateIncomeTax($taxableIncome);
-        $pension = $taxableIncome * 0.07;
+        // Pension 7% of Basic Salary (Usually on Basic, not Net)
+        $pension = $basicSalary * 0.07; 
 
         // Net Salary
-        $netSalary = $taxableIncome - $incomeTax - $pension;
+        $netSalary = $grossSalary - $totalDeductions - $incomeTax - $pension;
 
         Payroll::create([
             'id' => (string) Str::uuid(),
             'employee_id' => $employee->id,
             'year' => $year,
             'month' => $month,
-            'basic_salary' => $proratedBasicSalary, // ← NOW PRORATED
+            'basic_salary' => $basicSalary,
             'overtime_pay' => $overtimePay,
             'holiday_pay' => $holidayPay,
             'training_incentive' => $trainingIncentive,
             'performance_bonus' => $performanceBonus,
             'gross_salary' => $grossSalary,
             'late_deduction' => $lateDeduction,
-            'absent_deduction' => $absentDeduction,
+            'absent_deduction' => $absentDeduction + $halfDayDeduction, // Combine for storage
             'unpaid_leave_deduction' => $unpaidLeaveDeduction,
             'taxable_income' => $taxableIncome,
             'income_tax' => $incomeTax,

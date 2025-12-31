@@ -43,10 +43,12 @@ class PayrollService
             ->get();
 
         $overtimeMinutes = $attendances->sum('overtime_minutes');
-        $lateMinutes = $attendances->sum('late_minutes');
+        
+        // Late Minutes: Only count for deduction if status is NOT 'absent' 
+        // to avoid double deduction (since 'absent' implies full day pay loss).
+        $lateMinutes = $attendances->where('status', '!=', 'absent')->sum('late_minutes');
         
         // Holiday work: 2.5x
-        // We need to check if attendance.status is 'present' on a day that is in Holidays table
         $holidayDates = Holiday::active()->whereBetween('date', [$startDate, $endDate])->pluck('date')->map(fn($d) => $d->toDateString())->toArray();
         $holidayWorkMinutes = $attendances->filter(fn($a) => in_array($a->date->toDateString(), $holidayDates))->sum('worked_minutes');
 
