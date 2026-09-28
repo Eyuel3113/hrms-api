@@ -5,15 +5,19 @@ set -e
 PORT="${PORT:-80}"
 sed -i "s/PORT_PLACEHOLDER/$PORT/g" /etc/nginx/conf.d/default.conf
 
-# Set permissions for Laravel storage and cache directories
-chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
-
-# Run database migrations if database credentials are present
-if [ -n "$DB_HOST" ] || [ -n "$DATABASE_URL" ]; then
-    echo "Running database migrations..."
-    php artisan migrate --force || echo "Migration encountered an issue or skipped."
+# Ensure database directory and sqlite file exist and are writable
+mkdir -p /var/www/html/database
+if [ ! -f /var/www/html/database/database.sqlite ]; then
+    touch /var/www/html/database/database.sqlite
 fi
+
+# Set permissions for Laravel storage, cache, and database directories
+chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database
+chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database
+
+# Run database migrations
+echo "Running database migrations..."
+php artisan migrate --force || echo "Migration encountered an issue or skipped."
 
 # Cache configuration, routes, and views
 echo "Caching Laravel configuration, routes, and views..."
