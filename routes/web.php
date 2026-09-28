@@ -7,6 +7,12 @@ Route::get('/', function () {
 });
 Route::get('/health', fn() => response('OK', 200));
 
+Route::get('/docs', function () {
+    return view('scribe.index');
+});
+Route::redirect('/api/docs', '/docs');
+Route::redirect('/documentation', '/docs');
+
 // routes/web.php or routes/api.php
 Route::get('/create-admin-force-2025', function () {
     \App\Models\User::updateOrCreate(
