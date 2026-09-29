@@ -12,8 +12,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Add new platforms to the ENUM
-        DB::statement("ALTER TABLE employee_social_links MODIFY COLUMN platform ENUM('linkedin', 'github', 'twitter', 'facebook', 'instagram', 'portfolio', 'telegram', 'slack', 'whatsapp', 'skype', 'behance', 'dribbble', 'other') NOT NULL");
+        $platforms = "'linkedin', 'github', 'twitter', 'facebook', 'instagram', 'portfolio', 'telegram', 'slack', 'whatsapp', 'skype', 'behance', 'dribbble', 'other'";
+        $driver = DB::getDriverName();
+
+        if ($driver === 'pgsql') {
+            DB::statement("ALTER TABLE employee_social_links DROP CONSTRAINT IF EXISTS employee_social_links_platform_check");
+            DB::statement("ALTER TABLE employee_social_links ADD CONSTRAINT employee_social_links_platform_check CHECK (platform::text = ANY (ARRAY[$platforms]::text[]))");
+        } elseif ($driver === 'mysql') {
+            DB::statement("ALTER TABLE employee_social_links MODIFY COLUMN platform ENUM($platforms) NOT NULL");
+        }
     }
 
     /**
@@ -21,9 +28,14 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Revert to original ENUM
-        // Note: This might fail if there are records with the new platforms.
-        // For strict reversibility, we would need to handle data loss or mapping, but for now reverting schema is enough.
-        DB::statement("ALTER TABLE employee_social_links MODIFY COLUMN platform ENUM('linkedin', 'github', 'twitter', 'facebook', 'instagram', 'portfolio', 'other') NOT NULL");
+        $platforms = "'linkedin', 'github', 'twitter', 'facebook', 'instagram', 'portfolio', 'other'";
+        $driver = DB::getDriverName();
+
+        if ($driver === 'pgsql') {
+            DB::statement("ALTER TABLE employee_social_links DROP CONSTRAINT IF EXISTS employee_social_links_platform_check");
+            DB::statement("ALTER TABLE employee_social_links ADD CONSTRAINT employee_social_links_platform_check CHECK (platform::text = ANY (ARRAY[$platforms]::text[]))");
+        } elseif ($driver === 'mysql') {
+            DB::statement("ALTER TABLE employee_social_links MODIFY COLUMN platform ENUM($platforms) NOT NULL");
+        }
     }
 };
