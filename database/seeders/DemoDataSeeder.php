@@ -255,10 +255,14 @@ class DemoDataSeeder extends Seeder
                     'zip_code' => '1000',
                 ]);
 
-                $dept = $deptMap[$eData['dept']] ?? null;
-                $desig = $desigMap[$eData['desig']] ?? null;
+            }
 
-                $emp->professionalInfo()->create([
+            $dept = $deptMap[$eData['dept']] ?? null;
+            $desig = $desigMap[$eData['desig']] ?? null;
+
+            EmployeeProfessionalInfo::updateOrCreate(
+                ['employee_id' => $emp->id],
+                [
                     'department_id' => $dept ? $dept->id : null,
                     'designation_id' => $desig ? $desig->id : null,
                     'joining_date' => $eData['joining_date'],
@@ -268,13 +272,13 @@ class DemoDataSeeder extends Seeder
                     'bank_name' => $eData['bank'],
                     'bank_account_number' => $eData['acc_num'],
                     'tax_id' => 'TIN-' . (10000000 + $idx),
-                ]);
+                ]
+            );
 
-                $emp->socialLinks()->create([
-                    'platform' => 'linkedin',
-                    'url' => 'https://linkedin.com/in/' . strtolower($eData['first_name'] . '-' . $eData['last_name']),
-                ]);
-            }
+            EmployeeSocialLink::updateOrCreate(
+                ['employee_id' => $emp->id, 'platform' => 'linkedin'],
+                ['url' => 'https://linkedin.com/in/' . strtolower($eData['first_name'] . '-' . $eData['last_name'])]
+            );
 
             $createdEmployees[] = $emp;
         }
