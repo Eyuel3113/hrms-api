@@ -39,6 +39,9 @@ class DemoDataSeeder extends Seeder
         $dayShift = Shift::where('name', 'Day Shift')->first() ?? Shift::first();
         $morningShift = Shift::where('name', 'Morning Shift')->first() ?? $dayShift;
 
+        // Clean up any incomplete employee records
+        Employee::doesntHave('personalInfo')->forceDelete();
+
         // 2. Departments
         $departmentsData = [
             [
