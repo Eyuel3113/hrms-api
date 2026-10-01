@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
             ShiftSeeder::class,
             HolidaySeeder::class,
             LeaveTypeSeeder::class,
+            DemoDataSeeder::class,
         ]);
 
         // Test user

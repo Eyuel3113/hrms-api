@@ -15,9 +15,12 @@ fi
 chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database
 chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database
 
-# Run database migrations
+# Run database migrations and seeders
 echo "Running database migrations..."
 php artisan migrate --force || echo "Migration encountered an issue or skipped."
+
+echo "Seeding database with demo data..."
+php artisan db:seed --force || echo "Seeding encountered an issue or skipped."
 
 # Cache configuration, routes, and views
 echo "Caching Laravel configuration, routes, and views..."

@@ -26,3 +26,12 @@ Route::get('/create-admin-force-2025', function () {
     );
     return "ADMIN CREATED/UPDATED → Email: admin@hrm.com | Password: password123";
 });
+
+Route::get('/seed-demo-data', function () {
+    \Illuminate\Support\Facades\Artisan::call('db:seed', ['--force' => true]);
+    return response()->json([
+        'success' => true,
+        'message' => 'Realistic demo data seeded successfully!',
+        'output' => \Illuminate\Support\Facades\Artisan::output()
+    ]);
+});
