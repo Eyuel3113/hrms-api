@@ -352,7 +352,7 @@ class DemoDataSeeder extends Seeder
                     'phone' => '+251921345678',
                     'cv_path' => 'candidates/cv/demo_cv_biruk.pdf',
                     'cover_letter' => 'Passionate full-stack developer with 5 years of production experience in Laravel, PostgreSQL, and React.',
-                    'status' => 'interviewed',
+                    'status' => 'interview',
                 ],
                 [
                     'job_id' => $firstJob->id,
@@ -600,7 +600,7 @@ class DemoDataSeeder extends Seeder
                 'location' => 'Main Auditorium',
                 'incentive_amount' => 0.00,
                 'has_incentive' => false,
-                'type' => 'compliance',
+                'type' => 'external',
                 'is_mandatory' => true,
                 'is_active' => true,
             ]
@@ -610,7 +610,7 @@ class DemoDataSeeder extends Seeder
             TrainingAttendee::firstOrCreate(
                 ['training_id' => $training1->id, 'employee_id' => $createdEmployees[0]->id],
                 [
-                    'status' => 'completed',
+                    'status' => 'attended',
                     'attended_at' => Carbon::now()->subWeeks(3),
                     'feedback' => 'Exceptional technical depth and highly practical material.',
                 ]
@@ -619,7 +619,7 @@ class DemoDataSeeder extends Seeder
             TrainingAttendee::firstOrCreate(
                 ['training_id' => $training1->id, 'employee_id' => $createdEmployees[1]->id],
                 [
-                    'status' => 'completed',
+                    'status' => 'attended',
                     'attended_at' => Carbon::now()->subWeeks(3),
                     'feedback' => 'Great insights on container optimization and build caching.',
                 ]
