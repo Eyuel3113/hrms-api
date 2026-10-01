@@ -261,8 +261,6 @@ class DemoDataSeeder extends Seeder
                     'joining_date' => $eData['joining_date'],
                     'employment_type' => 'full-time',
                     'basic_salary' => $eData['salary'],
-                    'transport_allowance' => 2000.00,
-                    'has_pension' => true,
                     'salary_currency' => 'ETB',
                     'bank_name' => $eData['bank'],
                     'bank_account_number' => $eData['acc_num'],

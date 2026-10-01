@@ -28,10 +28,19 @@ Route::get('/create-admin-force-2025', function () {
 });
 
 Route::get('/seed-demo-data', function () {
-    \Illuminate\Support\Facades\Artisan::call('db:seed', ['--force' => true]);
-    return response()->json([
-        'success' => true,
-        'message' => 'Realistic demo data seeded successfully!',
-        'output' => \Illuminate\Support\Facades\Artisan::output()
-    ]);
+    try {
+        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--force' => true]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Realistic demo data seeded successfully!',
+            'output' => \Illuminate\Support\Facades\Artisan::output()
+        ]);
+    } catch (\Throwable $e) {
+        return response()->json([
+            'success' => false,
+            'error' => $e->getMessage(),
+            'file' => $e->getFile(),
+            'line' => $e->getLine(),
+        ], 200);
+    }
 });
